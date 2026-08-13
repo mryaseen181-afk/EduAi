@@ -82,6 +82,22 @@
           <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest" id="navRole">Student</span>
           <span class="text-sm font-bold text-slate-800" id="navUserName">Loading...</span>
         </div>
+        <!-- Notifications Bell -->
+        <div class="relative">
+          <button onclick="toggleNotificationsDropdown()" class="text-slate-400 hover:text-indigo-600 p-2 rounded-xl transition-all relative" title="Notifications">
+            <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+            <span id="notificationBadge" class="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full hidden animate-ping"></span>
+          </button>
+          <div id="notificationsDropdown" class="absolute right-0 mt-2 w-72 bg-white rounded-2xl border border-slate-100 shadow-xl py-3 hidden z-50 max-h-80 overflow-y-auto">
+            <div class="px-4 pb-2 border-b border-slate-100 flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Alerts & Updates</span>
+              <button onclick="clearNotifications()" class="text-[10px] text-indigo-600 hover:underline font-bold">Clear All</button>
+            </div>
+            <div id="notificationsListContainer" class="divide-y divide-slate-100 text-xs">
+              <p class="text-slate-400 text-center py-6">No new notifications.</p>
+            </div>
+          </div>
+        </div>
         <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-2 rounded-xl transition-all" title="Logout">
           <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
         </button>
@@ -384,8 +400,68 @@
             <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-2xl text-sm font-semibold border border-white/10 shadow-sm flex items-center gap-2">
               <i data-lucide="award" class="w-4 h-4 text-amber-400"></i> Course Completion: <span class="font-bold text-white" id="completionRateText">0%</span>
             </div>
+            <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-2xl text-sm font-semibold border border-white/10 shadow-sm flex items-center gap-2">
+              <i data-lucide="flame" class="w-4 h-4 text-orange-400 animate-pulse"></i> Daily Streak: <span class="font-bold text-white" id="userStreakText">0 Days</span>
+            </div>
             <div class="bg-indigo-600/30 px-5 py-2.5 rounded-2xl text-xs font-semibold text-indigo-300 flex items-center gap-2">
               <i data-lucide="help-circle" class="w-4 h-4 text-indigo-400"></i> 24/7 AI Doubt Engine: **Active**
+            </div>
+          </div>
+        </div>
+
+        <!-- Streaks, Bookmarks & Continue Learning Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
+          <!-- Continue Learning -->
+          <div class="md:col-span-2 bg-white rounded-3xl border border-slate-200/70 p-6 shadow-sm flex flex-col justify-between min-h-[140px]" id="continueLearningContainer">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Continue Learning</span>
+              </div>
+              <h3 class="text-base font-extrabold text-slate-800" id="continueLessonTitle">No lessons in progress</h3>
+              <p class="text-xs text-slate-400 mt-1" id="continueLessonInstructor">Pick a lesson below to start study tracking</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
+              <div class="flex-1 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-emerald-500 h-full rounded-full transition-all" id="continueLessonProgress" style="width: 0%"></div>
+              </div>
+              <button id="resumeLessonBtn" disabled class="px-4 py-2 bg-slate-200 text-slate-400 font-bold rounded-xl text-xs transition-all shrink-0 cursor-not-allowed">Resume</button>
+            </div>
+          </div>
+
+          <!-- Bookmarked Lessons -->
+          <div class="bg-white rounded-3xl border border-slate-200/70 p-6 shadow-sm flex flex-col justify-between max-h-[160px]">
+            <div class="flex items-center gap-1.5 mb-2 text-indigo-600">
+              <i data-lucide="bookmark" class="w-4 h-4"></i>
+              <span class="text-xs font-bold uppercase tracking-wider">Bookmarks</span>
+            </div>
+            <div class="flex-1 space-y-2 overflow-y-auto chat-scroll text-xs font-medium text-slate-600" id="bookmarkedLessonsList">
+              <p class="text-slate-400 text-center py-4">No bookmarked lessons yet.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Weak-Topic Recommendations & Notifications row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Weak Topic Recommendations -->
+          <div class="bg-white rounded-3xl border border-slate-200/70 p-6 shadow-sm min-h-[140px]">
+            <div class="flex items-center gap-1.5 mb-4 text-amber-600">
+              <i data-lucide="trending-down" class="w-4 h-4"></i>
+              <span class="text-xs font-bold uppercase tracking-wider">AI Weak-Topic Revisions</span>
+            </div>
+            <div class="space-y-3" id="weakTopicsContainer">
+              <p class="text-slate-400 text-xs font-medium">Analyzing quiz reports to suggest topics...</p>
+            </div>
+          </div>
+          
+          <!-- Recent Activity Log -->
+          <div class="bg-white rounded-3xl border border-slate-200/70 p-6 shadow-sm min-h-[140px]">
+            <div class="flex items-center gap-1.5 mb-4 text-purple-600">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+              <span class="text-xs font-bold uppercase tracking-wider">Recent Activity</span>
+            </div>
+            <div class="space-y-2 overflow-y-auto chat-scroll max-h-36 text-xs text-slate-600" id="recentActivityContainer">
+              <p class="text-slate-400 text-center py-4">Loading student activities...</p>
             </div>
           </div>
         </div>
@@ -506,9 +582,14 @@
               <span class="inline-block px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-3" id="lessonSubjectTag">Science</span>
               <h1 class="text-2xl font-bold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
             </div>
-            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-650 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md active:scale-95">
-              <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> <span id="completeBtnText">Mark Complete</span>
-            </button>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="toggleBookmarkLesson()" id="bookmarkBtn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all flex items-center gap-2 shadow-md active:scale-95">
+                <i data-lucide="bookmark" class="w-4.5 h-4.5"></i> <span id="bookmarkBtnText">Bookmark</span>
+              </button>
+              <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shadow-md active:scale-95">
+                <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> <span id="completeBtnText">Mark Complete</span>
+              </button>
+            </div>
           </div>
           <p class="text-xs text-slate-400 font-medium" id="lessonInstructor">Educator: -</p>
           
@@ -861,6 +942,8 @@
             syncLessons();
             loadEducators();
             setupUserInterface();
+            checkStreak();
+            syncNotifications();
           } catch (e) {
             console.error("Error fetching user profile:", e);
             navigateTo('landing');
@@ -939,34 +1022,12 @@
     async function handleGoogleSignIn() {
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
-        let user;
-        try {
-          const result = await auth.signInWithPopup(provider);
-          user = result.user;
-        } catch (authErr) {
-          console.warn("Google Sign-In popup failed/blocked, falling back to simulated Google user:", authErr);
-          user = { uid: "simulated_google_user", displayName: "Google Student", email: "google.student@gmail.com" };
-        }
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
         
-        let profileData = null;
-        try {
-          const doc = await db.collection('users').doc(user.uid).get();
-          if (!doc.exists) {
-            profileData = {
-              uid: user.uid,
-              name: user.displayName || "Google User",
-              email: user.email,
-              role: selectedAuthRole,
-              grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
-              subjects: ['Science', 'Mathematics'],
-              progress: {}
-            };
-            await db.collection('users').doc(user.uid).set(profileData);
-          } else {
-            profileData = doc.data();
-          }
-        } catch (dbErr) {
-          console.warn("Firestore error, pulling profile from local storage simulation:", dbErr);
+        const doc = await db.collection('users').doc(user.uid).get();
+        let profileData;
+        if (!doc.exists) {
           profileData = {
             uid: user.uid,
             name: user.displayName || "Google User",
@@ -976,13 +1037,17 @@
             subjects: ['Science', 'Mathematics'],
             progress: {}
           };
+          await db.collection('users').doc(user.uid).set(profileData);
+        } else {
+          profileData = doc.data();
+          profileData.uid = user.uid;
         }
         currentUser = profileData;
         localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
         closeAuthModal();
         setupUserInterface();
       } catch (err) {
-        alert(err.message);
+        alert("Google Sign-In Error: " + err.message);
       }
     }
 
@@ -998,14 +1063,8 @@
 
       try {
         if (authMode === 'signup') {
-          let user;
-          try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-            user = userCredential.user;
-          } catch (firebaseErr) {
-            console.warn("Firebase Auth sign up failed, falling back to local simulation:", firebaseErr);
-            user = { uid: "simulated_" + Date.now(), email: email, displayName: name };
-          }
+          const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+          const user = userCredential.user;
           
           const profileData = {
             uid: user.uid,
@@ -1017,15 +1076,7 @@
             progress: {}
           };
           
-          try {
-            await db.collection('users').doc(user.uid).set(profileData);
-          } catch (dbErr) {
-            console.warn("Firestore profile save failed, using local storage:", dbErr);
-            let simulatedUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-            simulatedUsers.push(profileData);
-            localStorage.setItem('eduai_users', JSON.stringify(simulatedUsers));
-          }
-          
+          await db.collection('users').doc(user.uid).set(profileData);
           currentUser = profileData;
           localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
           closeAuthModal();
@@ -1036,42 +1087,32 @@
             setupUserInterface();
           }
         } else {
-          let user;
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+          
+          const doc = await db.collection('users').doc(user.uid).get();
           let profileData = null;
-          try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            user = userCredential.user;
-            const doc = await db.collection('users').doc(user.uid).get();
-            if (doc.exists) {
-              profileData = doc.data();
-              profileData.uid = user.uid;
-            }
-          } catch (firebaseErr) {
-            console.warn("Firebase Auth login failed, checking fallback:", firebaseErr);
-            if (email === 'student@eduai.com' && password === '123456') {
-              profileData = { uid: "demo_student", name: "Alex Johnson", role: "STUDENT", grade: "Class 10", email: email };
-            } else if (email === 'educator@eduai.com' && password === '123456') {
-              profileData = { uid: "demo_educator", name: "Dr. Sarah Jenkins", role: "EDUCATOR", grade: "Educator", email: email };
-            } else {
-              let simulatedUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-              const matched = simulatedUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
-              if (matched) {
-                profileData = matched;
-              }
-            }
-          }
-
-          if (profileData) {
-            currentUser = profileData;
-            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-            closeAuthModal();
-            setupUserInterface();
+          if (doc.exists) {
+            profileData = doc.data();
+            profileData.uid = user.uid;
           } else {
-            alert("Login failed! If using Firebase, please ensure Email/Password auth provider is enabled. Otherwise, sign up or use student@eduai.com / 123456.");
+            profileData = {
+              uid: user.uid,
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              role: selectedAuthRole,
+              grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator'
+            };
+            await db.collection('users').doc(user.uid).set(profileData);
           }
+          
+          currentUser = profileData;
+          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+          closeAuthModal();
+          setupUserInterface();
         }
       } catch (err) {
-        alert(err.message);
+        alert("Authentication Error: " + err.message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = authMode === 'signup' ? 'Sign Up' : 'Log In';
@@ -1200,6 +1241,179 @@
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = "Save Changes";
+      }
+    }
+
+    // --- PREMIUM GAMIFICATION & ACTIVITIES ENGINE ---
+    async function logStudentActivity(actionText) {
+      if (!currentUser) return;
+      try {
+        await db.collection('users').doc(currentUser.uid).collection('activities').add({
+          text: actionText,
+          timestamp: Date.now()
+        });
+        if (document.getElementById('page-student-dashboard') && !document.getElementById('page-student-dashboard').classList.contains('hidden')) {
+          renderStudentDashboard();
+        }
+      } catch (err) {
+        console.error("Error logging student activity:", err);
+      }
+    }
+
+    async function checkStreak() {
+      if (!currentUser) return;
+      const todayStr = new Date().toDateString();
+      const lastActiveStr = currentUser.lastActiveDate ? new Date(currentUser.lastActiveDate).toDateString() : '';
+
+      if (todayStr === lastActiveStr) return;
+
+      let newStreak = currentUser.streakCount || 0;
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toDateString();
+
+      if (lastActiveStr === yesterdayStr) {
+        newStreak++;
+      } else {
+        newStreak = 1;
+      }
+
+      currentUser.streakCount = newStreak;
+      currentUser.lastActiveDate = Date.now();
+
+      try {
+        await db.collection('users').doc(currentUser.uid).update({
+          streakCount: newStreak,
+          lastActiveDate: currentUser.lastActiveDate
+        });
+        addNotification("Streak Active! 🔥", `You have kept up your daily learning streak for ${newStreak} days!`);
+      } catch (err) {
+        console.error("Error updating streak count:", err);
+      }
+    }
+
+    async function toggleBookmarkLesson() {
+      if (!currentUser || !activeLessonId) return;
+      if (!currentUser.bookmarks) currentUser.bookmarks = [];
+
+      const lidStr = activeLessonId.toString();
+      const idx = currentUser.bookmarks.indexOf(lidStr);
+      let actionText = "";
+
+      if (idx !== -1) {
+        currentUser.bookmarks.splice(idx, 1);
+        actionText = "Removed lesson bookmark";
+      } else {
+        currentUser.bookmarks.push(lidStr);
+        actionText = "Bookmarked lesson";
+      }
+
+      try {
+        await db.collection('users').doc(currentUser.uid).update({
+          bookmarks: currentUser.bookmarks
+        });
+        updateBookmarkBtnState(idx === -1);
+        logStudentActivity(actionText);
+      } catch (err) {
+        console.error("Error updating bookmark states:", err);
+      }
+    }
+
+    function updateBookmarkBtnState(isBookmarked) {
+      const btn = document.getElementById('bookmarkBtn');
+      const text = document.getElementById('bookmarkBtnText');
+      if (isBookmarked) {
+        text.innerText = "Bookmarked";
+        btn.className = "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition-all flex items-center gap-2 shadow-md active:scale-95";
+      } else {
+        text.innerText = "Bookmark";
+        btn.className = "px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-305 text-xs font-semibold transition-all flex items-center gap-2 shadow-md active:scale-95";
+      }
+    }
+
+    // --- REALTIME NOTIFICATIONS SYSTEMS ---
+    function toggleNotificationsDropdown() {
+      const dropdown = document.getElementById('notificationsDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    let notificationsUnsubscribe = null;
+    function syncNotifications() {
+      if (!currentUser) return;
+      if (notificationsUnsubscribe) notificationsUnsubscribe();
+
+      notificationsUnsubscribe = db.collection('users')
+        .doc(currentUser.uid)
+        .collection('notifications')
+        .orderBy('timestamp', 'desc')
+        .limit(10)
+        .onSnapshot(snapshot => {
+          const badge = document.getElementById('notificationBadge');
+          const list = document.getElementById('notificationsListContainer');
+
+          if (snapshot.empty) {
+            badge.classList.add('hidden');
+            list.innerHTML = `<p class="text-slate-400 text-center py-6">No new notifications.</p>`;
+            return;
+          }
+
+          let unread = snapshot.docs.some(doc => !doc.data().read);
+          if (unread) {
+            badge.classList.remove('hidden');
+          } else {
+            badge.classList.add('hidden');
+          }
+
+          list.innerHTML = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return `
+              <div onclick="markNotificationRead('${doc.id}')" class="p-3 hover:bg-slate-50 cursor-pointer transition-colors ${data.read ? 'opacity-60' : 'bg-indigo-50/20 font-semibold'}">
+                <h4 class="text-slate-800 font-bold text-xs">${data.title}</h4>
+                <p class="text-slate-500 text-[10px] mt-0.5">${data.text}</p>
+              </div>
+            `;
+          }).join('');
+        }, err => {
+          console.error("Notifications sync failed:", err);
+        });
+    }
+
+    async function addNotification(title, text) {
+      if (!currentUser) return;
+      try {
+        await db.collection('users').doc(currentUser.uid).collection('notifications').add({
+          title: title,
+          text: text,
+          timestamp: Date.now(),
+          read: false
+        });
+      } catch (err) {
+        console.error("Error creating notifications:", err);
+      }
+    }
+
+    async function markNotificationRead(docId) {
+      if (!currentUser) return;
+      try {
+        await db.collection('users').doc(currentUser.uid).collection('notifications').doc(docId).update({
+          read: true
+        });
+      } catch (err) {
+        console.error("Error marking notification read:", err);
+      }
+    }
+
+    async function clearNotifications() {
+      if (!currentUser) return;
+      try {
+        const snapshot = await db.collection('users').doc(currentUser.uid).collection('notifications').get();
+        const batch = db.batch();
+        snapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        await batch.commit();
+      } catch (err) {
+        console.error("Error clearing notifications:", err);
       }
     }
 
@@ -1489,6 +1703,131 @@
       const completedCount = lessons.filter(l => l.completed).length;
       const rate = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
       document.getElementById('completionRateText').innerText = `${rate}%`;
+      document.getElementById('userStreakText').innerText = `${currentUser.streakCount || 0} Days`;
+
+      // Continue Learning rendering
+      let lastActiveLesson = null;
+      if (currentUser.progress) {
+        Object.keys(currentUser.progress).forEach(lid => {
+          const prog = currentUser.progress[lid];
+          if (prog && prog.position > 0 && !prog.completed) {
+            const les = lessons.find(l => l.id.toString() === lid.toString());
+            if (les) lastActiveLesson = les;
+          }
+        });
+      }
+
+      const continueTitle = document.getElementById('continueLessonTitle');
+      const continueInst = document.getElementById('continueLessonInstructor');
+      const continueBar = document.getElementById('continueLessonProgress');
+      const resumeBtn = document.getElementById('resumeLessonBtn');
+
+      if (lastActiveLesson) {
+        const prog = currentUser.progress[lastActiveLesson.id];
+        continueTitle.innerText = lastActiveLesson.title;
+        continueInst.innerText = `Educator: ${lastActiveLesson.instructor} • ${lastActiveLesson.grade}`;
+        continueBar.style.width = `${prog.percentage}%`;
+        resumeBtn.disabled = false;
+        resumeBtn.className = "px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition-all shrink-0 cursor-pointer active:scale-95 shadow-sm";
+        resumeBtn.onclick = () => openLesson(lastActiveLesson.id);
+      } else {
+        continueTitle.innerText = "No lessons in progress";
+        continueInst.innerText = "Pick a lesson below to start study tracking";
+        continueBar.style.width = "0%";
+        resumeBtn.disabled = true;
+        resumeBtn.className = "px-4 py-2 bg-slate-200 text-slate-400 font-bold rounded-xl text-xs transition-all shrink-0 cursor-not-allowed";
+      }
+
+      // Bookmarks rendering
+      const bookmarksList = document.getElementById('bookmarkedLessonsList');
+      if (currentUser.bookmarks && currentUser.bookmarks.length > 0) {
+        let bHtml = "";
+        currentUser.bookmarks.forEach(lid => {
+          const les = lessons.find(l => l.id.toString() === lid.toString());
+          if (les) {
+            bHtml += `
+              <div onclick="openLesson('${les.id}')" class="p-2 border border-slate-100 hover:border-indigo-100 hover:bg-slate-50/50 rounded-xl cursor-pointer transition-all flex items-center justify-between">
+                <span class="truncate font-semibold text-slate-700 max-w-[180px]">${les.title}</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+              </div>
+            `;
+          }
+        });
+        bookmarksList.innerHTML = bHtml || `<p class="text-slate-400 text-center py-4">No bookmarks saved.</p>`;
+      } else {
+        bookmarksList.innerHTML = `<p class="text-slate-400 text-center py-4">No bookmarks saved.</p>`;
+      }
+
+      // Weak Topics analysis from quiz logs
+      db.collection('quiz_attempts').where('uid', '==', currentUser.uid).get().then(snapshot => {
+        const container = document.getElementById('weakTopicsContainer');
+        let topicScores = {};
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const scorePct = Math.round((data.score / data.totalQuestions) * 100);
+          const lesson = lessons.find(l => l.id.toString() === data.lessonId.toString());
+          if (lesson) {
+            const topic = lesson.subject || "General";
+            if (!topicScores[topic]) topicScores[topic] = [];
+            topicScores[topic].push(scorePct);
+          }
+        });
+
+        let weakTopics = [];
+        Object.keys(topicScores).forEach(topic => {
+          const scores = topicScores[topic];
+          const average = scores.reduce((a,b)=>a+b, 0) / scores.length;
+          if (average < 70) {
+            weakTopics.push({ topic, average: Math.round(average) });
+          }
+        });
+
+        if (weakTopics.length === 0) {
+          container.innerHTML = `
+            <div class="flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-100 text-xs">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+              <p class="font-semibold">All subjects averages are above 70%!</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = weakTopics.map(wt => `
+            <div class="flex items-center justify-between p-3 rounded-2xl bg-amber-50 text-amber-900 border border-amber-100 text-xs">
+              <div>
+                <h4 class="font-extrabold">${wt.topic} Revision</h4>
+                <p class="text-[10px] text-amber-700 font-medium">Average score: ${wt.average}% • Review lessons & clear doubts</p>
+              </div>
+              <i data-lucide="alert-triangle" class="w-4.5 h-4.5 text-amber-600"></i>
+            </div>
+          `).join('');
+        }
+        lucide.createIcons();
+      }).catch(err => {
+        console.error("Error analyzing weak topics:", err);
+      });
+
+      // Recent Activity Log from Firestore
+      db.collection('users').doc(currentUser.uid).collection('activities').orderBy('timestamp', 'desc').limit(5).get().then(snapshot => {
+        const container = document.getElementById('recentActivityContainer');
+        if (snapshot.empty) {
+          container.innerHTML = `<p class="text-slate-400 text-center py-4">No activity logged.</p>`;
+        } else {
+          container.innerHTML = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const timeString = new Date(data.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' + new Date(data.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return `
+              <div class="flex items-start gap-2.5 p-1 rounded-xl">
+                <div class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0 animate-pulse"></div>
+                <div>
+                  <p class="font-semibold text-slate-700">${data.text}</p>
+                  <span class="text-[9px] text-slate-400 font-bold block mt-0.5">${timeString}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }).catch(err => {
+        console.error("Error loading activities:", err);
+      });
 
       if (filtered.length === 0) {
         pathContainer.innerHTML = `
@@ -1711,16 +2050,18 @@
 
         // Save quiz attempt in Firestore
         if (currentUser) {
+          const lTitle = lesson ? lesson.title : "Lesson";
           db.collection('quiz_attempts').add({
             uid: currentUser.uid,
             userName: currentUser.name,
             lessonId: activeLessonId,
-            lessonTitle: lesson ? lesson.title : "Lesson",
+            lessonTitle: lTitle,
             score: currentQuizScore,
             totalQuestions: questionsList.length,
             date: Date.now()
           }).then(() => {
-            console.log("Quiz attempt logged successfully");
+            logStudentActivity(`Scored ${currentQuizScore}/${questionsList.length} in Quiz: ${lTitle}`);
+            addNotification("Quiz Finished! 📝", `You scored ${currentQuizScore}/${questionsList.length} on lesson: ${lTitle}`);
           }).catch(err => {
             console.error("Error saving quiz attempt:", err);
           });
@@ -1801,6 +2142,11 @@
       
       const isCompleted = currentUser && currentUser.progress && currentUser.progress[activeLessonId] && currentUser.progress[activeLessonId].completed;
       updateCompleteBtnState(isCompleted);
+
+      const isBookmarked = currentUser && currentUser.bookmarks && currentUser.bookmarks.includes(activeLessonId.toString());
+      updateBookmarkBtnState(isBookmarked);
+
+      logStudentActivity(`Started studying: ${lesson.title}`);
       
       // Load AI Chat history from Firestore
       loadAiChats(activeLessonId);
@@ -1837,6 +2183,11 @@
           progress: currentUser.progress
         });
         updateCompleteBtnState(newStatus);
+        
+        const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
+        const title = lesson ? lesson.title : "Lesson";
+        logStudentActivity(newStatus ? `Completed lesson: ${title}` : `Marked lesson incomplete: ${title}`);
+        addNotification(newStatus ? "Lesson Completed! 🎉" : "Lesson Milestone Updated", newStatus ? `You finished watching all content in ${title}!` : `You marked ${title} as incomplete.`);
       } catch (err) {
         console.error("Error toggling completion:", err);
       }
