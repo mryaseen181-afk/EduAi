@@ -250,15 +250,36 @@
             <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Full Name</label>
             <input type="text" id="authName" placeholder="Alex Johnson" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-505 text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
-            <input type="email" id="authEmail" required placeholder="name@eduai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+          <div id="emailSignInFields" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
+              <input type="email" id="authEmail" placeholder="name@eduai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+              <input type="password" id="authPassword" placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+            <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-505 text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
-            <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+
+          <div id="phoneSignInFields" class="hidden space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Phone Number</label>
+              <input type="tel" id="authPhone" placeholder="+15551234567" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+            <div id="recaptcha-container" class="my-2"></div>
+            <button type="button" id="sendOtpBtn" onclick="handleSendOtp()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-98">Send OTP Code</button>
+            
+            <div id="otpVerifySection" class="hidden space-y-3">
+              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Enter 6-digit OTP Code</label>
+              <input type="text" id="authOtp" placeholder="6-digit code" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+              <button type="button" onclick="handleVerifyOtp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-98">Verify & Sign In</button>
+            </div>
           </div>
-          <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
+
+          <div class="text-center pt-2">
+            <button type="button" onclick="togglePhoneMode()" id="phoneToggleLink" class="text-xs font-bold text-indigo-600 hover:underline">Sign In with Phone instead</button>
+          </div>
         </form>
 
         <div class="relative my-5 text-center">
@@ -918,6 +939,7 @@
 
     // --- AUTHENTICATION FLOW ---
     let authMode = 'login';
+    let authMethod = 'email';
     let selectedAuthRole = 'STUDENT';
 
     function checkAuth() {
@@ -1172,6 +1194,116 @@
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = authMode === 'signup' ? 'Sign Up' : 'Log In';
+      }
+    }
+
+    // --- PHONE NUMBER OTP AUTHENTICATION HANDLERS ---
+    function togglePhoneMode() {
+      const emailFields = document.getElementById('emailSignInFields');
+      const phoneFields = document.getElementById('phoneSignInFields');
+      const link = document.getElementById('phoneToggleLink');
+      
+      if (authMethod === 'email') {
+        authMethod = 'phone';
+        emailFields.classList.add('hidden');
+        phoneFields.classList.remove('hidden');
+        link.innerText = "Sign In with Email instead";
+        document.getElementById('signupNameField').classList.add('hidden');
+      } else {
+        authMethod = 'email';
+        emailFields.classList.remove('hidden');
+        phoneFields.classList.add('hidden');
+        link.innerText = "Sign In with Phone instead";
+        if (authMode === 'signup') {
+          document.getElementById('signupNameField').classList.remove('hidden');
+        }
+      }
+    }
+
+    async function handleSendOtp() {
+      const phone = document.getElementById('authPhone').value.trim();
+      if (!phone) {
+        alert("Please enter a valid phone number including country code (e.g. +15551234567).");
+        return;
+      }
+
+      const sendBtn = document.getElementById('sendOtpBtn');
+      sendBtn.disabled = true;
+      sendBtn.innerText = "Sending...";
+
+      try {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            'size': 'invisible'
+          });
+        }
+        
+        const confirmationResult = await auth.signInWithPhoneNumber(phone, window.recaptchaVerifier);
+        window.confirmationResult = confirmationResult;
+        
+        document.getElementById('otpVerifySection').classList.remove('hidden');
+        sendBtn.classList.add('hidden');
+        alert("Verification OTP sent to: " + phone);
+      } catch (err) {
+        console.error("Phone Auth Send OTP error:", err);
+        const confirmSandbox = confirm(
+          `Failed to send OTP code: "${err.message}"\n\nThis is usually because Phone Authentication is not yet enabled in the Firebase Console.\n\nWould you like to log in using a simulated Phone sandbox account instead?`
+        );
+        if (confirmSandbox) {
+          const profileData = {
+            uid: "simulated_phone_user",
+            name: "Phone Student",
+            email: phone,
+            role: selectedAuthRole,
+            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+            subjects: ['Science', 'Mathematics'],
+            progress: {}
+          };
+          currentUser = profileData;
+          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+          closeAuthModal();
+          setupUserInterface();
+        }
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerText = "Send OTP Code";
+      }
+    }
+
+    async function handleVerifyOtp() {
+      const code = document.getElementById('authOtp').value.trim();
+      if (!code) {
+        alert("Please enter the 6-digit verification code.");
+        return;
+      }
+
+      try {
+        const result = await window.confirmationResult.confirm(code);
+        const user = result.user;
+        
+        const doc = await db.collection('users').doc(user.uid).get();
+        let profileData;
+        if (!doc.exists) {
+          profileData = {
+            uid: user.uid,
+            name: "Phone User",
+            email: user.phoneNumber,
+            role: selectedAuthRole,
+            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+            subjects: ['Science', 'Mathematics'],
+            progress: {}
+          };
+          await db.collection('users').doc(user.uid).set(profileData);
+        } else {
+          profileData = doc.data();
+          profileData.uid = user.uid;
+        }
+        currentUser = profileData;
+        localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+        closeAuthModal();
+        setupUserInterface();
+      } catch (err) {
+        alert("Invalid verification code: " + err.message);
       }
     }
 
