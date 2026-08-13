@@ -6,6 +6,11 @@
   <title>EduAI Pro - Next-Gen Interactive Learning Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase Compatibility SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
     
@@ -113,6 +118,97 @@
       <!-- Brand badges -->
       <div class="bg-slate-50 border-y border-slate-100 py-8 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">
         Inspired by top learning systems around the globe
+      </div>
+
+      <!-- Feature Section -->
+      <div class="max-w-6xl mx-auto px-4 py-20 space-y-16">
+        <div class="text-center space-y-3">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Everything You Need to Excel</h2>
+          <p class="text-slate-500 text-sm max-w-lg mx-auto">Explore features designed to make learning personalized, engaging, and highly effective.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">AI Doubt Solver</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Ask any academic question and get instant, age-appropriate, step-by-step explanations and real analogies.</p>
+          </div>
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center"><i data-lucide="map" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">Personalized Roadmap</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Interactive chapters mapped from Class 1-12 matching real school syllabi to keep you aligned with school.</p>
+          </div>
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center"><i data-lucide="list-checks" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">Interactive Quizzes</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Take real multiple-choice tests generated dynamically from lectures to evaluate your score reports.</p>
+          </div>
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center"><i data-lucide="video" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">Video Lessons</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">High-fidelity video player controls featuring resume-playback trackers and searchable transcripts.</p>
+          </div>
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center"><i data-lucide="users" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">Teacher Support</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Initiate real-time secure direct chat rooms with educators to get dedicated guidance.</p>
+          </div>
+          <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+            <h3 class="font-bold text-lg text-slate-900">Progress Tracking</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">Save watched positions, check syllabus progress bars, and track metrics on your dashboard.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- How EduAI Works -->
+      <div class="bg-slate-50 border-y border-slate-100 py-20">
+        <div class="max-w-6xl mx-auto px-4 space-y-12">
+          <div class="text-center space-y-3">
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">How EduAI Works</h2>
+            <p class="text-slate-500 text-sm font-medium">Follow a simple structured pathway to master your classes.</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">1</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Choose Class</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">Select from Class 1 to 12.</p>
+            </div>
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">2</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Select Subjects</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">Choose matching subjects.</p>
+            </div>
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">3</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Learn</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">Watch dynamic video lectures.</p>
+            </div>
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">4</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Ask Doubts</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">Clear doubts with AI.</p>
+            </div>
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">5</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Take Quizzes</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">Test lesson scores.</p>
+            </div>
+            <div class="space-y-3">
+              <div class="w-12 h-12 bg-white text-indigo-600 rounded-full flex items-center justify-center mx-auto shadow-sm font-bold text-sm border border-slate-100">6</div>
+              <h4 class="font-extrabold text-sm text-slate-800">Track Progress</h4>
+              <p class="text-slate-400 text-[10px] leading-relaxed">See dashboard reports.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="max-w-4xl mx-auto px-4 py-20 text-center space-y-6">
+        <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Start Learning with AI Today</h2>
+        <p class="text-slate-500 text-base max-w-lg mx-auto">Join the next-generation personalized study framework free. Optimize your exam marks.</p>
+        <button onclick="showAuthModal('signup')" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 transition-all hover:scale-105 active:scale-95 text-base mx-auto">
+          Create Free Account
+        </button>
       </div>
     </section>
 
@@ -227,7 +323,7 @@
         <!-- Welcome card -->
         <div class="bg-gradient-to-r from-indigo-900 via-indigo-950 to-violet-950 rounded-3xl p-6 lg:p-8 text-white shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden animate-fade-in">
           <div class="absolute right-0 top-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl translate-x-20 -translate-y-10"></div>
-          <div class="relative z-10">
+          <div class="relative z-10" id="studentDashWelcomeHeader">
             <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/20 px-3 py-1 rounded-full">Interactive Student Portal</span>
             <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5 mt-3">Ready to study, <span id="studentDashName">Alex</span>? ⚡</h1>
             <p class="text-slate-300 text-sm font-medium"><span id="studentDashGrade">Class 10</span> • Structured Learning Roadmap</p>
@@ -627,81 +723,62 @@
 
   </main>
 
-  <!-- JAVASCRIPT APP LOGIC -->
-  <script>
+  <!-- JAVASCRIPT APP    // --- FIREBASE CONFIGURATION ---
+    const firebaseConfig = {
+      projectId: "eduwithai-214ee",
+      appId: "1:1023020324549:web:89f21fd89037a0622402ac",
+      storageBucket: "eduwithai-214ee.firebasestorage.app",
+      apiKey: "AIzaSyDfGR0ZH57K1p5cg9GewoCBVbCwDswtWaY",
+      authDomain: "eduwithai-214ee.firebaseapp.com",
+      messagingSenderId: "1023020324549",
+      measurementId: "G-LMZ3WR0JB2"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+
     // --- DATABASE & APP STATE ---
     let currentUser = null;
     let activeLessonId = null;
     let tempUploadedVideoUrl = null;
     let activeRightPanelTab = 'doubt';
+    let activeTeacherId = null;
     
+    let chatHistories = {};
     let teacherChatHistories = {};
-
-    // Empty array to support ONLY real video uploads
-    let defaultLessons = [];
-
-    // Dynamically populated quizzes on upload
     let WAVE_QUIZZES = {};
+    let lessons = [];
+    let educatorsList = [];
 
     let currentQuizIndex = 0;
     let currentQuizScore = 0;
     let selectedOptionIndex = null;
 
-    let lessons = [];
-    let chatHistories = {};
-
     // --- INITIALIZATION ---
     window.onload = () => {
-      initDatabase();
       checkAuth();
       lucide.createIcons();
     };
 
-    function initDatabase() {
-      const storedLessons = localStorage.getItem('eduai_lessons');
-      if (storedLessons) {
-        lessons = JSON.parse(storedLessons);
-      } else {
-        lessons = defaultLessons;
-        saveLessons();
-      }
-
-      const storedChats = localStorage.getItem('eduai_chats');
-      if (storedChats) {
-        chatHistories = JSON.parse(storedChats);
-      } else {
-        chatHistories = {};
-        saveChats();
-      }
-
-      const storedTeacherChats = localStorage.getItem('eduai_teacher_chats');
-      if (storedTeacherChats) {
-        teacherChatHistories = JSON.parse(storedTeacherChats);
-      }
-
-      // Load dynamic quizzes from storage or init
-      const storedQuizzes = localStorage.getItem('eduai_quizzes');
-      if (storedQuizzes) {
-        WAVE_QUIZZES = JSON.parse(storedQuizzes);
-      } else {
-        WAVE_QUIZZES = {};
-      }
-    }
-
-    function saveLessons() {
-      localStorage.setItem('eduai_lessons', JSON.stringify(lessons));
-    }
-
-    function saveChats() {
-      localStorage.setItem('eduai_chats', JSON.stringify(chatHistories));
-    }
-
-    function saveTeacherChats() {
-      localStorage.setItem('eduai_teacher_chats', JSON.stringify(teacherChatHistories));
-    }
-
-    function saveQuizzes() {
-      localStorage.setItem('eduai_quizzes', JSON.stringify(WAVE_QUIZZES));
+    let lessonsUnsubscribe = null;
+    function syncLessons() {
+      if (lessonsUnsubscribe) lessonsUnsubscribe();
+      lessonsUnsubscribe = db.collection('lessons').onSnapshot(snapshot => {
+        lessons = [];
+        snapshot.forEach(doc => {
+          lessons.push({ id: doc.id, ...doc.data() });
+        });
+        if (currentUser && currentUser.role === 'STUDENT') {
+          renderStudentDashboard();
+        } else if (currentUser && currentUser.role === 'EDUCATOR') {
+          renderEducatorDashboard();
+        }
+      }, err => {
+        console.error("Error syncing lessons:", err);
+      });
     }
 
     // --- AUTHENTICATION FLOW ---
@@ -709,12 +786,50 @@
     let selectedAuthRole = 'STUDENT';
 
     function checkAuth() {
-      const storedUser = localStorage.getItem('eduai_current_user');
-      if (storedUser) {
-        currentUser = JSON.parse(storedUser);
-        setupUserInterface();
-      } else {
-        navigateTo('landing');
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          try {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists) {
+              currentUser = userDoc.data();
+              currentUser.uid = user.uid;
+            } else {
+              currentUser = {
+                uid: user.uid,
+                name: user.displayName || user.email.split('@')[0],
+                email: user.email,
+                role: 'STUDENT',
+                grade: 'Class 10',
+                subjects: ['Science', 'Mathematics']
+              };
+              await db.collection('users').doc(user.uid).set(currentUser);
+            }
+            syncLessons();
+            loadEducators();
+            setupUserInterface();
+          } catch (e) {
+            console.error("Error fetching user profile:", e);
+            navigateTo('landing');
+          }
+        } else {
+          currentUser = null;
+          navigateTo('landing');
+        }
+      });
+    }
+
+    async function loadEducators() {
+      try {
+        const snapshot = await db.collection('users').where('role', '==', 'EDUCATOR').get();
+        educatorsList = [];
+        snapshot.forEach(doc => {
+          educatorsList.push(doc.data());
+        });
+        if (document.getElementById('page-student-teachers') && !document.getElementById('page-student-teachers').classList.contains('hidden')) {
+          renderTeachersTab();
+        }
+      } catch (err) {
+        console.error("Error loading educators:", err);
       }
     }
 
@@ -759,113 +874,110 @@
       const educatorBtn = document.getElementById('authSelectEducator');
 
       if (role === 'STUDENT') {
-        studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-550 hover:text-slate-900";
+        studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
       } else {
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
-        studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-555 hover:text-slate-900";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
+        studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
       }
     }
 
-    function handleGoogleSignIn() {
-      const gName = "Google Student";
-      const gEmail = "google.student@gmail.com";
-      
-      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-      let matched = registeredUsers.find(u => u.email === gEmail);
-      
-      if (!matched) {
-        matched = {
-          name: gName,
-          email: gEmail,
-          password: 'google-oauth-token',
-          role: selectedAuthRole,
-          grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator'
-        };
-        registeredUsers.push(matched);
-        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+    async function handleGoogleSignIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        const doc = await db.collection('users').doc(user.uid).get();
+        if (!doc.exists) {
+          const profileData = {
+            uid: user.uid,
+            name: user.displayName || "Google User",
+            email: user.email,
+            role: selectedAuthRole,
+            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+            subjects: ['Science', 'Mathematics'],
+            progress: {}
+          };
+          await db.collection('users').doc(user.uid).set(profileData);
+          currentUser = profileData;
+        } else {
+          currentUser = doc.data();
+        }
+        closeAuthModal();
+        setupUserInterface();
+      } catch (err) {
+        alert(err.message);
       }
-
-      currentUser = matched;
-      localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-      closeAuthModal();
-      setupUserInterface();
     }
 
-    function handleAuthSubmit(e) {
+    async function handleAuthSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('authEmail').value.trim();
       const password = document.getElementById('authPassword').value;
       const name = document.getElementById('authName').value.trim();
 
-      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+      const submitBtn = document.getElementById('authSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = authMode === 'signup' ? 'Signing Up...' : 'Logging In...';
 
-      if (authMode === 'signup') {
-        if (registeredUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-          alert("An account with this email already exists!");
-          return;
-        }
-
-        const newUser = {
-          name: name || 'User',
-          email: email,
-          password: password,
-          role: selectedAuthRole,
-          grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator'
-        };
-
-        registeredUsers.push(newUser);
-        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
-
-        currentUser = newUser;
-        localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-        closeAuthModal();
-
-        if (currentUser.role === 'STUDENT') {
-          navigateTo('student-setup');
+      try {
+        if (authMode === 'signup') {
+          const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+          
+          const profileData = {
+            uid: user.uid,
+            name: name || 'Student',
+            email: email,
+            role: selectedAuthRole,
+            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+            subjects: ['Science', 'Mathematics'],
+            progress: {}
+          };
+          
+          await db.collection('users').doc(user.uid).set(profileData);
+          currentUser = profileData;
+          closeAuthModal();
+          
+          if (currentUser.role === 'STUDENT') {
+            navigateTo('student-setup');
+          } else {
+            setupUserInterface();
+          }
         } else {
-          setupUserInterface();
-        }
-      } else {
-        const matchedUser = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-        
-        if (matchedUser) {
-          currentUser = matchedUser;
-          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+          
+          const doc = await db.collection('users').doc(user.uid).get();
+          if (doc.exists) {
+            currentUser = doc.data();
+          } else {
+            currentUser = {
+              uid: user.uid,
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              role: selectedAuthRole,
+              grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator'
+            };
+          }
           closeAuthModal();
           setupUserInterface();
-        } else {
-          if (email === 'student@eduai.com' && password === '123456') {
-            currentUser = { name: "Alex Johnson", role: "STUDENT", grade: "Class 10", email: email };
-            
-            if (!registeredUsers.some(u => u.email === email)) {
-              registeredUsers.push(currentUser);
-              localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
-            }
-
-            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-            closeAuthModal();
-            setupUserInterface();
-          } else if (email === 'educator@eduai.com' && password === '123456') {
-            currentUser = { name: "Dr. Sarah Jenkins", role: "EDUCATOR", grade: "Educator", email: email };
-            
-            if (!registeredUsers.some(u => u.email === email)) {
-              registeredUsers.push(currentUser);
-              localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
-            }
-
-            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-            closeAuthModal();
-            setupUserInterface();
-          } else {
-            alert("Invalid email or password! Tip: signup first, or log in with student@eduai.com / password '123456'.");
-          }
         }
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = authMode === 'signup' ? 'Sign Up' : 'Log In';
       }
     }
 
-    function logout() {
-      localStorage.removeItem('eduai_current_user');
+    async function logout() {
+      try {
+        await auth.signOut();
+      } catch (e) {
+        console.error("Sign out failed:", e);
+      }
       currentUser = null;
       document.getElementById('authNavButtons').classList.remove('hidden');
       document.getElementById('userProfileNav').classList.add('hidden');
@@ -919,44 +1031,35 @@
       const educatorBtn = document.getElementById('roleBtnEducator');
 
       if (currentUser.role === 'STUDENT') {
-        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 text-indigo-600 shadow-sm";
-        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-500 hover:text-slate-900";
       } else {
-        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 text-indigo-600 shadow-sm";
-        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-555 hover:text-slate-900";
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-500 hover:text-slate-900";
       }
     }
 
-    function switchRole(role) {
+    async function switchRole(role) {
       if (!currentUser) return;
       currentUser.role = role;
-      
-      localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-      
-      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-      const userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-      if (userIndex !== -1) {
-        registeredUsers[userIndex].role = role;
-        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+      try {
+        await db.collection('users').doc(currentUser.uid).update({ role: role });
+        setupUserInterface();
+      } catch (err) {
+        console.error("Error switching role:", err);
       }
-
-      setupUserInterface();
     }
 
-    function finishSetup() {
+    async function finishSetup() {
       if (!currentUser) return;
       currentUser.grade = document.getElementById('setupGrade').value;
-      
-      localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-      const userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-      if (userIndex !== -1) {
-        registeredUsers[userIndex].grade = currentUser.grade;
-        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+      try {
+        await db.collection('users').doc(currentUser.uid).update({ grade: currentUser.grade });
+        document.getElementById('filterClassDropdown').value = currentUser.grade;
+        navigateTo('student-dashboard');
+      } catch (err) {
+        console.error("Error updating setup grade:", err);
       }
-
-      document.getElementById('filterClassDropdown').value = currentUser.grade;
-      navigateTo('student-dashboard');
     }
 
     // --- NAVIGATION LOGIC ---
@@ -972,13 +1075,16 @@
 
       document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
         ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-650 transition-all flex items-center gap-1.5";
+        : "px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5";
       document.getElementById('navTabTeachers').className = pageId === 'student-teachers' 
         ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-650 transition-all flex items-center gap-1.5";
+        : "px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5";
 
       if (pageId === 'student-dashboard') renderStudentDashboard();
-      if (pageId === 'student-teachers') renderTeachersTab();
+      if (pageId === 'student-teachers') {
+        loadEducators();
+        renderTeachersTab();
+      }
       if (pageId === 'educator-dashboard') renderEducatorDashboard();
       if (pageId === 'video-learning') renderVideoPage();
       
@@ -986,27 +1092,19 @@
     }
 
     // --- TEACHERS DIRECT CHAT TAB LOGIC ---
-    function getRegisteredEducators() {
-      const registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-      return registeredUsers.filter(u => u.role === 'EDUCATOR');
-    }
-
     function renderTeachersTab() {
       const container = document.getElementById('teachersListContainer');
-      const realEducators = getRegisteredEducators();
-
-      if (realEducators.length === 0) {
+      if (educatorsList.length === 0) {
         container.innerHTML = `
           <div class="text-center py-8 text-slate-400">
             <p class="text-xs">No educators registered yet.</p>
-            <p class="text-[10px] mt-1">Tip: Register an Educator account first or log in with educator@eduai.com!</p>
           </div>
         `;
         renderTeacherChatBox();
         return;
       }
 
-      container.innerHTML = realEducators.map(t => {
+      container.innerHTML = educatorsList.map(t => {
         const isSelected = activeTeacherId === t.email;
         const initials = t.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase();
         return `
@@ -1015,7 +1113,7 @@
               ? 'bg-indigo-50/60 border-indigo-200' 
               : 'border-slate-100 hover:bg-slate-50 bg-white'
           } flex items-center gap-3">
-            <div class="w-10 h-10 bg-indigo-100 text-indigo-605 rounded-xl flex items-center justify-center font-bold shrink-0">${initials}</div>
+            <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold shrink-0">${initials}</div>
             <div class="overflow-hidden">
               <h4 class="font-extrabold text-sm text-slate-800">${t.name}</h4>
               <p class="text-[11px] text-slate-500 font-medium truncate">Faculty Advisor</p>
@@ -1030,6 +1128,50 @@
     function selectActiveTeacher(teacherEmail) {
       activeTeacherId = teacherEmail;
       renderTeachersTab();
+      syncTeacherChat(teacherEmail);
+    }
+
+    let teacherChatUnsubscribe = null;
+    function syncTeacherChat(teacherEmail) {
+      if (!currentUser) return;
+      if (teacherChatUnsubscribe) teacherChatUnsubscribe();
+      
+      const chatId = `${currentUser.uid}_${teacherEmail.replace(/[^a-zA-Z0-9]/g, '_')}`;
+      const chatDocRef = db.collection('teacher_chats').doc(chatId);
+
+      teacherChatUnsubscribe = chatDocRef.onSnapshot(doc => {
+        const msgArea = document.getElementById('teacherChatMessages');
+        if (doc.exists) {
+          const data = doc.data();
+          const history = data.messages || [];
+          msgArea.innerHTML = history.map(msg => {
+            const isUser = msg.senderId === currentUser.uid;
+            const timeString = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+            return `
+              <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
+                <div class="max-w-[80%] rounded-2xl px-4 py-2.5 ${
+                  isUser 
+                    ? 'bg-indigo-600 text-white rounded-tr-none shadow-sm' 
+                    : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200/50'
+                }">
+                  <p class="text-sm font-medium leading-relaxed">${msg.text}</p>
+                  <span class="text-[9px] block text-right mt-1 opacity-70">${timeString}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          msgArea.innerHTML = `
+            <div class="text-center text-slate-400 my-auto py-16">
+              <p class="text-xs">Send your first message to request advice from your faculty advisor!</p>
+            </div>
+          `;
+        }
+        msgArea.scrollTop = msgArea.scrollHeight;
+        lucide.createIcons();
+      }, err => {
+        console.error("Error syncing teacher chats:", err);
+      });
     }
 
     function renderTeacherChatBox() {
@@ -1047,8 +1189,7 @@
         return;
       }
 
-      const realEducators = getRegisteredEducators();
-      const teacher = realEducators.find(t => t.email === activeTeacherId);
+      const teacher = educatorsList.find(t => t.email === activeTeacherId);
       if (!teacher) {
         activeTeacherId = null;
         renderTeacherChatBox();
@@ -1058,66 +1199,71 @@
       document.getElementById('activeTeacherName').innerText = teacher.name;
       const initials = teacher.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase();
       document.getElementById('activeTeacherAvatar').innerText = initials;
-
-      if (!teacherChatHistories[activeTeacherId]) {
-        teacherChatHistories[activeTeacherId] = [{ sender: 'teacher', text: `Hello! I'm ${teacher.name}. As your faculty advisor, feel free to ask me any question or clear your doubts regarding the lessons!` }];
-        saveTeacherChats();
-      }
-
-      const history = teacherChatHistories[activeTeacherId] || [];
-      msgArea.innerHTML = history.map(msg => {
-        const isUser = msg.sender === 'user';
-        return `
-          <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
-            <div class="max-w-[80%] rounded-2xl px-4 py-2.5 ${
-              isUser 
-                ? 'bg-indigo-600 text-white rounded-tr-none shadow-sm' 
-                : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200/50'
-            }">
-              <p class="text-sm font-medium leading-relaxed">${msg.text}</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      msgArea.scrollTop = msgArea.scrollHeight;
-      lucide.createIcons();
     }
 
-    function sendTeacherChatMessage(e) {
+    async function sendTeacherChatMessage(e) {
       e.preventDefault();
-      if (!activeTeacherId) return;
+      if (!activeTeacherId || !currentUser) return;
 
       const input = document.getElementById('teacherChatInput');
       const text = input.value.trim();
       if (!text) return;
 
-      if (!teacherChatHistories[activeTeacherId]) teacherChatHistories[activeTeacherId] = [];
-      
-      teacherChatHistories[activeTeacherId].push({ sender: 'user', text: text });
-      input.value = '';
-      renderTeacherChatBox();
-      saveTeacherChats();
+      const chatId = `${currentUser.uid}_${activeTeacherId.replace(/[^a-zA-Z0-9]/g, '_')}`;
+      const chatDocRef = db.collection('teacher_chats').doc(chatId);
 
-      setTimeout(() => {
-        const realEducators = getRegisteredEducators();
-        const teacher = realEducators.find(t => t.email === activeTeacherId);
-        if (!teacher) return;
+      const newMessage = {
+        senderId: currentUser.uid,
+        senderName: currentUser.name,
+        text: text,
+        timestamp: Date.now()
+      };
 
-        let teacherReply = `I received your message! As your instructor, I recommend reviewing the latest lesson files and transcripts published in your dashboard. Let me know if you run into any trouble.`;
-        
-        teacherChatHistories[activeTeacherId].push({ sender: 'teacher', text: teacherReply });
-        renderTeacherChatBox();
-        saveTeacherChats();
-      }, 1200);
+      try {
+        const doc = await chatDocRef.get();
+        if (doc.exists) {
+          await chatDocRef.update({
+            messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
+          });
+        } else {
+          const teacher = educatorsList.find(t => t.email === activeTeacherId);
+          await chatDocRef.set({
+            studentId: currentUser.uid,
+            studentName: currentUser.name,
+            teacherEmail: activeTeacherId,
+            teacherName: teacher ? teacher.name : "Teacher",
+            messages: [newMessage]
+          });
+        }
+        input.value = '';
+      } catch (err) {
+        console.error("Error sending teacher message:", err);
+      }
     }
 
     // --- STUDENT DASHBOARD RENDERING ---
     function renderStudentDashboard() {
       if (!currentUser) return;
 
-      document.getElementById('studentDashName').innerText = currentUser.name;
-      document.getElementById('studentDashGrade').innerText = currentUser.grade;
+      const userName = currentUser.name || 'Student';
+      const userGrade = currentUser.grade || 'Not Set';
+      
+      const welcomeHeader = document.getElementById('studentDashWelcomeHeader');
+      if (welcomeHeader) {
+        if (userGrade === 'Not Set') {
+          welcomeHeader.innerHTML = `
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-405 bg-indigo-500/20 px-3 py-1 rounded-full">Interactive Student Portal</span>
+            <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5 mt-3">Welcome to EduAI 👋</h1>
+            <p class="text-slate-300 text-sm font-medium">Complete your profile to personalize your learning roadmap.</p>
+          `;
+        } else {
+          welcomeHeader.innerHTML = `
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-405 bg-indigo-500/20 px-3 py-1 rounded-full">Interactive Student Portal</span>
+            <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5 mt-3">Ready to study, <span id="studentDashName">${userName}</span>? ⚡</h1>
+            <p class="text-slate-300 text-sm font-medium"><span id="studentDashGrade">${userGrade}</span> • Structured Syllabus Pathway</p>
+          `;
+        }
+      }
 
       const pathContainer = document.getElementById('syllabusPathContainer');
       const filterClass = document.getElementById('filterClassDropdown').value;
@@ -1335,11 +1481,9 @@
       nextBtn.disabled = false;
       nextBtn.className = "w-full py-3 bg-indigo-600 hover:bg-indigo-705 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95";
 
-      lucide.createIcons();
-    }
-
-    function nextWAVEQuestion() {
-      const questionsList = WAVE_QUIZZES[activeLessonId];
+      lucide.    function nextWAVEQuestion() {
+      const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
+      const questionsList = lesson ? lesson.quiz : [];
       if (currentQuizIndex < questionsList.length - 1) {
         currentQuizIndex++;
         loadWAVEQuestion();
@@ -1351,9 +1495,62 @@
         document.getElementById('quizResultScore').innerText = `${currentQuizScore} / ${questionsList.length}`;
         const percent = Math.round((currentQuizScore / questionsList.length) * 100);
         document.getElementById('quizResultPercent').innerText = `${percent}%`;
+
+        // Save quiz attempt in Firestore
+        if (currentUser) {
+          db.collection('quiz_attempts').add({
+            uid: currentUser.uid,
+            userName: currentUser.name,
+            lessonId: activeLessonId,
+            lessonTitle: lesson ? lesson.title : "Lesson",
+            score: currentQuizScore,
+            totalQuestions: questionsList.length,
+            date: Date.now()
+          }).then(() => {
+            console.log("Quiz attempt logged successfully");
+          }).catch(err => {
+            console.error("Error saving quiz attempt:", err);
+          });
+        }
         
         lucide.createIcons();
       }
+    }
+
+    // --- VIDEO PLAYBACK PROGRESS RESUME ---
+    let videoProgressTimer = null;
+    function initVideoProgressTracking(player, lessonId) {
+      if (videoProgressTimer) clearInterval(videoProgressTimer);
+      
+      // Attempt to resume from saved position
+      if (currentUser && currentUser.progress && currentUser.progress[lessonId]) {
+        const savedPos = currentUser.progress[lessonId].position || 0;
+        if (savedPos > 0) {
+          player.currentTime = savedPos;
+          console.log(`Resumed video at timestamp: ${savedPos}s`);
+        }
+      }
+
+      // Track progress periodically
+      videoProgressTimer = setInterval(() => {
+        if (!player.paused && !player.ended && currentUser) {
+          const pos = player.currentTime;
+          const duration = player.duration || 1;
+          const pct = Math.round((pos / duration) * 100);
+
+          if (!currentUser.progress) currentUser.progress = {};
+          currentUser.progress[lessonId] = {
+            position: pos,
+            percentage: pct,
+            completed: pct >= 80 ? true : (currentUser.progress[lessonId]?.completed || false)
+          };
+
+          // Throttle saves to Firestore
+          db.collection('users').doc(currentUser.uid).update({
+            progress: currentUser.progress
+          }).catch(err => console.error("Error saving video progress:", err));
+        }
+      }, 5000);
     }
 
     // --- VIDEO LEARNING PAGE ---
@@ -1362,8 +1559,8 @@
       navigateTo('video-learning');
     }
 
-    function renderVideoPage() {
-      const lesson = lessons.find(l => l.id === activeLessonId);
+    async function renderVideoPage() {
+      const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
       if (!lesson) return;
 
       const player = document.getElementById('videoPlayer');
@@ -1374,6 +1571,11 @@
         player.classList.remove('hidden');
         placeholder.classList.add('hidden');
         player.load();
+        
+        // Wait for metadata to load before resuming track
+        player.onloadedmetadata = () => {
+          initVideoProgressTracking(player, activeLessonId);
+        };
       } else {
         player.classList.add('hidden');
         placeholder.classList.remove('hidden');
@@ -1384,7 +1586,11 @@
       document.getElementById('lessonInstructor').innerText = `Educator: ${lesson.instructor} • ${lesson.grade}`;
       document.getElementById('lessonDescription').innerText = lesson.transcript;
       
-      updateCompleteBtnState(lesson.completed);
+      const isCompleted = currentUser && currentUser.progress && currentUser.progress[activeLessonId] && currentUser.progress[activeLessonId].completed;
+      updateCompleteBtnState(isCompleted);
+      
+      // Load AI Chat history from Firestore
+      loadAiChats(activeLessonId);
       switchRightPanelTab('doubt');
     }
 
@@ -1400,16 +1606,56 @@
       }
     }
 
-    function toggleLessonComplete() {
-      const lesson = lessons.find(l => l.id === activeLessonId);
-      if (lesson) {
-        lesson.completed = !lesson.completed;
-        saveLessons();
-        updateCompleteBtnState(lesson.completed);
+    async function toggleLessonComplete() {
+      if (!currentUser || !activeLessonId) return;
+      if (!currentUser.progress) currentUser.progress = {};
+      
+      const currentStatus = currentUser.progress[activeLessonId]?.completed || false;
+      const newStatus = !currentStatus;
+      
+      currentUser.progress[activeLessonId] = {
+        position: document.getElementById('videoPlayer').currentTime || 0,
+        percentage: currentStatus ? 0 : 100,
+        completed: newStatus
+      };
+      
+      try {
+        await db.collection('users').doc(currentUser.uid).update({
+          progress: currentUser.progress
+        });
+        updateCompleteBtnState(newStatus);
+      } catch (err) {
+        console.error("Error toggling completion:", err);
       }
     }
 
     // --- AI CHATBOT SYSTEM ---
+    async function loadAiChats(lessonId) {
+      if (!currentUser) return;
+      try {
+        const doc = await db.collection('users').doc(currentUser.uid).collection('chats').doc(lessonId.toString()).get();
+        if (doc.exists) {
+          chatHistories[lessonId] = doc.data().messages || [];
+        } else {
+          chatHistories[lessonId] = [{ sender: 'ai', text: "Ask me a question about this video! I can prioritize the transcript context." }];
+        }
+        renderChatMessages();
+      } catch (err) {
+        console.error("Error loading chats:", err);
+      }
+    }
+
+    async function saveAiChats(lessonId) {
+      if (!currentUser) return;
+      try {
+        await db.collection('users').doc(currentUser.uid).collection('chats').doc(lessonId.toString()).set({
+          messages: chatHistories[lessonId]
+        });
+      } catch (err) {
+        console.error("Error saving chats:", err);
+      }
+    }
+
     function renderChatMessages() {
       const chatContainer = document.getElementById('chatMessages');
       const history = chatHistories[activeLessonId] || [];
@@ -1421,7 +1667,7 @@
             <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
               isUser 
                 ? 'bg-indigo-600 text-white rounded-tr-none' 
-                : 'bg-slate-800 text-slate-100 rounded-tl-none border border-slate-700/50'
+                : 'bg-slate-850 text-slate-100 rounded-tl-none border border-slate-800'
             }">
               <div class="leading-relaxed whitespace-pre-wrap">${msg.text}</div>
             </div>
@@ -1447,12 +1693,11 @@
 
       setTimeout(() => {
         removeTypingIndicator();
-        const lesson = lessons.find(l => l.id === activeLessonId);
+        const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
         const query = text.toLowerCase();
         let response = "";
 
-        // Dynamic transcript-based QA matching
-        if (lesson.transcript) {
+        if (lesson && lesson.transcript) {
           const keywords = query.split(' ');
           const matchingSentences = lesson.transcript.split(/[.!?]+/).filter(sentence => 
             keywords.some(word => word.length > 3 && sentence.toLowerCase().includes(word))
@@ -1465,16 +1710,16 @@
 
         if (!response) {
           if (query.includes('summary') || query.includes('summarize')) {
-            response = `### Video Lesson Summary:\n\nIn this session covering **${lesson.title}**, the lecture explains the core principles of **${lesson.subject}**. Educator ${lesson.instructor} outlines the key conceptual definitions, structures, and applications required for examinations.`;
+            response = `### Video Lesson Summary:\n\nIn this session covering **${lesson ? lesson.title : 'Topic'}**, the lecture explains the core principles of **${lesson ? lesson.subject : 'Subject'}**. Educator ${lesson ? lesson.instructor : 'Instructor'} outlines the key conceptual definitions, structures, and applications required.`;
           } else if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
-            response = `### Practice Question:\n\n*Based on the video tutorial for ${lesson.title}, can you explain the central mechanism or equation introduced and how it applies to real-world examples?*\n\nTake a moment to draft your answer!`;
+            response = `### Practice Question:\n\n*Based on the video tutorial, can you explain the central mechanism or equation introduced and how it applies to real-world examples?*\n\nTake a moment to draft your answer!`;
           } else {
-            response = `I've analyzed the video content for **${lesson.title}**.\n\nYour question regarding "${text}" relates to critical aspects of the lesson. Based on the course materials, we focus heavily on the topics explained by ${lesson.instructor}. Could you clarify if you need a step-by-step example or a conceptual overview?`;
+            response = `I've analyzed the video content for **${lesson ? lesson.title : 'Topic'}**.\n\nYour question regarding "${text}" relates to critical aspects of the lesson. Based on the course materials, we focus heavily on the topics explained by ${lesson ? lesson.instructor : 'Instructor'}. Could you clarify if you need a step-by-step example or a conceptual overview?`;
           }
         }
 
         chatHistories[activeLessonId].push({ sender: 'ai', text: response });
-        saveChats();
+        saveAiChats(activeLessonId);
         renderChatMessages();
       }, 1000);
     }
@@ -1485,7 +1730,7 @@
       typingDiv.id = 'ai-typing-indicator';
       typingDiv.className = 'flex justify-start';
       typingDiv.innerHTML = `
-        <div class="bg-slate-800 text-slate-450 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/50 flex items-center space-x-1.5">
+        <div class="bg-slate-805 bg-slate-800 text-slate-400 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/50 flex items-center space-x-1.5">
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
@@ -1501,7 +1746,7 @@
     }
 
     function triggerQuickAi(action) {
-      const lesson = lessons.find(l => l.id === activeLessonId);
+      const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
       if (!chatHistories[activeLessonId]) chatHistories[activeLessonId] = [];
 
       showTypingIndicator();
@@ -1510,55 +1755,51 @@
         removeTypingIndicator();
         let reply = "";
         if (action === 'summarize') {
-          reply = `### Video Lesson Summary:\n\n**${lesson.title}**\n${lesson.transcript || "No transcript notes have been published for this lesson."}\n\n*This content forms the primary reference of the topic.*`;
+          reply = `### Video Lesson Summary:\n\n**${lesson ? lesson.title : 'Topic'}**\n${lesson ? (lesson.transcript || "No transcript notes have been published for this lesson.") : ''}\n\n*This content forms the primary reference of the topic.*`;
         } else if (action === 'explain') {
-          reply = `### Simple Analogy:\n\nThink of **${lesson.title}** like a structured machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
+          reply = `### Simple Analogy:\n\nThink of **${lesson ? lesson.title : 'Topic'}** like a structured machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
         } else if (action === 'formula') {
-          reply = `### Core Subject Reference:\n\nFor **${lesson.title}**, make sure you master:\n\n- The fundamental processes\n- The relevant formulas\n- The context-driven variables described by ${lesson.instructor}.`;
+          reply = `### Core Subject Reference:\n\nFor **${lesson ? lesson.title : 'Topic'}**, make sure you master:\n\n- The fundamental processes\n- The relevant formulas\n- The context-driven variables described by ${lesson ? lesson.instructor : 'Instructor'}.`;
         }
 
         chatHistories[activeLessonId].push({ sender: 'ai', text: reply });
-        saveChats();
+        saveAiChats(activeLessonId);
         renderChatMessages();
       }, 800);
     }
 
     function clearChat() {
       chatHistories[activeLessonId] = [{ sender: 'ai', text: "Chat history cleared. Ask me a question about this video!" }];
-      saveChats();
+      saveAiChats(activeLessonId);
       renderChatMessages();
     }
 
     // --- EDUCATOR PORTAL ---
     function renderEducatorDashboard() {
       document.getElementById('statLessons').innerText = lessons.length;
-      
-      const registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
-      const studentCount = registeredUsers.filter(u => u.role === 'STUDENT').length;
-      document.getElementById('statStudentsCount').innerText = studentCount;
+      document.getElementById('statActiveClassesCount').innerText = new Set(lessons.map(l => l.grade)).size;
 
-      const activeClasses = new Set(lessons.map(l => l.grade));
-      document.getElementById('statActiveClassesCount').innerText = activeClasses.size;
-
-      let totalChatsCount = 0;
-      Object.values(chatHistories).forEach(hist => {
-        totalChatsCount += hist.filter(m => m.sender === 'user').length;
+      db.collection('users').where('role', '==', 'STUDENT').get().then(snapshot => {
+        document.getElementById('statStudentsCount').innerText = snapshot.size;
       });
-      document.getElementById('statChatsCount').innerText = totalChatsCount;
+
+      db.collection('quiz_attempts').get().then(snapshot => {
+        document.getElementById('statChatsCount').innerText = snapshot.size;
+      });
 
       const tbody = document.getElementById('educatorLessonsTable');
       tbody.innerHTML = lessons.map(lesson => {
-        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
+        const videoType = lesson.videoUrl.startsWith('https://firebasestorage') ? 'Cloud Storage' : 'Native File';
         return `
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
-            <td class="p-5 font-medium text-slate-555">${lesson.grade} • ${lesson.subject}</td>
+            <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
             <td class="p-5">
               <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
             <td class="p-5">
-              <button onclick="openLesson(${lesson.id})" class="text-indigo-650 text-indigo-600 hover:underline font-bold text-xs">Preview</button>
+              <button onclick="openLesson('${lesson.id}')" class="text-indigo-600 hover:underline font-bold text-xs">Preview</button>
             </td>
           </tr>
         `;
@@ -1567,24 +1808,22 @@
       lucide.createIcons();
     }
 
+    let selectedVideoFile = null;
     function handleVideoFileSelect(e) {
       const file = e.target.files[0];
       if (!file) return;
 
+      selectedVideoFile = file;
       const sizeInMB = (file.size / (1024 * 1024)).toFixed(1);
       document.getElementById('selectedVideoName').innerText = file.name;
       document.getElementById('selectedVideoSize').innerText = `${sizeInMB} MB`;
 
       document.getElementById('videoUploadPlaceholder').classList.add('hidden');
       document.getElementById('videoUploadSelected').classList.remove('hidden');
-
-      tempUploadedVideoUrl = URL.createObjectURL(file);
     }
 
-    // Auto-generate Quiz dynamically from uploaded transcript
-    function generateInteractiveQuiz(lessonId, transcript, title) {
+    function generateInteractiveQuiz(transcript, title) {
       const sentences = transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 25);
-      
       let quizQuestions = [];
       
       if (sentences.length >= 3) {
@@ -1621,23 +1860,20 @@
           }
         ];
       } else {
-        // Fallback simple quiz if transcript is very short
         quizQuestions = [
           {
             question: `What is the primary topic discussed in the lesson "${title}"?`,
             options: [
               `Theoretical concepts regarding ${title}`,
               "Static equilibrium structures",
-              "Unrelated experimental boundary parameters",
-              "Alternative physical constructs"
+              "Unrelated boundary parameters",
+              "Alternative constructs"
             ],
             correctIndex: 0
           }
         ];
       }
-
-      WAVE_QUIZZES[lessonId] = quizQuestions;
-      saveQuizzes();
+      return quizQuestions;
     }
 
     function handleUpload(e) {
@@ -1648,41 +1884,59 @@
       const subject = document.getElementById('upSubject').value;
       const transcript = document.getElementById('upTranscript').value;
 
-      if (!tempUploadedVideoUrl) {
-        alert("Please upload a local video file!");
+      if (!selectedVideoFile) {
+        alert("Please select a local video file!");
         return;
       }
 
-      const lessonId = lessons.length + 1;
-      const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
+      const publishBtn = e.target.querySelector('button[type="submit"]');
+      publishBtn.disabled = true;
+      publishBtn.innerText = "Uploading Video File (0%)...";
 
-      const newLesson = {
-        id: lessonId,
-        title: title,
-        grade: grade,
-        subject: subject,
-        videoUrl: tempUploadedVideoUrl,
-        transcript: transcript,
-        instructor: currentUser ? currentUser.name : "Educator",
-        completed: false,
-        chapter: chapter
-      };
+      // Upload file to Firebase Storage
+      const storageRef = storage.ref(`lessons/videos/${Date.now()}_${selectedVideoFile.name}`);
+      const uploadTask = storageRef.put(selectedVideoFile);
 
-      lessons.push(newLesson);
-      saveLessons();
+      uploadTask.on('state_changed', (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        publishBtn.innerText = `Uploading Video File (${progress}%)...`;
+      }, (error) => {
+        alert("Video upload failed: " + error.message);
+        publishBtn.disabled = false;
+        publishBtn.innerText = "Publish Lesson & Process AI Context";
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          const lessonId = Date.now().toString();
+          const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
+          
+          const quizQuestions = generateInteractiveQuiz(transcript, title);
 
-      // Generate dynamic quiz based on educator's uploaded transcript context
-      generateInteractiveQuiz(lessonId, transcript, title);
+          const newLesson = {
+            id: lessonId,
+            title: title,
+            grade: grade,
+            subject: subject,
+            videoUrl: downloadURL,
+            transcript: transcript,
+            instructor: currentUser ? currentUser.name : "Educator",
+            completed: false,
+            chapter: chapter,
+            quiz: quizQuestions
+          };
 
-      chatHistories[newLesson.id] = [{ sender: 'ai', text: `Transcript processed! Ask questions about ${newLesson.title}.` }];
-      saveChats();
-
-      tempUploadedVideoUrl = null;
-      document.getElementById('videoUploadPlaceholder').classList.remove('hidden');
-      document.getElementById('videoUploadSelected').classList.add('hidden');
-      e.target.reset();
-
-      navigateTo('educator-dashboard');
+          db.collection('lessons').doc(lessonId).set(newLesson).then(() => {
+            selectedVideoFile = null;
+            document.getElementById('videoUploadPlaceholder').classList.remove('hidden');
+            document.getElementById('videoUploadSelected').classList.add('hidden');
+            e.target.reset();
+            navigateTo('educator-dashboard');
+          }).catch(err => {
+            alert("Error saving lesson document: " + err.message);
+          }).finally(() => {
+            publishBtn.disabled = false;
+            publishBtn.innerText = "Publish Lesson & Process AI Context";
+          });
+      });
     }
   </script>
 </body>
