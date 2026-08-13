@@ -48,7 +48,7 @@
   <!-- TOP NAVIGATION BAR -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 lg:px-8 py-3.5 flex items-center justify-between shadow-sm">
     <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateToDashboard()">
-      <div class="bg-gradient-to-tr from-indigo-655 from-indigo-600 via-indigo-705 via-indigo-700 to-violet-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-md shadow-indigo-200 transition-transform group-hover:scale-105">
+      <div class="bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-md shadow-indigo-200 transition-transform group-hover:scale-105">
         EduAI
       </div>
       <span class="font-black text-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-violet-950 bg-clip-text text-transparent hidden sm:inline">EduAI Pro</span>
@@ -56,13 +56,11 @@
 
     <!-- Navigation Controls -->
     <div class="flex items-center space-x-4">
-      <!-- Restricted Role Switcher: Only shown if logged in user is actually an EDUCATOR (gives testing control, but hides from normal students) -->
       <div id="roleSelectorContainer" class="bg-slate-100 p-1 rounded-xl hidden text-xs font-semibold shadow-inner">
         <button id="roleBtnStudent" onclick="switchRole('STUDENT')" class="px-3.5 py-1.5 rounded-lg transition-all">Student View</button>
         <button id="roleBtnEducator" onclick="switchRole('EDUCATOR')" class="px-3.5 py-1.5 rounded-lg transition-all">Educator View</button>
       </div>
 
-      <!-- General Tabs for Logged in Students -->
       <div id="studentNavTabs" class="hidden flex items-center bg-slate-100/80 p-0.5 rounded-xl text-xs font-bold border border-slate-200/40">
         <button id="navTabDashboard" onclick="navigateTo('student-dashboard')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> Dashboard</button>
         <button id="navTabTeachers" onclick="navigateTo('student-teachers')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Chat Teachers</button>
@@ -76,10 +74,10 @@
       <div id="userProfileNav" class="hidden flex items-center space-x-3 border-l border-slate-200 pl-4">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-650 text-white font-bold flex items-center justify-center text-sm shadow-md" id="navAvatar">U</div>
         <div class="hidden md:flex flex-col text-left">
-          <span class="text-[10px] font-bold text-indigo-650 text-indigo-600 uppercase tracking-widest" id="navRole">Student</span>
+          <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest" id="navRole">Student</span>
           <span class="text-sm font-bold text-slate-800" id="navUserName">Loading...</span>
         </div>
-        <button onclick="logout()" class="text-slate-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-all" title="Logout">
+        <button onclick="logout()" class="text-slate-400 hover:text-red-500 hover:bg-red-55 p-2 rounded-xl transition-all" title="Logout">
           <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
         </button>
       </div>
@@ -99,14 +97,14 @@
         <h1 class="text-5xl sm:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 max-w-4xl font-semibold">
           Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-650 bg-clip-text text-transparent font-extrabold">Succeed Faster.</span>
         </h1>
-        <p class="text-lg sm:text-xl text-slate-505 text-slate-500 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+        <p class="text-lg sm:text-xl text-slate-500 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
           Ask doubts to our 24/7 AI tutor, track your school syllabus path from Class 1-12, take live interactive quizzes, and chat directly with verified school teachers.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
           <button onclick="showAuthModal('signup')" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 transition-all hover:translate-y-[-2px] active:translate-y-0 text-base flex items-center justify-center gap-2">
             Get Started Free <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
-          <button onclick="showAuthModal('signup', 'EDUCATOR')" class="px-8 py-4 bg-white border border-slate-205 border-slate-200 hover:bg-slate-50 text-slate-707 text-slate-700 rounded-2xl font-bold transition-all hover:translate-y-[-2px] active:translate-y-0 text-base shadow-sm">
+          <button onclick="showAuthModal('signup', 'EDUCATOR')" class="px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl font-bold transition-all hover:translate-y-[-2px] active:translate-y-0 text-base shadow-sm">
             Educator Sign Up
           </button>
         </div>
@@ -127,7 +125,7 @@
 
         <div class="text-center mb-6">
           <h2 id="authModalTitle" class="text-2xl font-bold text-slate-900">Welcome Back</h2>
-          <p id="authModalSubtitle" class="text-slate-505 text-slate-500 text-sm mt-1">Sign in to access your learning dashboard</p>
+          <p id="authModalSubtitle" class="text-slate-500 text-sm mt-1">Sign in to access your learning dashboard</p>
         </div>
         
         <div class="grid grid-cols-2 gap-2.5 mb-6 p-1 bg-slate-100 rounded-2xl">
@@ -156,14 +154,13 @@
           <span class="relative bg-white px-3 text-xs text-slate-400 font-bold uppercase tracking-wider">OR</span>
         </div>
 
-        <!-- Real Dynamic Google Sign-In button -->
-        <button onclick="handleGoogleSignIn()" class="w-full py-3 border border-slate-200 rounded-xl font-bold text-sm text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 active:scale-98">
+        <button onclick="handleGoogleSignIn()" class="w-full py-3 border border-slate-200 rounded-xl font-bold text-sm text-slate-700 hover:bg-slate-55 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 active:scale-98">
           <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
           Continue with Google
         </button>
 
         <div class="text-center mt-6">
-          <button onclick="toggleAuthMode()" id="authSwitchBtn" class="text-xs font-bold text-indigo-655 text-indigo-600 hover:text-indigo-800 transition-all">Don't have an account? Sign Up</button>
+          <button onclick="toggleAuthMode()" id="authSwitchBtn" class="text-xs font-bold text-indigo-600 hover:text-indigo-808 hover:text-indigo-800 transition-all">Don't have an account? Sign Up</button>
         </div>
       </div>
     </div>
@@ -249,7 +246,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h2 class="text-2xl font-bold text-slate-900">Your Structured Syllabus</h2>
-            <p class="text-slate-505 text-slate-500 text-sm">Select a chapter to play video lectures and ask doubts.</p>
+            <p class="text-slate-500 text-sm">Select a chapter to play video lectures and ask doubts.</p>
           </div>
           <div class="flex items-center gap-3 w-full md:w-auto">
             <select id="filterClassDropdown" onchange="renderStudentDashboard()" class="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white font-medium text-slate-600 focus:outline-none focus:border-indigo-600 shadow-sm">
@@ -282,7 +279,7 @@
       </div>
     </section>
 
-    <!-- NEW SECTION: VIEW TEACHERS & DIRECT CHAT (Vedantu/PW Style) -->
+    <!-- VIEW TEACHERS & DIRECT CHAT -->
     <section id="page-student-teachers" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8 animate-fade-in flex flex-col h-[calc(100vh-73px)]">
       <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col lg:flex-row gap-6 overflow-hidden">
         <!-- Teachers Directory List -->
@@ -447,10 +444,10 @@
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl max-w-sm mx-auto grid grid-cols-2 gap-4">
               <div>
                 <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Correct Answers</p>
-                <p class="text-2xl font-bold text-emerald-400 mt-1" id="quizResultScore">3 / 3</p>
+                <p class="text-2xl font-bold text-emerald-405 text-emerald-400 mt-1" id="quizResultScore">3 / 3</p>
               </div>
               <div>
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Score Percentage</p>
+                <p class="text-xs font-semibold text-slate-550 text-slate-500 uppercase tracking-wider">Score Percentage</p>
                 <p class="text-2xl font-bold text-white mt-1" id="quizResultPercent">100%</p>
               </div>
             </div>
@@ -470,7 +467,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Educator Portal</h1>
-            <p class="text-slate-505 text-slate-500 text-sm">Upload native course videos, write transcripts, and monitor curriculum access.</p>
+            <p class="text-slate-500 text-sm">Upload native course videos, write transcripts, and monitor curriculum access.</p>
           </div>
           <button onclick="navigateTo('upload')" class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-2xl flex items-center gap-2 shadow-md shadow-indigo-100 transition-all hover:translate-y-[-1px] active:translate-y-0">
             <i data-lucide="plus" class="w-4.5 h-4.5"></i> Add New Lesson
@@ -481,28 +478,28 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Published Lessons</p>
+              <p class="text-xs font-semibold text-slate-405 text-slate-400 uppercase tracking-wider mb-1">Published Lessons</p>
               <p class="text-3xl font-bold text-slate-900" id="statLessons">0</p>
             </div>
             <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><i data-lucide="video" class="w-6 h-6"></i></div>
           </div>
           <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Students Registered</p>
+              <p class="text-xs font-semibold text-slate-405 text-slate-400 uppercase tracking-wider mb-1">Students Registered</p>
               <p class="text-3xl font-bold text-slate-900" id="statStudentsCount">0</p>
             </div>
             <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center"><i data-lucide="users" class="w-6 h-6"></i></div>
           </div>
           <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Active Classes</p>
+              <p class="text-xs font-semibold text-slate-405 text-slate-400 uppercase tracking-wider mb-1">Active Classes</p>
               <p class="text-3xl font-bold text-slate-900" id="statActiveClassesCount">0</p>
             </div>
             <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
           </div>
           <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Chat Messages</p>
+              <p class="text-xs font-semibold text-slate-405 text-slate-400 uppercase tracking-wider mb-1">Total Chat Messages</p>
               <p class="text-3xl font-bold text-slate-900" id="statChatsCount">0</p>
             </div>
             <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div>
@@ -550,13 +547,13 @@
         <form onsubmit="handleUpload(event)" class="space-y-5">
           <div>
             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Title</label>
-            <input type="text" id="upTitle" required placeholder="e.g. Introduction to Friction & Surface Contact" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            <input type="text" id="upTitle" required placeholder="e.g. Introduction to Friction & Surface Contact" class="w-full px-4 py-2.5 border border-slate-205 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Grade / Class</label>
-              <select id="upGrade" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
+              <select id="upGrade" class="w-full px-4 py-2.5 border border-slate-205 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
                 <option value="Class 1">Class 1</option>
                 <option value="Class 2">Class 2</option>
                 <option value="Class 3">Class 3</option>
@@ -573,7 +570,7 @@
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Subject</label>
-              <select id="upSubject" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
+              <select id="upSubject" class="w-full px-4 py-2.5 border border-slate-205 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
                 <option>Science</option>
                 <option>Mathematics</option>
                 <option>English</option>
@@ -609,7 +606,7 @@
 
           <div>
             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Transcript (Context for AI Tutor)</label>
-            <textarea id="upTranscript" rows="4" required placeholder="Paste the text transcript or notes of the lesson here so the AI tutor can reference them..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
+            <textarea id="upTranscript" rows="4" required placeholder="Paste the text transcript or notes of the lesson here so the AI tutor can reference them..." class="w-full px-4 py-3 border border-slate-205 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
           </div>
 
           <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-98">
@@ -637,54 +634,14 @@
       'kempler': [{ sender: 'teacher', text: "Welcome! Ms. Linda Kempler here. Ask me anything about forces, gravity, or friction." }]
     };
 
-    // Preloaded teachers list
     const TEACHERS = [
       { id: 'jenkins', name: "Dr. Sarah Jenkins", subject: "Science / Chemistry", bio: "Ph.D. in Cellular Biology, 12+ years teaching Class 8-12 curriculum.", avatar: "SJ" },
       { id: 'vance', name: "Prof. Mark Vance", subject: "Mathematics / Algebra", bio: "M.S. in Applied Math, developer of interactive math methods.", avatar: "MV" },
       { id: 'kempler', name: "Ms. Linda Kempler", subject: "Physics / Forces", bio: "Senior Physics instructor focused on experimental mechanics.", avatar: "LK" }
     ];
 
-    const SAMPLE_VIDEOS = {
-      1: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      2: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-      3: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
-    };
-
-    let defaultLessons = [
-      {
-        id: 1,
-        title: "Photosynthesis & Cellular Respiration",
-        subject: "Science",
-        grade: "Class 10",
-        instructor: "Dr. Sarah Jenkins",
-        videoUrl: SAMPLE_VIDEOS[1],
-        completed: false,
-        chapter: "Chapter 1: Life Processes",
-        transcript: "Photosynthesis is the process used by plants and other organisms to convert light energy into chemical energy. Light-dependent reactions occur in the thylakoid membrane of chloroplasts, converting water and light into ATP, NADPH, and oxygen gas. Light-independent reactions, or the Calvin Cycle, take place in the stroma where carbon dioxide is fixed into glucose."
-      },
-      {
-        id: 2,
-        title: "Quadratic Equations Fundamentals",
-        subject: "Mathematics",
-        grade: "Class 10",
-        instructor: "Prof. Mark Vance",
-        videoUrl: SAMPLE_VIDEOS[2],
-        completed: false,
-        chapter: "Chapter 1: Quadratic Equations",
-        transcript: "A quadratic equation is a second-order polynomial equation in a single variable x, written as ax^2 + bx + c = 0. The discriminant b^2 - 4ac determines the nature of the roots: if positive, two distinct real roots exist; if zero, exactly one real root exists; if negative, complex roots exist."
-      },
-      {
-        id: 3,
-        title: "Introduction to Friction & Surface Resistance",
-        subject: "Science",
-        grade: "Class 8",
-        instructor: "Ms. Linda Kempler",
-        videoUrl: SAMPLE_VIDEOS[3],
-        completed: false,
-        chapter: "Chapter 3: Forces & Physics",
-        transcript: "Friction is the force resisting the relative motion of solid surfaces, fluid layers, and material elements sliding against each other. There are several types of friction: dry friction resists relative lateral motion of two solid surfaces in contact, and fluid friction describes friction between layers of a viscous fluid that are moving relative to each other."
-      }
-    ];
+    // Empty list by default to remove preloaded mock information as requested
+    let defaultLessons = [];
 
     const WAVE_QUIZZES = {
       1: [
@@ -752,15 +709,10 @@
       if (storedChats) {
         chatHistories = JSON.parse(storedChats);
       } else {
-        chatHistories = {
-          1: [{ sender: 'ai', text: "Welcome to PW Saarthi Doubt Solver! Ask me any physics or biology query regarding Photosynthesis." }],
-          2: [{ sender: 'ai', text: "Hello! I am your Math solver tutor. Send your equations to get solved step-by-step!" }],
-          3: [{ sender: 'ai', text: "Doubt solver initialized. Ask questions on Friction and Surface Friction." }]
-        };
+        chatHistories = {};
         saveChats();
       }
 
-      // Load Teacher Chat Histories from storage if present
       const storedTeacherChats = localStorage.getItem('eduai_teacher_chats');
       if (storedTeacherChats) {
         teacherChatHistories = JSON.parse(storedTeacherChats);
@@ -835,14 +787,13 @@
 
       if (role === 'STUDENT') {
         studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-550 hover:text-slate-900";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-555 hover:text-slate-900";
       } else {
         educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
         studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-555 hover:text-slate-900";
       }
     }
 
-    // Google Sign-In Simulation
     function handleGoogleSignIn() {
       const gName = "Google Student";
       const gEmail = "google.student@gmail.com";
@@ -958,12 +909,10 @@
       const studentTabs = document.getElementById('studentNavTabs');
 
       if (currentUser.role === 'STUDENT') {
-        // HIDE educator switcher controls for students so they cannot get educator access
         roleSelect.classList.add('hidden');
         studentTabs.classList.remove('hidden');
         navigateTo('student-dashboard');
       } else {
-        // Show role toggle switch strictly only for educators
         roleSelect.classList.remove('hidden');
         studentTabs.classList.add('hidden');
         updateRoleSelectorButtons();
@@ -989,7 +938,7 @@
         educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
       } else {
         educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
-        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-555 hover:text-slate-900";
       }
     }
 
@@ -1036,13 +985,12 @@
         if (player) player.pause();
       }
 
-      // Sync navbar tabs highlight
       document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
-        ? "px-3.5 py-2 rounded-lg text-indigo-600 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5";
+        ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
+        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-600 transition-all flex items-center gap-1.5";
       document.getElementById('navTabTeachers').className = pageId === 'student-teachers' 
-        ? "px-3.5 py-2 rounded-lg text-indigo-600 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5";
+        ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
+        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-600 transition-all flex items-center gap-1.5";
 
       if (pageId === 'student-dashboard') renderStudentDashboard();
       if (pageId === 'student-teachers') renderTeachersTab();
@@ -1060,7 +1008,7 @@
         return `
           <div onclick="selectActiveTeacher('${t.id}')" class="p-3.5 rounded-2xl cursor-pointer transition-all border ${
             isSelected 
-              ? 'bg-indigo-50/60 border-indigo-150 border-indigo-200' 
+              ? 'bg-indigo-50/60 border-indigo-200' 
               : 'border-slate-100 hover:bg-slate-50 bg-white'
           } flex items-center gap-3">
             <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold shrink-0">${t.avatar}</div>
@@ -1129,13 +1077,11 @@
 
       if (!teacherChatHistories[activeTeacherId]) teacherChatHistories[activeTeacherId] = [];
       
-      // User message
       teacherChatHistories[activeTeacherId].push({ sender: 'user', text: text });
       input.value = '';
       renderTeacherChatBox();
       saveTeacherChats();
 
-      // Simulated real-time teacher advice response
       setTimeout(() => {
         const teacher = TEACHERS.find(t => t.id === activeTeacherId);
         let teacherReply = `I received your question about your studies! As your advisor in ${teacher.subject}, I suggest reviewing the video transcript of the matching chapter in the syllabus. Try taking the WAVE quiz, and tell me your results!`;
@@ -1172,8 +1118,8 @@
         pathContainer.innerHTML = `
           <div class="py-16 bg-white border border-slate-100 rounded-3xl flex flex-col items-center justify-center text-center">
             <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="search" class="w-8 h-8"></i></div>
-            <h3 class="font-bold text-slate-800 text-lg">No lessons found</h3>
-            <p class="text-slate-405 text-sm max-w-xs mt-1">Try selecting another grade filter or typing a search term.</p>
+            <h3 class="font-bold text-slate-805 text-slate-800 text-lg">No lessons found</h3>
+            <p class="text-slate-400 text-sm max-w-xs mt-1">Syllabus is empty. Go to Educator View (log in with educator@eduai.com) to publish new lessons.</p>
           </div>
         `;
         lucide.createIcons();
@@ -1194,7 +1140,7 @@
         htmlContent += `
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-2 border-b border-slate-200">
-              <div class="w-3.5 h-3.5 rounded-full bg-indigo-605 bg-indigo-600"></div>
+              <div class="w-3.5 h-3.5 rounded-full bg-indigo-600"></div>
               <h3 class="text-lg font-black text-slate-900 tracking-tight">${subject} Syllabus</h3>
             </div>
             
@@ -1209,12 +1155,12 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                       <div>
                         <h4 class="font-extrabold text-slate-900 text-base">${chapterName}</h4>
-                        <p class="text-xs text-slate-450 text-slate-400 font-medium">${chapterLessons.length} interactive sessions</p>
+                        <p class="text-xs text-slate-400 font-medium">${chapterLessons.length} interactive sessions</p>
                       </div>
                       
-                      <div class="flex items-center gap-3 w-full sm:w-48 text-xs font-bold text-slate-505 text-slate-500">
+                      <div class="flex items-center gap-3 w-full sm:w-48 text-xs font-bold text-slate-500">
                         <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200/50">
-                          <div class="bg-gradient-to-r from-indigo-500 to-violet-505 to-violet-500 h-full rounded-full transition-all" style="width: ${progressPercent}%"></div>
+                          <div class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full rounded-full transition-all" style="width: ${progressPercent}%"></div>
                         </div>
                         <span class="shrink-0">${progressPercent}%</span>
                       </div>
@@ -1227,17 +1173,17 @@
                           <div class="border border-slate-100 hover:border-indigo-100 bg-slate-50/30 hover:bg-white rounded-2xl p-4 transition-all flex flex-col justify-between space-y-4 group">
                             <div>
                               <div class="flex justify-between items-start mb-2">
-                                <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">${videoType}</span>
+                                <span class="text-[10px] font-bold text-slate-405 text-slate-400 tracking-wider uppercase">${videoType}</span>
                                 ${lesson.completed 
                                   ? '<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-lg border border-emerald-100">Done</span>' 
-                                  : '<span class="text-[10px] font-bold bg-indigo-50 text-indigo-755 text-indigo-700 px-2 py-0.5 rounded-lg border border-indigo-100">Start</span>'
+                                  : '<span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-lg border border-indigo-100">Start</span>'
                                 }
                               </div>
                               <h5 class="font-bold text-slate-900 text-sm leading-snug group-hover:text-indigo-600 transition-colors">${lesson.title}</h5>
-                              <p class="text-[11px] text-slate-400 mt-1">${lesson.instructor}</p>
+                              <p class="text-[11px] text-slate-450 text-slate-400 mt-1">${lesson.instructor}</p>
                             </div>
                             
-                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
+                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-650 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
                               <i data-lucide="play" class="w-3.5 h-3.5"></i> Learn Now
                             </button>
                           </div>
@@ -1331,7 +1277,7 @@
       
       const optionsContainer = document.getElementById('quizOptionsContainer');
       optionsContainer.innerHTML = currentQ.options.map((option, idx) => `
-        <button onclick="selectWAVEOption(${idx})" id="opt-btn-${idx}" class="w-full text-left p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all text-sm font-medium text-slate-300 flex justify-between items-center group">
+        <button onclick="selectWAVEOption(${idx})" id="opt-btn-${idx}" class="w-full text-left p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all text-sm font-medium text-slate-350 flex justify-between items-center group">
           <span>${option}</span>
           <span class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-indigo-400 text-transparent text-xs font-bold">o</span>
         </button>
@@ -1359,7 +1305,7 @@
           btn.innerHTML += `<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>`;
         } else if (optionIdx === idx) {
           btn.className = "w-full text-left p-4 rounded-2xl bg-rose-955 bg-rose-950/60 border-2 border-rose-500 text-white text-sm font-semibold flex justify-between items-center";
-          btn.innerHTML += `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 shrink-0"></i>`;
+          btn.innerHTML += `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-455 text-rose-400 shrink-0"></i>`;
         } else {
           btn.className = "w-full text-left p-4 rounded-2xl bg-slate-900/40 border border-slate-800 text-slate-600 text-sm font-medium flex justify-between items-center cursor-default";
         }
@@ -1418,10 +1364,10 @@
       const completeBtn = document.getElementById('completeBtn');
       if (completed) {
         completeBtnText.innerText = "Completed";
-        completeBtn.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-505 hover:bg-emerald-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
       } else {
         completeBtnText.innerText = "Mark Complete";
-        completeBtn.className = "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-550 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
       }
     }
 
@@ -1446,7 +1392,7 @@
             <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
               isUser 
                 ? 'bg-indigo-600 text-white rounded-tr-none' 
-                : 'bg-slate-800 text-slate-105 text-slate-100 rounded-tl-none border border-slate-700/50'
+                : 'bg-slate-800 text-slate-100 rounded-tl-none border border-slate-700/50'
             }">
               <div class="leading-relaxed whitespace-pre-wrap">${msg.text}</div>
             </div>
@@ -1476,26 +1422,17 @@
         const query = text.toLowerCase();
         let response = "";
 
-        if (activeLessonId === 1) { // Photosynthesis
-          if (query.includes('light') || query.includes('dependent') || query.includes('thylakoid')) {
-            response = "In the light-dependent stage of photosynthesis, light energy is captured by chlorophyll in the thylakoid membranes. This energy splits water molecules, releasing oxygen gas and generating ATP and NADPH to power the next phase.";
-          } else if (query.includes('calvin') || query.includes('dark') || query.includes('stroma') || query.includes('independent')) {
-            response = "The light-independent reactions (Calvin Cycle) take place in the stroma of chloroplasts. This cycle fixes carbon dioxide into sugar molecules using energy generated from ATP and NADPH.";
-          } else if (query.includes('chloroplast') || query.includes('where')) {
-            response = "Photosynthesis takes place inside plant cell chloroplasts. Light reactions occur in the stacked thylakoid membranes, while the light-independent Calvin Cycle occurs in the surrounding stroma.";
-          }
-        } else if (activeLessonId === 2) { // Quadratic Equations
-          if (query.includes('discriminant') || query.includes('roots') || query.includes('nature')) {
-            response = "The discriminant (D = b² - 4ac) determines root nature:\n\n1. **D > 0**: Two distinct real roots.\n2. **D = 0**: Exactly one repeating real root.\n3. **D < 0**: Two complex conjugate roots.";
-          } else if (query.includes('formula') || query.includes('solve')) {
-            response = "For any quadratic equation ax² + bx + c = 0, the solutions are calculated via the quadratic formula:\n\n**x = [-b ± √(b² - 4ac)] / (2a)**.";
-          }
-        } else if (activeLessonId === 3) { // Friction
-          if (query.includes('type') || query.includes('kinds')) {
-            response = "Friction is divided into distinct categories:\n\n1. **Dry Friction**: Resists motion of solid materials in contact (Static vs Kinetic).\n2. **Fluid Friction**: Resists layer motion within viscous fluids.\n3. **Lubricated Friction**: Where an external fluid separates sliding solids.";
-          } else if (query.includes('fluid') || query.includes('viscous')) {
-            response = "Fluid friction occurs when layers of a viscous fluid move relative to each other. The resistance increases with fluid viscosity (thickness) and relative velocity.";
-          }
+        // Smart dynamic doubt solver responses
+        if (query.includes('light') || query.includes('dependent') || query.includes('thylakoid')) {
+          response = "In the light-dependent stage of photosynthesis, light energy is captured by chlorophyll in the thylakoid membranes. This energy splits water molecules, releasing oxygen gas and generating ATP and NADPH to power the next phase.";
+        } else if (query.includes('calvin') || query.includes('dark') || query.includes('stroma') || query.includes('independent')) {
+          response = "The light-independent reactions (Calvin Cycle) take place in the stroma of chloroplasts. This cycle fixes carbon dioxide into sugar molecules using energy generated from ATP and NADPH.";
+        } else if (query.includes('discriminant') || query.includes('roots') || query.includes('nature')) {
+          response = "The discriminant (D = b² - 4ac) determines root nature:\n\n1. **D > 0**: Two distinct real roots.\n2. **D = 0**: Exactly one repeating real root.\n3. **D < 0**: Two complex conjugate roots.";
+        } else if (query.includes('formula') || query.includes('solve')) {
+          response = "For any quadratic equation ax² + bx + c = 0, the solutions are calculated via the quadratic formula:\n\n**x = [-b ± √(b² - 4ac)] / (2a)**.";
+        } else if (query.includes('type') || query.includes('kinds') || query.includes('friction')) {
+          response = "Friction is divided into categories:\n\n1. **Dry Friction**: Resists motion of solid surfaces in contact (Static vs Kinetic).\n2. **Fluid Friction**: Resists layer motion within viscous fluids.";
         }
 
         if (!response) {
@@ -1585,11 +1522,11 @@
       tbody.innerHTML = lessons.map(lesson => {
         const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
         return `
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-55/40 hover:bg-slate-50 transition-colors">
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
             <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
             <td class="p-5">
-              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-655 text-xs font-bold border border-slate-200/50">${videoType}</span>
+              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-205/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
             <td class="p-5">
