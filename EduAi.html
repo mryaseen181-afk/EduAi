@@ -62,8 +62,8 @@
       </div>
 
       <div id="studentNavTabs" class="hidden flex items-center bg-slate-100/80 p-0.5 rounded-xl text-xs font-bold border border-slate-200/40">
-        <button id="navTabDashboard" onclick="navigateTo('student-dashboard')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> Dashboard</button>
-        <button id="navTabTeachers" onclick="navigateTo('student-teachers')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Chat Teachers</button>
+        <button id="navTabDashboard" onclick="navigateTo('student-dashboard')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> Dashboard</button>
+        <button id="navTabTeachers" onclick="navigateTo('student-teachers')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Chat Teachers</button>
       </div>
 
       <div id="authNavButtons" class="flex items-center space-x-2">
@@ -77,7 +77,7 @@
           <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest" id="navRole">Student</span>
           <span class="text-sm font-bold text-slate-800" id="navUserName">Loading...</span>
         </div>
-        <button onclick="logout()" class="text-slate-400 hover:text-red-505 p-2 rounded-xl transition-all" title="Logout">
+        <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-2 rounded-xl transition-all" title="Logout">
           <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
         </button>
       </div>
@@ -95,7 +95,7 @@
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i> Smart doubt engines & Direct Teacher Chat Rooms
         </span>
         <h1 class="text-5xl sm:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 max-w-4xl font-semibold">
-          Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-650 bg-clip-text text-transparent font-extrabold">Succeed Faster.</span>
+          Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-655 bg-clip-text text-transparent font-extrabold">Succeed Faster.</span>
         </h1>
         <p class="text-lg sm:text-xl text-slate-500 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
           Ask doubts to our 24/7 AI tutor, track your school syllabus path from Class 1-12, take live interactive quizzes, and chat directly with verified school teachers.
@@ -125,7 +125,7 @@
 
         <div class="text-center mb-6">
           <h2 id="authModalTitle" class="text-2xl font-bold text-slate-900">Welcome Back</h2>
-          <p id="authModalSubtitle" class="text-slate-550 text-slate-500 text-sm mt-1">Sign in to access your learning dashboard</p>
+          <p id="authModalSubtitle" class="text-slate-500 text-sm mt-1">Sign in to access your learning dashboard</p>
         </div>
         
         <div class="grid grid-cols-2 gap-2.5 mb-6 p-1 bg-slate-100 rounded-2xl">
@@ -139,11 +139,11 @@
             <input type="text" id="authName" placeholder="Alex Johnson" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
+            <label class="block text-xs font-semibold text-slate-505 text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
             <input type="email" id="authEmail" required placeholder="name@eduai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+            <label class="block text-xs font-semibold text-slate-505 text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
             <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
@@ -154,7 +154,7 @@
           <span class="relative bg-white px-3 text-xs text-slate-400 font-bold uppercase tracking-wider">OR</span>
         </div>
 
-        <button onclick="handleGoogleSignIn()" class="w-full py-3 border border-slate-200 rounded-xl font-bold text-sm text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 active:scale-98">
+        <button onclick="handleGoogleSignIn()" class="w-full py-3 border border-slate-200 rounded-xl font-bold text-sm text-slate-705 text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 active:scale-98">
           <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
           Continue with Google
         </button>
@@ -199,16 +199,16 @@
             <label class="block text-sm font-semibold text-slate-700 mb-3">Select Interested Subjects</label>
             <div class="grid grid-cols-2 gap-3 text-sm font-medium">
               <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Science
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Science
               </label>
               <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Mathematics
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Mathematics
               </label>
               <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> English
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> English
               </label>
               <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Social Science
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Social Science
               </label>
             </div>
           </div>
@@ -328,7 +328,7 @@
     </section>
 
     <!-- 5. VIDEO LEARNING & AI CHATBOT -->
-    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-955 bg-slate-950 text-white flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
+    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-950 text-white flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
       <!-- Left side: Player, Info & Notes -->
       <div class="flex-1 flex flex-col p-4 lg:p-6 space-y-4 overflow-y-auto chat-scroll h-full bg-slate-900/40">
         <div>
@@ -337,9 +337,18 @@
           </button>
         </div>
 
-        <!-- Video Player -->
-        <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
-          <video id="videoPlayer" class="w-full h-full object-contain" controls preload="metadata"></video>
+        <!-- Video Player with poster and loading placeholder -->
+        <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-850 border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
+          <video id="videoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata"></video>
+          <div id="videoPlaceholderMessage" class="text-center text-slate-400 py-16 space-y-3">
+            <div class="w-16 h-16 bg-slate-850 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
+              <i data-lucide="play" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-white">Loading Lesson Video...</p>
+              <p class="text-xs text-slate-500 mt-1">Please select play or make sure the video file loads correctly.</p>
+            </div>
+          </div>
         </div>
 
         <!-- Lecture Details -->
@@ -349,7 +358,7 @@
               <span class="inline-block px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-3" id="lessonSubjectTag">Science</span>
               <h1 class="text-2xl font-bold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
             </div>
-            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md active:scale-95">
+            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-650 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md active:scale-95">
               <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> <span id="completeBtnText">Mark Complete</span>
             </button>
           </div>
@@ -443,7 +452,7 @@
             
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl max-w-sm mx-auto grid grid-cols-2 gap-4">
               <div>
-                <p class="text-xs font-semibold text-slate-505 text-slate-500 uppercase tracking-wider">Correct Answers</p>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Correct Answers</p>
                 <p class="text-2xl font-bold text-emerald-400 mt-1" id="quizResultScore">3 / 3</p>
               </div>
               <div>
@@ -502,7 +511,7 @@
               <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Chat Messages</p>
               <p class="text-3xl font-bold text-slate-900" id="statChatsCount">0</p>
             </div>
-            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div>
+            <div class="w-12 h-12 bg-amber-55 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div>
           </div>
         </div>
 
@@ -622,53 +631,17 @@
   <script>
     // --- DATABASE & APP STATE ---
     let currentUser = null;
-    let activeLessonId = 1;
+    let activeLessonId = null;
     let tempUploadedVideoUrl = null;
     let activeRightPanelTab = 'doubt';
     
-    // Dynamic teachers and histories list
     let teacherChatHistories = {};
 
+    // Empty array to support ONLY real video uploads
     let defaultLessons = [];
 
-    const WAVE_QUIZZES = {
-      1: [
-        {
-          question: "Which cell organelle is responsible for capturing solar energy during Photosynthesis?",
-          options: ["Mitochondria", "Chloroplast", "Ribosome", "Golgi Body"],
-          correctIndex: 1
-        },
-        {
-          question: "Where do the light-dependent reactions of photosynthesis occur?",
-          options: ["Stroma", "Outer Membrane", "Thylakoid Membrane", "Cytoplasm"],
-          correctIndex: 2
-        },
-        {
-          question: "What is the primary product of the light-independent reactions (Calvin Cycle)?",
-          options: ["Oxygen gas", "Water", "Carbon Dioxide", "Glucose"],
-          correctIndex: 3
-        }
-      ],
-      2: [
-        {
-          question: "What is the formula to calculate the discriminant of a quadratic equation ax² + bx + c = 0?",
-          options: ["b² + 4ac", "b² - 4ac", "b - 4ac", "2a / b²"],
-          correctIndex: 1
-        },
-        {
-          question: "If the discriminant (D) of a quadratic equation is zero, what is the nature of the roots?",
-          options: ["No real roots", "Two distinct real roots", "Exactly one repeating real root", "None of the above"],
-          correctIndex: 2
-        }
-      ],
-      3: [
-        {
-          question: "Which type of friction occurs between sliding layers of a viscous liquid?",
-          options: ["Dry Friction", "Fluid Friction", "Lubricated Friction", "Static Friction"],
-          correctIndex: 1
-        }
-      ]
-    };
+    // Dynamically populated quizzes on upload
+    let WAVE_QUIZZES = {};
 
     let currentQuizIndex = 0;
     let currentQuizScore = 0;
@@ -705,6 +678,14 @@
       if (storedTeacherChats) {
         teacherChatHistories = JSON.parse(storedTeacherChats);
       }
+
+      // Load dynamic quizzes from storage or init
+      const storedQuizzes = localStorage.getItem('eduai_quizzes');
+      if (storedQuizzes) {
+        WAVE_QUIZZES = JSON.parse(storedQuizzes);
+      } else {
+        WAVE_QUIZZES = {};
+      }
     }
 
     function saveLessons() {
@@ -717,6 +698,10 @@
 
     function saveTeacherChats() {
       localStorage.setItem('eduai_teacher_chats', JSON.stringify(teacherChatHistories));
+    }
+
+    function saveQuizzes() {
+      localStorage.setItem('eduai_quizzes', JSON.stringify(WAVE_QUIZZES));
     }
 
     // --- AUTHENTICATION FLOW ---
@@ -774,10 +759,10 @@
       const educatorBtn = document.getElementById('authSelectEducator');
 
       if (role === 'STUDENT') {
-        studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-655 text-indigo-600 shadow-sm border border-slate-200/50";
+        studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
         educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-550 hover:text-slate-900";
       } else {
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-655 text-indigo-600 shadow-sm border border-slate-200/50";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
         studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-555 hover:text-slate-900";
       }
     }
@@ -853,7 +838,6 @@
           if (email === 'student@eduai.com' && password === '123456') {
             currentUser = { name: "Alex Johnson", role: "STUDENT", grade: "Class 10", email: email };
             
-            // Auto register student user in DB if missing
             if (!registeredUsers.some(u => u.email === email)) {
               registeredUsers.push(currentUser);
               localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
@@ -865,7 +849,6 @@
           } else if (email === 'educator@eduai.com' && password === '123456') {
             currentUser = { name: "Dr. Sarah Jenkins", role: "EDUCATOR", grade: "Educator", email: email };
             
-            // Auto register educator user in DB if missing so they appear in teachers chat list
             if (!registeredUsers.some(u => u.email === email)) {
               registeredUsers.push(currentUser);
               localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
@@ -936,10 +919,10 @@
       const educatorBtn = document.getElementById('roleBtnEducator');
 
       if (currentUser.role === 'STUDENT') {
-        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 text-indigo-600 shadow-sm";
         educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
       } else {
-        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 text-indigo-600 shadow-sm";
         studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-555 hover:text-slate-900";
       }
     }
@@ -989,10 +972,10 @@
 
       document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
         ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-600 transition-all flex items-center gap-1.5";
+        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-650 transition-all flex items-center gap-1.5";
       document.getElementById('navTabTeachers').className = pageId === 'student-teachers' 
         ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-600 transition-all flex items-center gap-1.5";
+        : "px-3.5 py-2 rounded-lg text-slate-605 hover:text-indigo-650 transition-all flex items-center gap-1.5";
 
       if (pageId === 'student-dashboard') renderStudentDashboard();
       if (pageId === 'student-teachers') renderTeachersTab();
@@ -1032,7 +1015,7 @@
               ? 'bg-indigo-50/60 border-indigo-200' 
               : 'border-slate-100 hover:bg-slate-50 bg-white'
           } flex items-center gap-3">
-            <div class="w-10 h-10 bg-indigo-100 text-indigo-605 text-indigo-600 rounded-xl flex items-center justify-center font-bold shrink-0">${initials}</div>
+            <div class="w-10 h-10 bg-indigo-100 text-indigo-605 rounded-xl flex items-center justify-center font-bold shrink-0">${initials}</div>
             <div class="overflow-hidden">
               <h4 class="font-extrabold text-sm text-slate-800">${t.name}</h4>
               <p class="text-[11px] text-slate-500 font-medium truncate">Faculty Advisor</p>
@@ -1076,7 +1059,6 @@
       const initials = teacher.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase();
       document.getElementById('activeTeacherAvatar').innerText = initials;
 
-      // Start dynamic initial message if conversation is empty
       if (!teacherChatHistories[activeTeacherId]) {
         teacherChatHistories[activeTeacherId] = [{ sender: 'teacher', text: `Hello! I'm ${teacher.name}. As your faculty advisor, feel free to ask me any question or clear your doubts regarding the lessons!` }];
         saveTeacherChats();
@@ -1122,7 +1104,7 @@
         const teacher = realEducators.find(t => t.email === activeTeacherId);
         if (!teacher) return;
 
-        let teacherReply = `I received your message! As your instructor, I recommend reviewing the latest lesson files and transcripts published in your Class 10 dashboard. Let me know if you run into any trouble.`;
+        let teacherReply = `I received your message! As your instructor, I recommend reviewing the latest lesson files and transcripts published in your dashboard. Let me know if you run into any trouble.`;
         
         teacherChatHistories[activeTeacherId].push({ sender: 'teacher', text: teacherReply });
         renderTeacherChatBox();
@@ -1157,7 +1139,7 @@
           <div class="py-16 bg-white border border-slate-100 rounded-3xl flex flex-col items-center justify-center text-center">
             <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="search" class="w-8 h-8"></i></div>
             <h3 class="font-bold text-slate-800 text-lg">No lessons found</h3>
-            <p class="text-slate-405 text-sm max-w-xs mt-1">Syllabus is empty. Go to Educator View (log in with educator@eduai.com) to publish new lessons.</p>
+            <p class="text-slate-405 text-sm max-w-xs mt-1">Syllabus is empty. Go to Educator View (log in with educator@eduai.com) to upload your real lesson video files.</p>
           </div>
         `;
         lucide.createIcons();
@@ -1193,7 +1175,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                       <div>
                         <h4 class="font-extrabold text-slate-900 text-base">${chapterName}</h4>
-                        <p class="text-xs text-slate-405 text-slate-400 font-medium">${chapterLessons.length} interactive sessions</p>
+                        <p class="text-xs text-slate-400 font-medium">${chapterLessons.length} interactive sessions</p>
                       </div>
                       
                       <div class="flex items-center gap-3 w-full sm:w-48 text-xs font-bold text-slate-500">
@@ -1206,7 +1188,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
                       ${chapterLessons.map(lesson => {
-                        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native Video' : 'Default Sample';
+                        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native Video' : 'Reference Video';
                         return `
                           <div class="border border-slate-100 hover:border-indigo-100 bg-slate-50/30 hover:bg-white rounded-2xl p-4 transition-all flex flex-col justify-between space-y-4 group">
                             <div>
@@ -1221,7 +1203,7 @@
                               <p class="text-[11px] text-slate-400 mt-1">${lesson.instructor}</p>
                             </div>
                             
-                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-650 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
+                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
                               <i data-lucide="play" class="w-3.5 h-3.5"></i> Learn Now
                             </button>
                           </div>
@@ -1277,7 +1259,7 @@
           </div>
           <h3 class="text-base font-bold text-white">No Quiz Available</h3>
           <p class="text-xs text-slate-400 max-w-xs mx-auto">
-            Our educators haven't uploaded an interactive WAVE quiz for this video yet. Check back soon!
+            Interactive quiz is generating from the transcript structure. Check back in a moment!
           </p>
         `;
         introState.classList.remove('hidden');
@@ -1315,7 +1297,7 @@
       
       const optionsContainer = document.getElementById('quizOptionsContainer');
       optionsContainer.innerHTML = currentQ.options.map((option, idx) => `
-        <button onclick="selectWAVEOption(${idx})" id="opt-btn-${idx}" class="w-full text-left p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all text-sm font-medium text-slate-350 flex justify-between items-center group">
+        <button onclick="selectWAVEOption(${idx})" id="opt-btn-${idx}" class="w-full text-left p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all text-sm font-medium text-slate-305 flex justify-between items-center group">
           <span>${option}</span>
           <span class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-indigo-400 text-transparent text-xs font-bold">o</span>
         </button>
@@ -1339,11 +1321,11 @@
       currentQ.options.forEach((_, optionIdx) => {
         const btn = document.getElementById(`opt-btn-${optionIdx}`);
         if (optionIdx === currentQ.correctIndex) {
-          btn.className = "w-full text-left p-4 rounded-2xl bg-emerald-950/60 border-2 border-emerald-500 text-white text-sm font-semibold flex justify-between items-center";
-          btn.innerHTML += `<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>`;
+          btn.className = "w-full text-left p-4 rounded-2xl bg-emerald-955 bg-emerald-955/60 border-2 border-emerald-500 text-white text-sm font-semibold flex justify-between items-center";
+          btn.innerHTML += `<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-450 shrink-0"></i>`;
         } else if (optionIdx === idx) {
           btn.className = "w-full text-left p-4 rounded-2xl bg-rose-955 bg-rose-950/60 border-2 border-rose-500 text-white text-sm font-semibold flex justify-between items-center";
-          btn.innerHTML += `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 shrink-0"></i>`;
+          btn.innerHTML += `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-455 shrink-0"></i>`;
         } else {
           btn.className = "w-full text-left p-4 rounded-2xl bg-slate-900/40 border border-slate-800 text-slate-600 text-sm font-medium flex justify-between items-center cursor-default";
         }
@@ -1351,7 +1333,7 @@
 
       const nextBtn = document.getElementById('quizNextBtn');
       nextBtn.disabled = false;
-      nextBtn.className = "w-full py-3 bg-indigo-650 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95";
+      nextBtn.className = "w-full py-3 bg-indigo-600 hover:bg-indigo-705 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95";
 
       lucide.createIcons();
     }
@@ -1385,8 +1367,17 @@
       if (!lesson) return;
 
       const player = document.getElementById('videoPlayer');
-      player.src = lesson.videoUrl;
-      player.load();
+      const placeholder = document.getElementById('videoPlaceholderMessage');
+
+      if (lesson.videoUrl) {
+        player.src = lesson.videoUrl;
+        player.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        player.load();
+      } else {
+        player.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
 
       document.getElementById('lessonTitle').innerText = lesson.title;
       document.getElementById('lessonSubjectTag').innerText = lesson.subject;
@@ -1429,7 +1420,7 @@
           <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
             <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
               isUser 
-                ? 'bg-indigo-650 bg-indigo-600 text-white rounded-tr-none' 
+                ? 'bg-indigo-600 text-white rounded-tr-none' 
                 : 'bg-slate-800 text-slate-100 rounded-tl-none border border-slate-700/50'
             }">
               <div class="leading-relaxed whitespace-pre-wrap">${msg.text}</div>
@@ -1460,23 +1451,23 @@
         const query = text.toLowerCase();
         let response = "";
 
-        if (query.includes('light') || query.includes('dependent') || query.includes('thylakoid')) {
-          response = "In the light-dependent stage of photosynthesis, light energy is captured by chlorophyll in the thylakoid membranes. This energy splits water molecules, releasing oxygen gas and generating ATP and NADPH to power the next phase.";
-        } else if (query.includes('calvin') || query.includes('dark') || query.includes('stroma') || query.includes('independent')) {
-          response = "The light-independent reactions (Calvin Cycle) take place in the stroma of chloroplasts. This cycle fixes carbon dioxide into sugar molecules using energy generated from ATP and NADPH.";
-        } else if (query.includes('discriminant') || query.includes('roots') || query.includes('nature')) {
-          response = "The discriminant (D = b² - 4ac) determines root nature:\n\n1. **D > 0**: Two distinct real roots.\n2. **D = 0**: Exactly one repeating real root.\n3. **D < 0**: Two complex conjugate roots.";
-        } else if (query.includes('formula') || query.includes('solve')) {
-          response = "For any quadratic equation ax² + bx + c = 0, the solutions are calculated via the quadratic formula:\n\n**x = [-b ± √(b² - 4ac)] / (2a)**.";
-        } else if (query.includes('type') || query.includes('kinds') || query.includes('friction')) {
-          response = "Friction is divided into categories:\n\n1. **Dry Friction**: Resists motion of solid surfaces in contact (Static vs Kinetic).\n2. **Fluid Friction**: Resists layer motion within viscous fluids.";
+        // Dynamic transcript-based QA matching
+        if (lesson.transcript) {
+          const keywords = query.split(' ');
+          const matchingSentences = lesson.transcript.split(/[.!?]+/).filter(sentence => 
+            keywords.some(word => word.length > 3 && sentence.toLowerCase().includes(word))
+          );
+          
+          if (matchingSentences.length > 0) {
+            response = `According to the lecture context:\n\n"${matchingSentences.slice(0, 2).join('. ').trim()}."`;
+          }
         }
 
         if (!response) {
           if (query.includes('summary') || query.includes('summarize')) {
-            response = `### Professional Summary of "${lesson.title}":\n\nThis course session covers central principles of **${lesson.subject}**. The instructor focuses on building core conceptual understanding, walking through mechanisms and equations necessary to solve real-world problems on this topic.`;
+            response = `### Video Lesson Summary:\n\nIn this session covering **${lesson.title}**, the lecture explains the core principles of **${lesson.subject}**. Educator ${lesson.instructor} outlines the key conceptual definitions, structures, and applications required for examinations.`;
           } else if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
-            response = `### Practice Question:\n\n*Based on the video tutorial for ${lesson.title}, can you explain the central mechanism or equation introduced and how it differs from similar concepts?*\n\nTake a moment to draft your answer!`;
+            response = `### Practice Question:\n\n*Based on the video tutorial for ${lesson.title}, can you explain the central mechanism or equation introduced and how it applies to real-world examples?*\n\nTake a moment to draft your answer!`;
           } else {
             response = `I've analyzed the video content for **${lesson.title}**.\n\nYour question regarding "${text}" relates to critical aspects of the lesson. Based on the course materials, we focus heavily on the topics explained by ${lesson.instructor}. Could you clarify if you need a step-by-step example or a conceptual overview?`;
           }
@@ -1488,7 +1479,6 @@
       }, 1000);
     }
 
-    // typing indicator
     function showTypingIndicator() {
       const chatContainer = document.getElementById('chatMessages');
       const typingDiv = document.createElement('div');
@@ -1520,9 +1510,9 @@
         removeTypingIndicator();
         let reply = "";
         if (action === 'summarize') {
-          reply = `### Video Lesson Summary:\n\n**${lesson.title}**\n${lesson.transcript}\n\n*This content forms the primary reference of the topic.*`;
+          reply = `### Video Lesson Summary:\n\n**${lesson.title}**\n${lesson.transcript || "No transcript notes have been published for this lesson."}\n\n*This content forms the primary reference of the topic.*`;
         } else if (action === 'explain') {
-          reply = `### Simple Analogy:\n\nThink of **${lesson.title}** like an interactive machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
+          reply = `### Simple Analogy:\n\nThink of **${lesson.title}** like a structured machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
         } else if (action === 'formula') {
           reply = `### Core Subject Reference:\n\nFor **${lesson.title}**, make sure you master:\n\n- The fundamental processes\n- The relevant formulas\n- The context-driven variables described by ${lesson.instructor}.`;
         }
@@ -1560,11 +1550,11 @@
       tbody.innerHTML = lessons.map(lesson => {
         const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
         return `
-          <tr class="hover:bg-slate-55/40 hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50 transition-colors">
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
-            <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
+            <td class="p-5 font-medium text-slate-555">${lesson.grade} • ${lesson.subject}</td>
             <td class="p-5">
-              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-655 text-xs font-bold border border-slate-200/50">${videoType}</span>
+              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
             <td class="p-5">
@@ -1591,6 +1581,65 @@
       tempUploadedVideoUrl = URL.createObjectURL(file);
     }
 
+    // Auto-generate Quiz dynamically from uploaded transcript
+    function generateInteractiveQuiz(lessonId, transcript, title) {
+      const sentences = transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 25);
+      
+      let quizQuestions = [];
+      
+      if (sentences.length >= 3) {
+        quizQuestions = [
+          {
+            question: `Based on the lecture for "${title}", which statement is correct?`,
+            options: [
+              sentences[0] + ".",
+              "This process does not exist in standard physical frameworks.",
+              "The formulas are completely independent of initial parameters.",
+              "None of the above statements apply."
+            ],
+            correctIndex: 0
+          },
+          {
+            question: `Regarding the context: "... ${sentences[1].slice(0, 40)} ...", what is the underlying logic?`,
+            options: [
+              "It indicates static, unchangeable system constants.",
+              sentences[1] + ".",
+              "It is an optional mechanism that is rarely utilized.",
+              "It directly contradicts standard theoretical assumptions."
+            ],
+            correctIndex: 1
+          },
+          {
+            question: `Which core concept is highlighted in the final sections of this lesson?`,
+            options: [
+              "Complex external boundary variables.",
+              "A simplified overview of completely unrelated formulas.",
+              sentences[2] + ".",
+              "The process is entirely random and unpredictable."
+            ],
+            correctIndex: 2
+          }
+        ];
+      } else {
+        // Fallback simple quiz if transcript is very short
+        quizQuestions = [
+          {
+            question: `What is the primary topic discussed in the lesson "${title}"?`,
+            options: [
+              `Theoretical concepts regarding ${title}`,
+              "Static equilibrium structures",
+              "Unrelated experimental boundary parameters",
+              "Alternative physical constructs"
+            ],
+            correctIndex: 0
+          }
+        ];
+      }
+
+      WAVE_QUIZZES[lessonId] = quizQuestions;
+      saveQuizzes();
+    }
+
     function handleUpload(e) {
       e.preventDefault();
       
@@ -1604,10 +1653,11 @@
         return;
       }
 
+      const lessonId = lessons.length + 1;
       const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
 
       const newLesson = {
-        id: lessons.length + 1,
+        id: lessonId,
         title: title,
         grade: grade,
         subject: subject,
@@ -1620,6 +1670,9 @@
 
       lessons.push(newLesson);
       saveLessons();
+
+      // Generate dynamic quiz based on educator's uploaded transcript context
+      generateInteractiveQuiz(lessonId, transcript, title);
 
       chatHistories[newLesson.id] = [{ sender: 'ai', text: `Transcript processed! Ask questions about ${newLesson.title}.` }];
       saveChats();
