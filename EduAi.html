@@ -3,41 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduAI - Learn Smarter. Teach Better.</title>
+  <title>EduAI - Interactive Smart Learning Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .chat-scroll::-webkit-scrollbar { width: 4px; }
-    .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --font-primary: 'Plus Jakarta Sans', sans-serif;
+      --font-secondary: 'Outfit', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-primary);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-secondary);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-dark {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .chat-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.3);
+      border-radius: 9999px;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(156, 163, 175, 0.5);
+    }
+
+    .nav-link-active {
+      color: #4f46e5;
+      background-color: #f5f3ff;
+    }
+
+    /* Custom custom styling for video container */
+    .video-shadow {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
   <!-- TOP NAVIGATION BAR -->
-  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 px-4 lg:px-8 py-3 flex items-center justify-between shadow-sm">
-    <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('landing')">
-      <div class="bg-indigo-600 text-white p-2 rounded-xl font-bold text-xl tracking-wider">EduAI</div>
-      <span class="font-bold text-xl text-slate-900 hidden sm:inline">EduAI Platform</span>
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 lg:px-8 py-3.5 flex items-center justify-between shadow-sm">
+    <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateTo('landing')">
+      <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-md shadow-indigo-200 transition-transform group-hover:scale-105">
+        EduAI
+      </div>
+      <span class="font-extrabold text-xl bg-gradient-to-r from-slate-900 to-indigo-950 bg-clip-text text-transparent hidden sm:inline">EduAI Platform</span>
     </div>
 
     <!-- Navigation Controls -->
-    <div class="flex items-center space-x-3 sm:space-x-4">
-      <div class="bg-slate-100 p-1 rounded-lg flex text-xs font-semibold">
-        <button id="roleBtnStudent" onclick="switchRole('STUDENT')" class="px-3 py-1.5 rounded-md transition-all bg-white text-indigo-600 shadow-sm">Student View</button>
-        <button id="roleBtnEducator" onclick="switchRole('EDUCATOR')" class="px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900">Educator View</button>
+    <div class="flex items-center space-x-4">
+      <div id="roleSelectorContainer" class="bg-slate-100 p-1 rounded-xl hidden text-xs font-semibold shadow-inner">
+        <button id="roleBtnStudent" onclick="switchRole('STUDENT')" class="px-3.5 py-1.5 rounded-lg transition-all">Student View</button>
+        <button id="roleBtnEducator" onclick="switchRole('EDUCATOR')" class="px-3.5 py-1.5 rounded-lg transition-all">Educator View</button>
       </div>
 
-      <div id="authNavButtons" class="flex space-x-2">
-        <button onclick="navigateTo('login')" class="px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">Log In</button>
-        <button onclick="navigateTo('login')" class="px-3.5 py-1.5 text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition-colors shadow-sm">Get Started</button>
+      <div id="authNavButtons" class="flex items-center space-x-2">
+        <button onclick="showAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all">Log In</button>
+        <button onclick="showAuthModal('signup')" class="px-4 py-2 text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 rounded-xl transition-all shadow-md shadow-indigo-100">Get Started</button>
       </div>
 
-      <div id="userProfileNav" class="hidden flex items-center space-x-2 border-l border-slate-200 pl-3">
-        <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm" id="navAvatar">S</div>
-        <span class="text-sm font-medium text-slate-700 hidden md:inline" id="navUserName">Alex Johnson</span>
-        <button onclick="logout()" class="text-slate-400 hover:text-red-500 p-1 rounded-md" title="Logout"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+      <div id="userProfileNav" class="hidden flex items-center space-x-3 border-l border-slate-200 pl-4">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold flex items-center justify-center text-sm shadow-md" id="navAvatar">U</div>
+        <div class="hidden md:flex flex-col text-left">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider" id="navRole">Student</span>
+          <span class="text-sm font-bold text-slate-800" id="navUserName">Loading...</span>
+        </div>
+        <button onclick="logout()" class="text-slate-400 hover:text-red-500 hover:bg-red-55 p-2 rounded-xl transition-all" title="Logout">
+          <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -46,271 +99,338 @@
   <main class="flex-1 flex flex-col">
 
     <!-- 1. LANDING PAGE -->
-    <section id="page-landing" class="view-page flex-1">
+    <section id="page-landing" class="view-page flex-1 flex flex-col justify-between">
       <!-- Hero -->
-      <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 text-center">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100 mb-6">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Next-Gen AI Learning Platform
+      <div class="max-w-6xl mx-auto px-4 py-20 sm:py-28 text-center flex-1 flex flex-col justify-center items-center">
+        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100 mb-8">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i> Next-Gen AI Learning Platform
         </span>
-        <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
-          Learn Smarter. <span class="text-indigo-600">Teach Better.</span>
+        <h1 class="text-5xl sm:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 max-w-4xl">
+          Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Teach Better.</span>
         </h1>
-        <p class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-          Watch interactive video lessons with an AI assistant ready to answer your questions strictly based on lesson content, while educators easily manage courses and auto-generate transcripts.
+        <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+          Watch interactive video lessons with an intelligent AI tutor ready to answer questions instantly, while educators upload native video lessons and generate learning contexts seamlessly.
         </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <button onclick="navigateTo('login')" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md transition-all text-base flex items-center justify-center gap-2">
-            Get Started Free <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+          <button onclick="showAuthModal('signup')" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 transition-all hover:translate-y-[-2px] active:translate-y-0 text-base flex items-center justify-center gap-2">
+            Get Started Free <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
-          <button onclick="navigateTo('login')" class="px-8 py-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold transition-all text-base">
+          <button onclick="showAuthModal('signup', 'EDUCATOR')" class="px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl font-bold transition-all hover:translate-y-[-2px] active:translate-y-0 text-base shadow-sm">
             Educator Sign Up
           </button>
         </div>
       </div>
 
       <!-- Features -->
-      <div class="bg-white border-t border-slate-200 py-16">
+      <div class="bg-white border-t border-slate-100 py-20">
         <div class="max-w-6xl mx-auto px-4">
-          <h2 class="text-2xl font-bold text-center text-slate-900 mb-12">Everything you need for modern learning</h2>
+          <h2 class="text-3xl font-extrabold text-center text-slate-900 mb-14 tracking-tight">Everything you need for modern learning</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-              <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
-              <h3 class="font-bold text-lg mb-2 text-slate-900">Video Learning</h3>
-              <p class="text-slate-600 text-sm">High quality structured courses organized cleanly by grade, subject, and topic.</p>
+            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
+              <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="video" class="w-7 h-7"></i></div>
+              <h3 class="font-bold text-xl mb-3 text-slate-950">Local File Video Player</h3>
+              <p class="text-slate-500 leading-relaxed text-sm">Upload MP4, WebM or other video lessons directly from your device. No streaming ads or external links required.</p>
             </div>
-            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-              <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4"><i data-lucide="bot" class="w-6 h-6"></i></div>
-              <h3 class="font-bold text-lg mb-2 text-slate-900">AI Context Assistant</h3>
-              <p class="text-slate-600 text-sm">Ask questions, get summaries, and create practice quizzes powered directly by video transcripts.</p>
+            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
+              <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="bot" class="w-7 h-7"></i></div>
+              <h3 class="font-bold text-xl mb-3 text-slate-955">AI Context Assistant</h3>
+              <p class="text-slate-500 leading-relaxed text-sm">Ask complex questions, get smart transcripts, and practice quizzes calibrated strictly based on your uploaded lesson video content.</p>
             </div>
-            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-              <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4"><i data-lucide="layout-dashboard" class="w-6 h-6"></i></div>
-              <h3 class="font-bold text-lg mb-2 text-slate-900">Educator Dashboard</h3>
-              <p class="text-slate-600 text-sm">Upload content, monitor student engagement, and automatically index lesson transcripts.</p>
+            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
+              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="layout-dashboard" class="w-7 h-7"></i></div>
+              <h3 class="font-bold text-xl mb-3 text-slate-955">Educator Portal</h3>
+              <p class="text-slate-500 leading-relaxed text-sm">Upload native video lessons, paste/extract transcript files, manage the standard curriculum, and overview student interactions.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. LOGIN / SIGNUP -->
-    <section id="page-login" class="view-page flex-1 hidden bg-slate-50 py-12 flex items-center justify-center px-4">
-      <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl max-w-md w-full">
-        <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Welcome to EduAI</h2>
-        <p class="text-slate-500 text-center text-sm mb-6">Choose your account type to continue</p>
+    <!-- 2. LOGIN / SIGNUP MODAL -->
+    <div id="authModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+      <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-2xl max-w-md w-full relative">
+        <button onclick="closeAuthModal()" class="absolute right-6 top-6 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-all">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <div class="text-center mb-6">
+          <h2 id="authModalTitle" class="text-2xl font-bold text-slate-900">Welcome back</h2>
+          <p id="authModalSubtitle" class="text-slate-500 text-sm mt-1">Sign in to access your dashboard</p>
+        </div>
         
-        <div class="grid grid-cols-2 gap-3 mb-6">
-          <button id="authSelectStudent" onclick="setAuthRole('STUDENT')" class="p-3 border-2 border-indigo-600 bg-indigo-50/50 rounded-xl text-center text-indigo-700 font-semibold text-sm">Student</button>
-          <button id="authSelectEducator" onclick="setAuthRole('EDUCATOR')" class="p-3 border-2 border-slate-200 rounded-xl text-center text-slate-600 font-semibold text-sm hover:border-slate-300">Educator</button>
+        <div class="grid grid-cols-2 gap-2.5 mb-6 p-1 bg-slate-100 rounded-2xl">
+          <button id="authSelectStudent" onclick="setAuthRole('STUDENT')" class="py-2.5 rounded-xl text-center font-bold text-sm transition-all">Student</button>
+          <button id="authSelectEducator" onclick="setAuthRole('EDUCATOR')" class="py-2.5 rounded-xl text-center font-bold text-sm transition-all">Educator</button>
         </div>
 
-        <form onsubmit="handleAuth(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Email Address</label>
-            <input type="email" required value="student@eduai.com" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-indigo-600">
+        <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+          <div id="signupNameField" class="hidden">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Full Name</label>
+            <input type="text" id="authName" placeholder="Alex Johnson" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Password</label>
-            <input type="password" required value="••••••••" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-indigo-600">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
+            <input type="email" id="authEmail" required placeholder="name@eduai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
-          <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">Continue</button>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+            <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+          </div>
+          <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
         </form>
 
-        <div class="relative my-6 text-center">
-          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-          <span class="relative bg-white px-3 text-xs text-slate-400">OR</span>
+        <div class="text-center mt-6">
+          <button onclick="toggleAuthMode()" id="authSwitchBtn" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-all">Don't have an account? Sign Up</button>
         </div>
-
-        <button onclick="handleAuth(event)" class="w-full py-2.5 border border-slate-300 rounded-lg font-medium text-sm text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-          Continue with Google
-        </button>
       </div>
-    </section>
+    </div>
 
     <!-- 3. STUDENT SETUP -->
-    <section id="page-student-setup" class="view-page flex-1 hidden bg-slate-50 py-12 flex items-center justify-center px-4">
-      <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full">
-        <h2 class="text-2xl font-bold text-slate-900 mb-1">Customize Your Learning</h2>
-        <p class="text-slate-500 text-sm mb-6">Select your current grade and subjects to personalize your curriculum.</p>
-
-        <div class="space-y-6">
+    <section id="page-student-setup" class="view-page flex-1 hidden bg-slate-50 py-16 flex items-center justify-center px-4">
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl max-w-lg w-full">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-3 bg-indigo-50 text-indigo-600 rounded-2xl"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Select Grade / Class</label>
-            <select id="setupGrade" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-indigo-600 bg-white">
-              <option>Class 9</option>
-              <option selected>Class 10</option>
-              <option>Class 11</option>
-              <option>Class 12</option>
+            <h2 class="text-2xl font-bold text-slate-900">Customize Your learning</h2>
+            <p class="text-slate-500 text-sm">Personalize your EduAI course catalog.</p>
+          </div>
+        </div>
+
+        <div class="space-y-6 mt-6">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Select Your Class / Grade</label>
+            <select id="setupGrade" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white transition-all font-semibold text-slate-700">
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+              <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Class 9">Class 9</option>
+              <option value="Class 10" selected>Class 10</option>
+              <option value="Class 11">Class 11</option>
+              <option value="Class 12">Class 12</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Select Subjects</label>
-            <div class="grid grid-cols-2 gap-2 text-sm">
-              <label class="flex items-center p-2.5 border rounded-lg cursor-pointer hover:bg-slate-50"><input type="checkbox" checked class="mr-2 accent-indigo-600"> Science</label>
-              <label class="flex items-center p-2.5 border rounded-lg cursor-pointer hover:bg-slate-50"><input type="checkbox" checked class="mr-2 accent-indigo-600"> Mathematics</label>
-              <label class="flex items-center p-2.5 border rounded-lg cursor-pointer hover:bg-slate-50"><input type="checkbox" checked class="mr-2 accent-indigo-600"> English</label>
-              <label class="flex items-center p-2.5 border rounded-lg cursor-pointer hover:bg-slate-50"><input type="checkbox" class="mr-2 accent-indigo-600"> Social Science</label>
+            <label class="block text-sm font-semibold text-slate-700 mb-3">Select Interested Subjects</label>
+            <div class="grid grid-cols-2 gap-3 text-sm font-medium">
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Science
+              </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Mathematics
+              </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> English
+              </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Social Science
+              </label>
             </div>
           </div>
 
-          <button onclick="finishSetup()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">Save & Enter Dashboard</button>
+          <button onclick="finishSetup()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-98 mt-2">
+            Save & Open Dashboard
+          </button>
         </div>
       </div>
     </section>
 
     <!-- 4. STUDENT DASHBOARD -->
-    <section id="page-student-dashboard" class="view-page flex-1 hidden bg-slate-50 p-4 lg:p-8">
-      <div class="max-w-7xl mx-auto space-y-8">
+    <section id="page-student-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto space-y-8">
         <!-- Welcome banner -->
-        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 lg:p-8 text-white shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 class="text-2xl lg:text-3xl font-bold mb-1">Welcome back, <span id="studentDashName">Alex</span>! 👋</h1>
-            <p class="text-indigo-100 text-sm">Class 10 • Science & Mathematics Focus</p>
+        <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 rounded-3xl p-6 lg:p-8 text-white shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+          <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-2xl translate-x-20 -translate-y-10"></div>
+          <div class="relative z-10">
+            <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5">Welcome back, <span id="studentDashName">Alex</span>! 👋</h1>
+            <p class="text-indigo-100 text-sm font-medium"><span id="studentDashGrade">Class 10</span> • Science & Mathematics</p>
           </div>
-          <div class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-medium border border-white/20">
-            Overall Completion: <span class="font-bold text-white">68%</span>
+          <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-2xl text-sm font-semibold border border-white/20 shadow-sm relative z-10 flex items-center gap-2">
+            <i data-lucide="trending-up" class="w-4 h-4 text-emerald-300"></i> Course Completion: <span class="font-bold text-white" id="completionRateText">0%</span>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900">Your Active Lessons</h2>
+            <p class="text-slate-500 text-sm">Select a lesson to begin interactive learning.</p>
+          </div>
+          <div class="flex items-center gap-3 w-full md:w-auto">
+            <select id="filterClassDropdown" onchange="renderStudentDashboard()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm bg-white font-medium text-slate-600 focus:outline-none focus:border-indigo-600">
+              <option value="ALL">All Classes</option>
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+              <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Class 9">Class 9</option>
+              <option value="Class 10" selected>Class 10</option>
+              <option value="Class 11">Class 11</option>
+              <option value="Class 12">Class 12</option>
+            </select>
+            <div class="relative flex-1 md:flex-none">
+              <input type="text" id="lessonSearch" oninput="renderStudentDashboard()" placeholder="Search lessons..." class="w-full md:w-60 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:border-indigo-600">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            </div>
           </div>
         </div>
 
         <!-- Lessons Grid -->
-        <div>
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-slate-900">Your Active Lessons</h2>
-            <div class="flex gap-2">
-              <input type="text" placeholder="Search lessons..." class="px-3 py-1.5 border border-slate-300 rounded-lg text-sm bg-white focus:outline-none focus:border-indigo-600">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="coursesGrid">
-            <!-- Dynamic course cards injected via JS -->
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="coursesGrid">
+          <!-- Dynamic course cards injected via JS -->
         </div>
       </div>
     </section>
 
     <!-- 5. VIDEO LEARNING & AI CHATBOT -->
-    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-900 text-white">
-      <div class="max-w-7xl mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
-        
-        <!-- Left 2 Cols: Player & Info -->
-        <div class="lg:col-span-2 space-y-4">
-          <!-- Video Container -->
-          <div class="aspect-video bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-slate-800 flex items-center justify-center">
-            <iframe id="videoPlayer" class="w-full h-full" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-
-          <!-- Video Details -->
-          <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/60 space-y-3">
-            <div class="flex justify-between items-start gap-4">
-              <div>
-                <span class="inline-block px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-semibold mb-2" id="lessonSubjectTag">Science</span>
-                <h1 class="text-xl font-bold text-white" id="lessonTitle">Photosynthesis & Plant Cellular Respiration</h1>
-              </div>
-              <button onclick="toggleLessonComplete()" id="completeBtn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-colors flex items-center gap-1.5 shrink-0">
-                <i data-lucide="check-circle" class="w-4 h-4"></i> <span id="completeBtnText">Mark Complete</span>
-              </button>
-            </div>
-            <p class="text-xs text-slate-400" id="lessonInstructor">Educator: Dr. Sarah Jenkins • Class 10</p>
-            <p class="text-sm text-slate-300 leading-relaxed pt-2 border-t border-slate-700/50" id="lessonDescription">
-              Detailed breakdown of light-dependent and light-independent photosynthesis reactions within plant chloroplasts.
-            </p>
-          </div>
+    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-900 text-white flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
+      <!-- Left side: Player & Info -->
+      <div class="flex-1 flex flex-col p-4 lg:p-6 space-y-4 overflow-y-auto chat-scroll h-full">
+        <!-- Back to Dashboard -->
+        <div>
+          <button onclick="navigateTo('student-dashboard')" class="text-xs font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Dashboard
+          </button>
         </div>
 
-        <!-- Right Col: AI Assistant Chatbot -->
-        <div class="bg-slate-800/90 rounded-2xl border border-slate-700/80 flex flex-col h-[600px] lg:h-auto overflow-hidden shadow-2xl">
-          <!-- Chat Header -->
-          <div class="p-4 border-b border-slate-700 bg-slate-800 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="p-1.5 bg-indigo-600/30 text-indigo-400 rounded-lg"><i data-lucide="bot" class="w-5 h-5"></i></div>
-              <div>
-                <h3 class="font-bold text-sm text-white">EduAI Video Assistant</h3>
-                <p class="text-[10px] text-emerald-400 flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Context Locked to Lesson
-                </p>
-              </div>
-            </div>
-            <button onclick="clearChat()" class="text-slate-400 hover:text-slate-200 text-xs"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-          </div>
-
-          <!-- Quick Actions -->
-          <div class="p-2.5 bg-slate-800/40 border-b border-slate-700/60 flex gap-2 overflow-x-auto text-xs">
-            <button onclick="triggerQuickAi('summarize')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200 whitespace-nowrap transition-colors flex items-center gap-1">
-              <i data-lucide="file-text" class="w-3 h-3 text-indigo-400"></i> Summarize
-            </button>
-            <button onclick="triggerQuickAi('explain')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200 whitespace-nowrap transition-colors flex items-center gap-1">
-              <i data-lucide="smile" class="w-3 h-3 text-amber-400"></i> Explain Simply
-            </button>
-            <button onclick="triggerQuickAi('quiz')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200 whitespace-nowrap transition-colors flex items-center gap-1">
-              <i data-lucide="help-circle" class="w-3 h-3 text-emerald-400"></i> Practice Quiz
-            </button>
-          </div>
-
-          <!-- Chat Messages Area -->
-          <div id="chatMessages" class="flex-1 p-4 space-y-3 overflow-y-auto chat-scroll text-sm">
-            <!-- Messages injected dynamically -->
-          </div>
-
-          <!-- Chat Input -->
-          <form onsubmit="sendChatMessage(event)" class="p-3 border-t border-slate-700 bg-slate-800 flex gap-2">
-            <input type="text" id="chatInput" placeholder="Ask a question about this video..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white p-2 rounded-xl transition-colors shrink-0">
-              <i data-lucide="send" class="w-4 h-4"></i>
-            </button>
-          </form>
+        <!-- Video Player -->
+        <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
+          <video id="videoPlayer" class="w-full h-full object-contain" controls preload="metadata"></video>
         </div>
 
+        <!-- Video Details -->
+        <div class="bg-slate-800/60 p-6 rounded-3xl border border-slate-700/50 space-y-4 max-w-5xl mx-auto w-full">
+          <div class="flex justify-between items-start gap-4">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-3" id="lessonSubjectTag">Science</span>
+              <h1 class="text-2xl font-bold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
+            </div>
+            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0">
+              <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> <span id="completeBtnText">Mark Complete</span>
+            </button>
+          </div>
+          <p class="text-xs text-slate-400 font-medium" id="lessonInstructor">Educator: -</p>
+          <div class="pt-4 border-t border-slate-700/60">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Lesson Description & Notes</h4>
+            <p class="text-sm text-slate-300 leading-relaxed" id="lessonDescription">Detailed breakdown...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: AI Tutor Chatbot -->
+      <div class="w-full lg:w-[400px] xl:w-[450px] border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-950 flex flex-col h-[500px] lg:h-full shrink-0">
+        <!-- Chat Header -->
+        <div class="p-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-indigo-600/20 text-indigo-400 rounded-xl"><i data-lucide="bot" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="font-bold text-sm text-white">EduAI Assistant</h3>
+              <p class="text-[10px] text-emerald-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Context Locked to Lesson
+              </p>
+            </div>
+          </div>
+          <button onclick="clearChat()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-850 transition-all" title="Clear Chat">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="p-3 bg-slate-900/30 border-b border-slate-800/60 flex gap-2 overflow-x-auto text-xs chat-scroll">
+          <button onclick="triggerQuickAi('summarize')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Summarize
+          </button>
+          <button onclick="triggerQuickAi('explain')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+            <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400"></i> Explain Simply
+          </button>
+          <button onclick="triggerQuickAi('quiz')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Mini Quiz
+          </button>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div id="chatMessages" class="flex-1 p-4 space-y-4 overflow-y-auto chat-scroll text-sm">
+          <!-- Messages injected dynamically -->
+        </div>
+
+        <!-- Chat Input -->
+        <form onsubmit="sendChatMessage(event)" class="p-4 border-t border-slate-800 bg-slate-900 flex gap-2.5">
+          <input type="text" id="chatInput" placeholder="Ask a question about this video..." class="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all">
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition-all shadow-md shadow-indigo-550 active:scale-95 shrink-0">
+            <i data-lucide="send" class="w-4.5 h-4.5"></i>
+          </button>
+        </form>
       </div>
     </section>
 
     <!-- 6. EDUCATOR DASHBOARD -->
-    <section id="page-educator-dashboard" class="view-page flex-1 hidden bg-slate-50 p-4 lg:p-8">
-      <div class="max-w-7xl mx-auto space-y-8">
+    <section id="page-educator-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto space-y-8">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 class="text-2xl font-bold text-slate-900">Educator Portal</h1>
-            <p class="text-slate-500 text-sm">Manage lessons and monitor student interaction analytics.</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Educator Portal</h1>
+            <p class="text-slate-500 text-sm">Upload native course videos, write transcripts, and monitor curriculum access.</p>
           </div>
-          <button onclick="navigateTo('upload')" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl flex items-center gap-2 shadow-sm transition-colors">
-            <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload New Lesson
+          <button onclick="navigateTo('upload')" class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-2xl flex items-center gap-2 shadow-md shadow-indigo-100 transition-all hover:translate-y-[-1px] active:translate-y-0">
+            <i data-lucide="plus" class="w-4.5 h-4.5"></i> Add New Lesson
           </button>
         </div>
 
         <!-- Analytics Overview Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            <p class="text-xs font-semibold text-slate-500 mb-1">Total Published Lessons</p>
-            <p class="text-2xl font-bold text-slate-900" id="statLessons">4</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Published Lessons</p>
+              <p class="text-3xl font-bold text-slate-900" id="statLessons">0</p>
+            </div>
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><i data-lucide="video" class="w-6 h-6"></i></div>
           </div>
-          <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            <p class="text-xs font-semibold text-slate-500 mb-1">Enrolled Students</p>
-            <p class="text-2xl font-bold text-slate-900">142</p>
+          <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Students Registered</p>
+              <p class="text-3xl font-bold text-slate-900" id="statStudentsCount">0</p>
+            </div>
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center"><i data-lucide="users" class="w-6 h-6"></i></div>
           </div>
-          <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            <p class="text-xs font-semibold text-slate-500 mb-1">Avg. Completion Rate</p>
-            <p class="text-2xl font-bold text-emerald-600">82%</p>
+          <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Active Classes</p>
+              <p class="text-3xl font-bold text-slate-900" id="statActiveClassesCount">0</p>
+            </div>
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
           </div>
-          <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            <p class="text-xs font-semibold text-slate-500 mb-1">AI Questions Answered</p>
-            <p class="text-2xl font-bold text-indigo-600">1,209</p>
+          <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Chat Messages</p>
+              <p class="text-3xl font-bold text-slate-900" id="statChatsCount">0</p>
+            </div>
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6"></i></div>
           </div>
         </div>
 
         <!-- Educator Lessons Table -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="p-5 border-b border-slate-100 flex justify-between items-center">
-            <h3 class="font-bold text-slate-900">Uploaded Course Material</h3>
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-6 border-b border-slate-100">
+            <h3 class="font-extrabold text-slate-955 text-lg">Published Lessons Directory</h3>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
-              <thead class="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold text-xs uppercase">
+              <thead class="bg-slate-50/75 text-slate-550 border-b border-slate-100 font-bold text-xs uppercase tracking-wider">
                 <tr>
-                  <th class="p-4">Lesson Title</th>
-                  <th class="p-4">Grade / Subject</th>
-                  <th class="p-4">AI Transcript</th>
-                  <th class="p-4">Action</th>
+                  <th class="p-5">Lesson Title</th>
+                  <th class="p-5">Grade / Subject</th>
+                  <th class="p-5">Video Type</th>
+                  <th class="p-5">Transcript</th>
+                  <th class="p-5">Actions</th>
                 </tr>
               </thead>
               <tbody id="educatorLessonsTable" class="divide-y divide-slate-100 text-slate-700">
@@ -323,48 +443,86 @@
     </section>
 
     <!-- 7. UPLOAD LESSON -->
-    <section id="page-upload" class="view-page flex-1 hidden bg-slate-50 p-4 lg:p-8">
-      <div class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-lg">
-        <h2 class="text-xl font-bold text-slate-900 mb-1">Upload New Lesson</h2>
-        <p class="text-slate-500 text-xs mb-6">EduAI will automatically extract the transcript to power student AI tutoring.</p>
-
-        <form onsubmit="handleUpload(event)" class="space-y-4">
+    <section id="page-upload" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+      <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <button onclick="navigateTo('educator-dashboard')" class="p-2 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-700 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Lesson Title</label>
-            <input type="text" id="upTitle" required placeholder="e.g. Introduction to Quadratic Equations" class="w-full px-3.5 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-600">
+            <h2 class="text-2xl font-bold text-slate-900">Upload New Lesson</h2>
+            <p class="text-slate-500 text-xs mt-0.5">Publish high quality learning lessons directly with transcripts to feed the AI tutor.</p>
+          </div>
+        </div>
+
+        <form onsubmit="handleUpload(event)" class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Title</label>
+            <input type="text" id="upTitle" required placeholder="e.g. Introduction to Friction & Surface Contact" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Grade</label>
-              <select id="upGrade" class="w-full px-3.5 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-600 bg-white">
-                <option>Class 9</option>
-                <option>Class 10</option>
-                <option>Class 11</option>
-                <option>Class 12</option>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Grade / Class</label>
+              <select id="upGrade" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
+                <option value="Class 1">Class 1</option>
+                <option value="Class 2">Class 2</option>
+                <option value="Class 3">Class 3</option>
+                <option value="Class 4">Class 4</option>
+                <option value="Class 5">Class 5</option>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10" selected>Class 10</option>
+                <option value="Class 11">Class 11</option>
+                <option value="Class 12">Class 12</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Subject</label>
-              <select id="upSubject" class="w-full px-3.5 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-600 bg-white">
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Subject</label>
+              <select id="upSubject" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all">
                 <option>Science</option>
                 <option>Mathematics</option>
                 <option>English</option>
+                <option>Social Science</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">YouTube Embed / Video URL</label>
-            <input type="text" id="upUrl" required placeholder="https://www.youtube.com/embed/..." class="w-full px-3.5 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-600">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Video File</label>
+            <div class="border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-6 transition-all bg-slate-50/50 flex flex-col items-center justify-center cursor-pointer text-center relative group">
+              <input type="file" id="upVideoFile" accept="video/*" required class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleVideoFileSelect(event)">
+              <div id="videoUploadPlaceholder" class="space-y-2 pointer-events-none">
+                <div class="w-12 h-12 bg-white rounded-xl shadow-sm text-slate-400 flex items-center justify-center mx-auto group-hover:text-indigo-600 transition-colors">
+                  <i data-lucide="video" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-700">Click or drag & drop video file</p>
+                  <p class="text-xs text-slate-400 mt-1">MP4, WebM, or Ogg up to 100MB</p>
+                </div>
+              </div>
+              <div id="videoUploadSelected" class="hidden space-y-2 pointer-events-none">
+                <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mx-auto">
+                  <i data-lucide="check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-bold text-indigo-700" id="selectedVideoName">video.mp4</p>
+                  <p class="text-xs text-slate-400 mt-1" id="selectedVideoSize">0.0 MB</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Lesson Transcript (Context for AI)</label>
-            <textarea id="upTranscript" rows="4" required placeholder="Paste lesson transcript text here..." class="w-full px-3.5 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-600"></textarea>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Transcript (Context for AI Tutor)</label>
+            <textarea id="upTranscript" rows="4" required placeholder="Paste the text transcript or notes of the lesson here so the AI tutor can reference them..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
           </div>
 
-          <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">Publish Lesson & Process AI Context</button>
+          <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-98">
+            Publish Lesson & Process AI Context
+          </button>
         </form>
       </div>
     </section>
@@ -373,18 +531,27 @@
 
   <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    // --- APP STATE ---
-    let currentUser = { name: "Alex Johnson", role: "STUDENT", grade: "Class 10" };
+    // --- DATABASE & APP STATE ---
+    let currentUser = null;
     let activeLessonId = 1;
+    let tempUploadedVideoUrl = null;
 
-    let lessons = [
+    // Fallback sample videos (using high-quality free HTML5 mp4 assets)
+    const SAMPLE_VIDEOS = {
+      1: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      2: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      3: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+    };
+
+    // Pre-loaded lessons (All initial values marked completed: false to start at 0%)
+    let defaultLessons = [
       {
         id: 1,
         title: "Photosynthesis & Cellular Respiration",
         subject: "Science",
         grade: "Class 10",
         instructor: "Dr. Sarah Jenkins",
-        videoUrl: "https://www.youtube.com/embed/sQK3Yr4Sc_U",
+        videoUrl: SAMPLE_VIDEOS[1],
         completed: false,
         transcript: "Photosynthesis is the process used by plants and other organisms to convert light energy into chemical energy. Light-dependent reactions occur in the thylakoid membrane of chloroplasts, converting water and light into ATP, NADPH, and oxygen gas. Light-independent reactions, or the Calvin Cycle, take place in the stroma where carbon dioxide is fixed into glucose."
       },
@@ -394,22 +561,276 @@
         subject: "Mathematics",
         grade: "Class 10",
         instructor: "Prof. Mark Vance",
-        videoUrl: "https://www.youtube.com/embed/ZBalWWHYyiA",
-        completed: true,
+        videoUrl: SAMPLE_VIDEOS[2],
+        completed: false,
         transcript: "A quadratic equation is a second-order polynomial equation in a single variable x, written as ax^2 + bx + c = 0. The discriminant b^2 - 4ac determines the nature of the roots: if positive, two distinct real roots exist; if zero, exactly one real root exists; if negative, complex roots exist."
+      },
+      {
+        id: 3,
+        title: "Introduction to Friction & Surface Resistance",
+        subject: "Science",
+        grade: "Class 8",
+        instructor: "Ms. Linda Kempler",
+        videoUrl: SAMPLE_VIDEOS[3],
+        completed: false,
+        transcript: "Friction is the force resisting the relative motion of solid surfaces, fluid layers, and material elements sliding against each other. There are several types of friction: dry friction resists relative lateral motion of two solid surfaces in contact, and fluid friction describes friction between layers of a viscous fluid that are moving relative to each other."
       }
     ];
 
-    let chatHistories = {
-      1: [{ sender: 'ai', text: "Hello! I'm EduAI. Ask me anything about this video on Photosynthesis!" }],
-      2: [{ sender: 'ai', text: "Hi! Ready to solve Quadratic Equations? Ask any question based on the lesson." }]
+    let lessons = [];
+    let chatHistories = {};
+
+    // --- INITIALIZATION ---
+    window.onload = () => {
+      initDatabase();
+      checkAuth();
+      lucide.createIcons();
     };
+
+    function initDatabase() {
+      const storedLessons = localStorage.getItem('eduai_lessons');
+      if (storedLessons) {
+        lessons = JSON.parse(storedLessons);
+      } else {
+        lessons = defaultLessons;
+        saveLessons();
+      }
+
+      const storedChats = localStorage.getItem('eduai_chats');
+      if (storedChats) {
+        chatHistories = JSON.parse(storedChats);
+      } else {
+        chatHistories = {
+          1: [{ sender: 'ai', text: "Hello! I'm EduAI. Ask me anything about this video on Photosynthesis!" }],
+          2: [{ sender: 'ai', text: "Hi! Ready to solve Quadratic Equations? Ask any question based on the lesson." }],
+          3: [{ sender: 'ai', text: "Welcome! Ask me any physics questions regarding friction, surfaces, or kinetic resistance." }]
+        };
+        saveChats();
+      }
+    }
+
+    function saveLessons() {
+      localStorage.setItem('eduai_lessons', JSON.stringify(lessons));
+    }
+
+    function saveChats() {
+      localStorage.setItem('eduai_chats', JSON.stringify(chatHistories));
+    }
+
+    // --- AUTHENTICATION FLOW ---
+    let authMode = 'login';
+    let selectedAuthRole = 'STUDENT';
+
+    function checkAuth() {
+      const storedUser = localStorage.getItem('eduai_current_user');
+      if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+        setupUserInterface();
+      } else {
+        navigateTo('landing');
+      }
+    }
+
+    function showAuthModal(mode = 'login', role = 'STUDENT') {
+      authMode = mode;
+      selectedAuthRole = role;
+      document.getElementById('authModal').classList.remove('hidden');
+      updateAuthModalUI();
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function toggleAuthMode() {
+      authMode = (authMode === 'login') ? 'signup' : 'login';
+      updateAuthModalUI();
+    }
+
+    function updateAuthModalUI() {
+      const isLogin = authMode === 'login';
+      document.getElementById('authModalTitle').innerText = isLogin ? 'Welcome Back' : 'Create an Account';
+      document.getElementById('authModalSubtitle').innerText = isLogin ? 'Sign in to access your dashboard' : 'Join EduAI for smart video-based learning';
+      document.getElementById('authSubmitBtn').innerText = isLogin ? 'Log In' : 'Sign Up';
+      document.getElementById('authSwitchBtn').innerText = isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In';
+      
+      const nameField = document.getElementById('signupNameField');
+      if (isLogin) {
+        nameField.classList.add('hidden');
+        document.getElementById('authName').required = false;
+      } else {
+        nameField.classList.remove('hidden');
+        document.getElementById('authName').required = true;
+      }
+
+      setAuthRole(selectedAuthRole);
+    }
+
+    function setAuthRole(role) {
+      selectedAuthRole = role;
+      const studentBtn = document.getElementById('authSelectStudent');
+      const educatorBtn = document.getElementById('authSelectEducator');
+
+      if (role === 'STUDENT') {
+        studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
+      } else {
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
+        studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const name = document.getElementById('authName').value.trim();
+
+      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+
+      if (authMode === 'signup') {
+        if (registeredUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+          alert("An account with this email already exists!");
+          return;
+        }
+
+        const newUser = {
+          name: name || 'User',
+          email: email,
+          password: password,
+          role: selectedAuthRole,
+          grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator'
+        };
+
+        registeredUsers.push(newUser);
+        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+
+        currentUser = newUser;
+        localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+        closeAuthModal();
+
+        if (currentUser.role === 'STUDENT') {
+          navigateTo('student-setup');
+        } else {
+          setupUserInterface();
+        }
+      } else {
+        const matchedUser = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+        
+        if (matchedUser) {
+          currentUser = matchedUser;
+          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+          closeAuthModal();
+          setupUserInterface();
+        } else {
+          if (email === 'student@eduai.com' && password === '123456') {
+            currentUser = { name: "Alex Johnson", role: "STUDENT", grade: "Class 10", email: email };
+            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+            closeAuthModal();
+            setupUserInterface();
+          } else if (email === 'educator@eduai.com' && password === '123456') {
+            currentUser = { name: "Dr. Sarah Jenkins", role: "EDUCATOR", grade: "Educator", email: email };
+            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+            closeAuthModal();
+            setupUserInterface();
+          } else {
+            alert("Invalid email or password! Tip: signup first, or log in with student@eduai.com / password '123456'.");
+          }
+        }
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('eduai_current_user');
+      currentUser = null;
+      document.getElementById('authNavButtons').classList.remove('hidden');
+      document.getElementById('userProfileNav').classList.add('hidden');
+      document.getElementById('roleSelectorContainer').classList.add('hidden');
+      
+      const player = document.getElementById('videoPlayer');
+      if (player) {
+        player.pause();
+        player.src = "";
+      }
+      
+      navigateTo('landing');
+    }
+
+    function setupUserInterface() {
+      if (!currentUser) return;
+
+      document.getElementById('authNavButtons').classList.add('hidden');
+      document.getElementById('userProfileNav').classList.remove('hidden');
+      document.getElementById('navUserName').innerText = currentUser.name;
+      document.getElementById('navRole').innerText = currentUser.role === 'STUDENT' ? 'Student' : 'Educator';
+      document.getElementById('navAvatar').innerText = currentUser.name.charAt(0).toUpperCase();
+
+      const roleSelect = document.getElementById('roleSelectorContainer');
+      roleSelect.classList.remove('hidden');
+      updateRoleSelectorButtons();
+
+      if (currentUser.role === 'STUDENT') {
+        navigateTo('student-dashboard');
+      } else {
+        navigateTo('educator-dashboard');
+      }
+    }
+
+    function updateRoleSelectorButtons() {
+      const studentBtn = document.getElementById('roleBtnStudent');
+      const educatorBtn = document.getElementById('roleBtnEducator');
+
+      if (currentUser.role === 'STUDENT') {
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
+      } else {
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 shadow-sm";
+        studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
+      }
+    }
+
+    function switchRole(role) {
+      if (!currentUser) return;
+      currentUser.role = role;
+      
+      localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+      
+      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+      const userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        registeredUsers[userIndex].role = role;
+        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+      }
+
+      setupUserInterface();
+    }
+
+    function finishSetup() {
+      if (!currentUser) return;
+      currentUser.grade = document.getElementById('setupGrade').value;
+      
+      localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+      let registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+      const userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        registeredUsers[userIndex].grade = currentUser.grade;
+        localStorage.setItem('eduai_users', JSON.stringify(registeredUsers));
+      }
+
+      document.getElementById('filterClassDropdown').value = currentUser.grade;
+      navigateTo('student-dashboard');
+    }
 
     // --- NAVIGATION LOGIC ---
     function navigateTo(pageId) {
       document.querySelectorAll('.view-page').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById(`page-${pageId}`);
       if (target) target.classList.remove('hidden');
+
+      if (pageId !== 'video-learning') {
+        const player = document.getElementById('videoPlayer');
+        if (player) player.pause();
+      }
 
       if (pageId === 'student-dashboard') renderStudentDashboard();
       if (pageId === 'educator-dashboard') renderEducatorDashboard();
@@ -418,71 +839,73 @@
       lucide.createIcons();
     }
 
-    function switchRole(role) {
-      currentUser.role = role;
-      document.getElementById('roleBtnStudent').className = role === 'STUDENT' 
-        ? "px-3 py-1.5 rounded-md transition-all bg-white text-indigo-600 shadow-sm" 
-        : "px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900";
-      document.getElementById('roleBtnEducator').className = role === 'EDUCATOR' 
-        ? "px-3 py-1.5 rounded-md transition-all bg-white text-indigo-600 shadow-sm" 
-        : "px-3 py-1.5 rounded-md transition-all text-slate-600 hover:text-slate-900";
-
-      if (role === 'STUDENT') navigateTo('student-dashboard');
-      else navigateTo('educator-dashboard');
-    }
-
-    function setAuthRole(role) {
-      currentUser.role = role;
-      document.getElementById('authSelectStudent').className = role === 'STUDENT'
-        ? "p-3 border-2 border-indigo-600 bg-indigo-50/50 rounded-xl text-center text-indigo-700 font-semibold text-sm"
-        : "p-3 border-2 border-slate-200 rounded-xl text-center text-slate-600 font-semibold text-sm";
-      document.getElementById('authSelectEducator').className = role === 'EDUCATOR'
-        ? "p-3 border-2 border-indigo-600 bg-indigo-50/50 rounded-xl text-center text-indigo-700 font-semibold text-sm"
-        : "p-3 border-2 border-slate-200 rounded-xl text-center text-slate-600 font-semibold text-sm";
-    }
-
-    function handleAuth(e) {
-      e.preventDefault();
-      document.getElementById('authNavButtons').classList.add('hidden');
-      document.getElementById('userProfileNav').classList.remove('hidden');
-      document.getElementById('navUserName').innerText = currentUser.name;
-
-      if (currentUser.role === 'STUDENT') navigateTo('student-setup');
-      else navigateTo('educator-dashboard');
-    }
-
-    function logout() {
-      document.getElementById('authNavButtons').classList.remove('hidden');
-      document.getElementById('userProfileNav').classList.add('hidden');
-      navigateTo('landing');
-    }
-
-    function finishSetup() {
-      currentUser.grade = document.getElementById('setupGrade').value;
-      navigateTo('student-dashboard');
-    }
-
     // --- STUDENT DASHBOARD RENDERING ---
     function renderStudentDashboard() {
+      if (!currentUser) return;
+
+      document.getElementById('studentDashName').innerText = currentUser.name;
+      document.getElementById('studentDashGrade').innerText = currentUser.grade;
+
       const grid = document.getElementById('coursesGrid');
-      grid.innerHTML = lessons.map(lesson => `
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-          <div class="p-5">
-            <div class="flex justify-between items-start mb-3">
-              <span class="px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-bold">${lesson.subject}</span>
-              ${lesson.completed ? '<span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-medium">Completed</span>' : ''}
-            </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">${lesson.title}</h3>
-            <p class="text-xs text-slate-500 mb-4">${lesson.instructor} • ${lesson.grade}</p>
-            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 hover:bg-indigo-600 text-white rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1">
-              <i data-lucide="play-circle" class="w-4 h-4"></i> Start Lesson
-            </button>
+      const filterClass = document.getElementById('filterClassDropdown').value;
+      const searchQuery = document.getElementById('lessonSearch').value.toLowerCase().trim();
+
+      const filtered = lessons.filter(l => {
+        const matchesClass = (filterClass === 'ALL' || l.grade === filterClass);
+        const matchesQuery = l.title.toLowerCase().includes(searchQuery) || l.subject.toLowerCase().includes(searchQuery);
+        return matchesClass && matchesQuery;
+      });
+
+      const totalLessons = lessons.length;
+      const completedCount = lessons.filter(l => l.completed).length;
+      const rate = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+      document.getElementById('completionRateText').innerText = `${rate}%`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 bg-white border border-slate-100 rounded-3xl flex flex-col items-center justify-center text-center">
+            <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="search" class="w-8 h-8"></i></div>
+            <h3 class="font-bold text-slate-800 text-lg">No lessons found</h3>
+            <p class="text-slate-400 text-sm max-w-xs mt-1">Try switching the filters or searching for other subjects.</p>
           </div>
-        </div>
-      `).join('');
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(lesson => {
+        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
+        return `
+          <div class="bg-white rounded-3xl border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-xl hover:translate-y-[-2px] transition-all flex flex-col justify-between">
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-3 py-1 rounded-xl bg-indigo-50 text-indigo-650 text-xs font-bold tracking-wide">${lesson.subject}</span>
+                ${lesson.completed 
+                  ? '<span class="flex items-center gap-1 text-[11px] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-xl font-bold border border-emerald-100"><i data-lucide="check" class="w-3 h-3"></i> Completed</span>' 
+                  : '<span class="text-[11px] bg-slate-105 bg-slate-100 text-slate-500 px-2.5 py-1 rounded-xl font-bold border border-slate-200">Active</span>'
+                }
+              </div>
+              <h3 class="font-bold text-slate-900 text-lg mb-1 leading-snug">${lesson.title}</h3>
+              <p class="text-xs text-slate-400 font-medium">${lesson.instructor} • ${lesson.grade}</p>
+              
+              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <span class="flex items-center gap-1"><i data-lucide="file-video" class="w-3.5 h-3.5"></i> ${videoType}</span>
+              </div>
+            </div>
+            
+            <div class="px-6 pb-6 pt-0">
+              <button onclick="openLesson(${lesson.id})" class="w-full py-3 bg-slate-950 hover:bg-indigo-600 text-white rounded-2xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-98">
+                <i data-lucide="play" class="w-4 h-4"></i> Start Lesson
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
     }
 
-    // --- VIDEO PAGE & AI CHAT ---
+    // --- VIDEO LEARNING PAGE ---
     function openLesson(id) {
       activeLessonId = id;
       navigateTo('video-learning');
@@ -492,38 +915,60 @@
       const lesson = lessons.find(l => l.id === activeLessonId);
       if (!lesson) return;
 
-      document.getElementById('videoPlayer').src = lesson.videoUrl;
+      const player = document.getElementById('videoPlayer');
+      
+      player.src = lesson.videoUrl;
+      player.load();
+
       document.getElementById('lessonTitle').innerText = lesson.title;
       document.getElementById('lessonSubjectTag').innerText = lesson.subject;
       document.getElementById('lessonInstructor').innerText = `Educator: ${lesson.instructor} • ${lesson.grade}`;
+      document.getElementById('lessonDescription').innerText = lesson.transcript;
       
-      const completeBtnText = document.getElementById('completeBtnText');
-      completeBtnText.innerText = lesson.completed ? "Completed" : "Mark Complete";
-
+      updateCompleteBtnState(lesson.completed);
       renderChatMessages();
+    }
+
+    function updateCompleteBtnState(completed) {
+      const completeBtnText = document.getElementById('completeBtnText');
+      const completeBtn = document.getElementById('completeBtn');
+      if (completed) {
+        completeBtnText.innerText = "Completed";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md shadow-emerald-100";
+      } else {
+        completeBtnText.innerText = "Mark Complete";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md shadow-indigo-100";
+      }
     }
 
     function toggleLessonComplete() {
       const lesson = lessons.find(l => l.id === activeLessonId);
       if (lesson) {
         lesson.completed = !lesson.completed;
-        renderVideoPage();
+        saveLessons();
+        updateCompleteBtnState(lesson.completed);
       }
     }
 
+    // --- AI CHATBOT SYSTEM ---
     function renderChatMessages() {
       const chatContainer = document.getElementById('chatMessages');
       const history = chatHistories[activeLessonId] || [];
 
-      chatContainer.innerHTML = history.map(msg => `
-        <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
-          <div class="max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
-            msg.sender === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-100 border border-slate-600'
-          }">
-            ${msg.text}
+      chatContainer.innerHTML = history.map(msg => {
+        const isUser = msg.sender === 'user';
+        return `
+          <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
+            <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
+              isUser 
+                ? 'bg-indigo-600 text-white rounded-tr-none' 
+                : 'bg-slate-800 text-slate-100 rounded-tl-none border border-slate-700/50'
+            }">
+              <div class="leading-relaxed whitespace-pre-wrap">${msg.text}</div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
@@ -539,73 +984,196 @@
       input.value = '';
       renderChatMessages();
 
-      // Simulated Context-Aware AI Response
+      showTypingIndicator();
+
+      // Smart Retrieval Logic from Transcript
       setTimeout(() => {
+        removeTypingIndicator();
         const lesson = lessons.find(l => l.id === activeLessonId);
-        let response = `Based on the video content: I found references regarding "${text.slice(0, 15)}...". ${lesson.transcript.slice(0, 120)}...`;
-        
+        const query = text.toLowerCase();
+        let response = "";
+
+        if (activeLessonId === 1) { // Photosynthesis
+          if (query.includes('light') || query.includes('dependent') || query.includes('thylakoid')) {
+            response = "In the light-dependent stage of photosynthesis, light energy is captured by chlorophyll in the thylakoid membranes. This energy splits water molecules, releasing oxygen gas and generating ATP and NADPH to power the next phase.";
+          } else if (query.includes('calvin') || query.includes('dark') || query.includes('stroma') || query.includes('independent')) {
+            response = "The light-independent reactions (Calvin Cycle) take place in the stroma of chloroplasts. This cycle fixes carbon dioxide into sugar molecules using energy generated from ATP and NADPH.";
+          } else if (query.includes('chloroplast') || query.includes('where')) {
+            response = "Photosynthesis takes place inside plant cell chloroplasts. Light reactions occur in the stacked thylakoid membranes, while the light-independent Calvin Cycle occurs in the surrounding stroma.";
+          }
+        } else if (activeLessonId === 2) { // Quadratic Equations
+          if (query.includes('discriminant') || query.includes('roots') || query.includes('nature')) {
+            response = "The discriminant (D = b² - 4ac) determines root nature:\n\n1. **D > 0**: Two distinct real roots.\n2. **D = 0**: Exactly one repeating real root.\n3. **D < 0**: Two complex conjugate roots.";
+          } else if (query.includes('formula') || query.includes('solve')) {
+            response = "For any quadratic equation ax² + bx + c = 0, the solutions are calculated via the quadratic formula:\n\n**x = [-b ± √(b² - 4ac)] / (2a)**.";
+          }
+        } else if (activeLessonId === 3) { // Friction
+          if (query.includes('type') || query.includes('kinds')) {
+            response = "Friction is divided into distinct categories:\n\n1. **Dry Friction**: Resists motion of solid materials in contact (Static vs Kinetic).\n2. **Fluid Friction**: Resists layer motion within viscous fluids.\n3. **Lubricated Friction**: Where an external fluid separates sliding solids.";
+          } else if (query.includes('fluid') || query.includes('viscous')) {
+            response = "Fluid friction occurs when layers of a viscous fluid move relative to each other. The resistance increases with fluid viscosity (thickness) and relative velocity.";
+          }
+        }
+
+        // Generic fallback answers
+        if (!response) {
+          if (query.includes('summary') || query.includes('summarize')) {
+            response = `### Professional Summary of "${lesson.title}":\n\nThis course session covers central principles of **${lesson.subject}**. The instructor focuses on building core conceptual understanding, walking through mechanisms and equations necessary to solve real-world problems on this topic.`;
+          } else if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
+            response = `### Practice Question:\n\n*Based on the video tutorial for ${lesson.title}, can you explain the central mechanism or equation introduced and how it differs from similar concepts?*\n\nTake a moment to draft your answer!`;
+          } else {
+            response = `I've analyzed the video content for **${lesson.title}**.\n\nYour question regarding "${text}" relates to critical aspects of the lesson. Based on the course materials, we focus heavily on the topics explained by ${lesson.instructor}. Could you clarify if you need a step-by-step example or a conceptual overview?`;
+          }
+        }
+
         chatHistories[activeLessonId].push({ sender: 'ai', text: response });
+        saveChats();
         renderChatMessages();
-      }, 600);
+      }, 1000);
+    }
+
+    function showTypingIndicator() {
+      const chatContainer = document.getElementById('chatMessages');
+      const typingDiv = document.createElement('div');
+      typingDiv.id = 'ai-typing-indicator';
+      typingDiv.className = 'flex justify-start';
+      typingDiv.innerHTML = `
+        <div class="bg-slate-800 text-slate-450 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/50 flex items-center space-x-1.5">
+          <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+          <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+          <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+        </div>
+      `;
+      chatContainer.appendChild(typingDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const indicator = document.getElementById('ai-typing-indicator');
+      if (indicator) indicator.remove();
     }
 
     function triggerQuickAi(action) {
       const lesson = lessons.find(l => l.id === activeLessonId);
       if (!chatHistories[activeLessonId]) chatHistories[activeLessonId] = [];
 
-      let reply = "";
-      if (action === 'summarize') {
-        reply = `**Video Summary:** ${lesson.transcript}`;
-      } else if (action === 'explain') {
-        reply = `**Simple Explanation:** Think of this lesson as a factory where input raw materials get turned into useful energy step-by-step!`;
-      } else if (action === 'quiz') {
-        reply = `**Practice Quiz:**\n1. What is the key concept introduced in ${lesson.title}?\n2. Name one core mechanism described by ${lesson.instructor}.`;
-      }
+      showTypingIndicator();
 
-      chatHistories[activeLessonId].push({ sender: 'ai', text: reply });
-      renderChatMessages();
+      setTimeout(() => {
+        removeTypingIndicator();
+        let reply = "";
+        if (action === 'summarize') {
+          reply = `### Video Lesson Summary:\n\n**${lesson.title}**\n${lesson.transcript}\n\n*This content forms the primary reference of the topic.*`;
+        } else if (action === 'explain') {
+          reply = `### Simple Analogy:\n\nThink of **${lesson.title}** like an interactive machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
+        } else if (action === 'quiz') {
+          reply = `### Practice Mini Quiz:\n\n1. State the central argument presented in **${lesson.title}**.\n2. Summarize how the instructor explains the main concept.\n\n*Draft your answers here or ask for hints!*`;
+        }
+
+        chatHistories[activeLessonId].push({ sender: 'ai', text: reply });
+        saveChats();
+        renderChatMessages();
+      }, 800);
     }
 
     function clearChat() {
       chatHistories[activeLessonId] = [{ sender: 'ai', text: "Chat history cleared. Ask me a question about this video!" }];
+      saveChats();
       renderChatMessages();
     }
 
-    // --- EDUCATOR DASHBOARD & UPLOAD ---
+    // --- EDUCATOR PORTAL ---
     function renderEducatorDashboard() {
+      // Dynamic calculations based on state data for a fully professional view
       document.getElementById('statLessons').innerText = lessons.length;
+      
+      const registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+      const studentCount = registeredUsers.filter(u => u.role === 'STUDENT').length;
+      document.getElementById('statStudentsCount').innerText = studentCount;
+
+      // Count distinct active classes that have lessons published
+      const activeClasses = new Set(lessons.map(l => l.grade));
+      document.getElementById('statActiveClassesCount').innerText = activeClasses.size;
+
+      // Count total chat messages across all histories
+      let totalChatsCount = 0;
+      Object.values(chatHistories).forEach(hist => {
+        totalChatsCount += hist.filter(m => m.sender === 'user').length;
+      });
+      document.getElementById('statChatsCount').innerText = totalChatsCount;
+
       const tbody = document.getElementById('educatorLessonsTable');
-      tbody.innerHTML = lessons.map(lesson => `
-        <tr class="hover:bg-slate-50 transition-colors">
-          <td class="p-4 font-semibold text-slate-900">${lesson.title}</td>
-          <td class="p-4">${lesson.grade} • ${lesson.subject}</td>
-          <td class="p-4"><span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded font-medium">Processed</span></td>
-          <td class="p-4"><button onclick="openLesson(${lesson.id})" class="text-indigo-600 hover:underline font-medium text-xs">Preview</button></td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = lessons.map(lesson => {
+        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
+        return `
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
+            <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
+            <td class="p-5">
+              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-655 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
+            </td>
+            <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
+            <td class="p-5">
+              <button onclick="openLesson(${lesson.id})" class="text-indigo-650 text-indigo-600 hover:underline font-bold text-xs">Preview</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function handleVideoFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const sizeInMB = (file.size / (1024 * 1024)).toFixed(1);
+      document.getElementById('selectedVideoName').innerText = file.name;
+      document.getElementById('selectedVideoSize').innerText = `${sizeInMB} MB`;
+
+      document.getElementById('videoUploadPlaceholder').classList.add('hidden');
+      document.getElementById('videoUploadSelected').classList.remove('hidden');
+
+      tempUploadedVideoUrl = URL.createObjectURL(file);
     }
 
     function handleUpload(e) {
       e.preventDefault();
+      
+      const title = document.getElementById('upTitle').value;
+      const grade = document.getElementById('upGrade').value;
+      const subject = document.getElementById('upSubject').value;
+      const transcript = document.getElementById('upTranscript').value;
+
+      if (!tempUploadedVideoUrl) {
+        alert("Please upload a local video file!");
+        return;
+      }
+
       const newLesson = {
         id: lessons.length + 1,
-        title: document.getElementById('upTitle').value,
-        grade: document.getElementById('upGrade').value,
-        subject: document.getElementById('upSubject').value,
-        videoUrl: document.getElementById('upUrl').value,
-        transcript: document.getElementById('upTranscript').value,
-        instructor: currentUser.name,
+        title: title,
+        grade: grade,
+        subject: subject,
+        videoUrl: tempUploadedVideoUrl,
+        transcript: transcript,
+        instructor: currentUser ? currentUser.name : "Educator",
         completed: false
       };
 
       lessons.push(newLesson);
+      saveLessons();
+
       chatHistories[newLesson.id] = [{ sender: 'ai', text: `Transcript processed! Ask questions about ${newLesson.title}.` }];
-      
+      saveChats();
+
+      tempUploadedVideoUrl = null;
+      document.getElementById('videoUploadPlaceholder').classList.remove('hidden');
+      document.getElementById('videoUploadSelected').classList.add('hidden');
+      e.target.reset();
+
       navigateTo('educator-dashboard');
     }
-
-    // Initialize Lucide icons on start
-    window.onload = () => { lucide.createIcons(); };
   </script>
 </body>
 </html>
