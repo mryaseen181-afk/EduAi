@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduAI - Interactive Smart Learning Platform</title>
+  <title>EduAI - Premium Interactive EdTech Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;805;800;900&display=swap');
     
     :root {
       --font-primary: 'Plus Jakarta Sans', sans-serif;
@@ -23,15 +23,15 @@
     }
 
     .glass {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .glass-dark {
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .chat-scroll::-webkit-scrollbar {
@@ -41,21 +41,26 @@
       background: transparent;
     }
     .chat-scroll::-webkit-scrollbar-thumb {
-      background: rgba(156, 163, 175, 0.3);
+      background: rgba(156, 163, 175, 0.25);
       border-radius: 9999px;
     }
     .chat-scroll::-webkit-scrollbar-thumb:hover {
-      background: rgba(156, 163, 175, 0.5);
+      background: rgba(156, 163, 175, 0.4);
     }
 
-    .nav-link-active {
-      color: #4f46e5;
-      background-color: #f5f3ff;
+    /* Modern EdTech Glow Effects */
+    .brand-glow {
+      text-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
     }
-
-    /* Custom custom styling for video container */
-    .video-shadow {
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    .gradient-border {
+      position: relative;
+      border-radius: 1.5rem;
+      background: linear-gradient(to right, #4f46e5, #8b5cf6);
+      padding: 1px;
+    }
+    .gradient-border-inner {
+      background: #ffffff;
+      border-radius: calc(1.5rem - 1px);
     }
   </style>
 </head>
@@ -64,10 +69,10 @@
   <!-- TOP NAVIGATION BAR -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 lg:px-8 py-3.5 flex items-center justify-between shadow-sm">
     <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateTo('landing')">
-      <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-md shadow-indigo-200 transition-transform group-hover:scale-105">
+      <div class="bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-md shadow-indigo-200 transition-transform group-hover:scale-105">
         EduAI
       </div>
-      <span class="font-extrabold text-xl bg-gradient-to-r from-slate-900 to-indigo-950 bg-clip-text text-transparent hidden sm:inline">EduAI Platform</span>
+      <span class="font-black text-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-violet-950 bg-clip-text text-transparent hidden sm:inline">EduAI Pro</span>
     </div>
 
     <!-- Navigation Controls -->
@@ -78,17 +83,17 @@
       </div>
 
       <div id="authNavButtons" class="flex items-center space-x-2">
-        <button onclick="showAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all">Log In</button>
-        <button onclick="showAuthModal('signup')" class="px-4 py-2 text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 rounded-xl transition-all shadow-md shadow-indigo-100">Get Started</button>
+        <button onclick="showAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-slate-655 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all">Log In</button>
+        <button onclick="showAuthModal('signup')" class="px-4 py-2 text-sm font-semibold bg-indigo-650 bg-indigo-650 bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 rounded-xl transition-all shadow-md shadow-indigo-100">Get Started</button>
       </div>
 
       <div id="userProfileNav" class="hidden flex items-center space-x-3 border-l border-slate-200 pl-4">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold flex items-center justify-center text-sm shadow-md" id="navAvatar">U</div>
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-650 text-white font-bold flex items-center justify-center text-sm shadow-md" id="navAvatar">U</div>
         <div class="hidden md:flex flex-col text-left">
-          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider" id="navRole">Student</span>
+          <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest" id="navRole">Student</span>
           <span class="text-sm font-bold text-slate-800" id="navUserName">Loading...</span>
         </div>
-        <button onclick="logout()" class="text-slate-400 hover:text-red-500 hover:bg-red-55 p-2 rounded-xl transition-all" title="Logout">
+        <button onclick="logout()" class="text-slate-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-all" title="Logout">
           <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
         </button>
       </div>
@@ -103,59 +108,40 @@
       <!-- Hero -->
       <div class="max-w-6xl mx-auto px-4 py-20 sm:py-28 text-center flex-1 flex flex-col justify-center items-center">
         <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100 mb-8">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i> Next-Gen AI Learning Platform
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i> Smart Doubt Engines & Interactive WAVE Classes
         </span>
         <h1 class="text-5xl sm:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 max-w-4xl">
-          Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Teach Better.</span>
+          Learn Smarter. <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-650 bg-clip-text text-transparent">Succeed Faster.</span>
         </h1>
-        <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-          Watch interactive video lessons with an intelligent AI tutor ready to answer questions instantly, while educators upload native video lessons and generate learning contexts seamlessly.
+        <p class="text-lg sm:text-xl text-slate-500 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+          Ask doubts to our 24/7 AI tutor, track your school syllabus path from Class 1-12, take live interactive quizzes, and upload your own school lesson videos instantly.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-          <button onclick="showAuthModal('signup')" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 transition-all hover:translate-y-[-2px] active:translate-y-0 text-base flex items-center justify-center gap-2">
+          <button onclick="showAuthModal('signup')" class="px-8 py-4 bg-indigo-650 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 transition-all hover:translate-y-[-2px] active:translate-y-0 text-base flex items-center justify-center gap-2">
             Get Started Free <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
           <button onclick="showAuthModal('signup', 'EDUCATOR')" class="px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl font-bold transition-all hover:translate-y-[-2px] active:translate-y-0 text-base shadow-sm">
-            Educator Sign Up
+            Educator Portal Sign Up
           </button>
         </div>
       </div>
 
-      <!-- Features -->
-      <div class="bg-white border-t border-slate-100 py-20">
-        <div class="max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl font-extrabold text-center text-slate-900 mb-14 tracking-tight">Everything you need for modern learning</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
-              <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="video" class="w-7 h-7"></i></div>
-              <h3 class="font-bold text-xl mb-3 text-slate-950">Local File Video Player</h3>
-              <p class="text-slate-500 leading-relaxed text-sm">Upload MP4, WebM or other video lessons directly from your device. No streaming ads or external links required.</p>
-            </div>
-            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
-              <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="bot" class="w-7 h-7"></i></div>
-              <h3 class="font-bold text-xl mb-3 text-slate-955">AI Context Assistant</h3>
-              <p class="text-slate-500 leading-relaxed text-sm">Ask complex questions, get smart transcripts, and practice quizzes calibrated strictly based on your uploaded lesson video content.</p>
-            </div>
-            <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-indigo-50/30 transition-all group">
-              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="layout-dashboard" class="w-7 h-7"></i></div>
-              <h3 class="font-bold text-xl mb-3 text-slate-955">Educator Portal</h3>
-              <p class="text-slate-500 leading-relaxed text-sm">Upload native video lessons, paste/extract transcript files, manage the standard curriculum, and overview student interactions.</p>
-            </div>
-          </div>
-        </div>
+      <!-- Brand badges -->
+      <div class="bg-slate-50 border-y border-slate-100 py-8 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+        Inspired by top learning platforms around the globe
       </div>
     </section>
 
     <!-- 2. LOGIN / SIGNUP MODAL -->
     <div id="authModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
       <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-2xl max-w-md w-full relative">
-        <button onclick="closeAuthModal()" class="absolute right-6 top-6 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-all">
+        <button onclick="closeAuthModal()" class="absolute right-6 top-6 text-slate-400 hover:text-slate-650 p-1.5 rounded-lg hover:bg-slate-100 transition-all">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
 
         <div class="text-center mb-6">
-          <h2 id="authModalTitle" class="text-2xl font-bold text-slate-900">Welcome back</h2>
-          <p id="authModalSubtitle" class="text-slate-500 text-sm mt-1">Sign in to access your dashboard</p>
+          <h2 id="authModalTitle" class="text-2xl font-bold text-slate-900">Welcome Back</h2>
+          <p id="authModalSubtitle" class="text-slate-500 text-sm mt-1">Sign in to access your learning dashboard</p>
         </div>
         
         <div class="grid grid-cols-2 gap-2.5 mb-6 p-1 bg-slate-100 rounded-2xl">
@@ -169,18 +155,18 @@
             <input type="text" id="authName" placeholder="Alex Johnson" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
+            <label class="block text-xs font-semibold text-slate-550 uppercase tracking-wider mb-1.5">Email Address</label>
             <input type="email" id="authEmail" required placeholder="name@eduai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+            <label class="block text-xs font-semibold text-slate-550 uppercase tracking-wider mb-1.5">Password</label>
             <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
           </div>
           <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
         </form>
 
         <div class="text-center mt-6">
-          <button onclick="toggleAuthMode()" id="authSwitchBtn" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-all">Don't have an account? Sign Up</button>
+          <button onclick="toggleAuthMode()" id="authSwitchBtn" class="text-xs font-bold text-indigo-600 hover:text-indigo-805 transition-all">Don't have an account? Sign Up</button>
         </div>
       </div>
     </div>
@@ -189,10 +175,10 @@
     <section id="page-student-setup" class="view-page flex-1 hidden bg-slate-50 py-16 flex items-center justify-center px-4">
       <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl max-w-lg w-full">
         <div class="flex items-center gap-3 mb-4">
-          <div class="p-3 bg-indigo-50 text-indigo-600 rounded-2xl"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+          <div class="p-3 bg-indigo-55 text-indigo-600 rounded-2xl"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900">Customize Your learning</h2>
-            <p class="text-slate-500 text-sm">Personalize your EduAI course catalog.</p>
+            <h2 class="text-2xl font-bold text-slate-900">Customize Your Learning</h2>
+            <p class="text-slate-500 text-sm">Select your current grade level to customize your curriculum pathway.</p>
           </div>
         </div>
 
@@ -218,17 +204,17 @@
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-3">Select Interested Subjects</label>
             <div class="grid grid-cols-2 gap-3 text-sm font-medium">
-              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Science
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 accent-indigo-600"> Science
               </label>
-              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Mathematics
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 accent-indigo-600"> Mathematics
               </label>
-              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> English
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" checked class="mr-3 w-4 h-4 rounded text-indigo-605 accent-indigo-600"> English
               </label>
-              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-55/50 hover:bg-slate-50 transition-all select-none">
-                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-600 accent-indigo-600"> Social Science
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 accent-indigo-600"> Social Science
               </label>
             </div>
           </div>
@@ -240,29 +226,36 @@
       </div>
     </section>
 
-    <!-- 4. STUDENT DASHBOARD -->
-    <section id="page-student-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+    <!-- 4. STUDENT DASHBOARD (Vedantu & BYJU'S learning path style) -->
+    <section id="page-student-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8 animate-fade-in">
       <div class="max-w-6xl mx-auto space-y-8">
-        <!-- Welcome banner -->
-        <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-600 rounded-3xl p-6 lg:p-8 text-white shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-          <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-2xl translate-x-20 -translate-y-10"></div>
+        
+        <!-- Welcome card -->
+        <div class="bg-gradient-to-r from-indigo-900 via-indigo-950 to-violet-950 rounded-3xl p-6 lg:p-8 text-white shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+          <div class="absolute right-0 top-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl translate-x-20 -translate-y-10"></div>
           <div class="relative z-10">
-            <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5">Welcome back, <span id="studentDashName">Alex</span>! 👋</h1>
-            <p class="text-indigo-100 text-sm font-medium"><span id="studentDashGrade">Class 10</span> • Science & Mathematics</p>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/20 px-3 py-1 rounded-full">Interactive Student Portal</span>
+            <h1 class="text-3xl lg:text-4xl font-extrabold mb-1.5 mt-3">Ready to study, <span id="studentDashName">Alex</span>? ⚡</h1>
+            <p class="text-slate-300 text-sm font-medium"><span id="studentDashGrade">Class 10</span> • Structured Learning Roadmap</p>
           </div>
-          <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-2xl text-sm font-semibold border border-white/20 shadow-sm relative z-10 flex items-center gap-2">
-            <i data-lucide="trending-up" class="w-4 h-4 text-emerald-300"></i> Course Completion: <span class="font-bold text-white" id="completionRateText">0%</span>
+          <div class="relative z-10 flex flex-col gap-2 shrink-0">
+            <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-2xl text-sm font-semibold border border-white/10 shadow-sm flex items-center gap-2">
+              <i data-lucide="award" class="w-4 h-4 text-amber-405 text-amber-400"></i> Course Completion: <span class="font-bold text-white" id="completionRateText">0%</span>
+            </div>
+            <div class="bg-indigo-600/30 px-5 py-2.5 rounded-2xl text-xs font-semibold text-indigo-300 flex items-center gap-2">
+              <i data-lucide="help-circle" class="w-4 h-4 text-indigo-400"></i> 24/7 AI Doubt Engine: **Active**
+            </div>
           </div>
         </div>
 
         <!-- Filter bar -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-slate-900">Your Active Lessons</h2>
-            <p class="text-slate-500 text-sm">Select a lesson to begin interactive learning.</p>
+            <h2 class="text-2xl font-bold text-slate-900">Your Structured Syllabus</h2>
+            <p class="text-slate-500 text-sm">Select a chapter to play video lectures and ask doubts.</p>
           </div>
           <div class="flex items-center gap-3 w-full md:w-auto">
-            <select id="filterClassDropdown" onchange="renderStudentDashboard()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm bg-white font-medium text-slate-600 focus:outline-none focus:border-indigo-600">
+            <select id="filterClassDropdown" onchange="renderStudentDashboard()" class="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white font-medium text-slate-600 focus:outline-none focus:border-indigo-600 shadow-sm">
               <option value="ALL">All Classes</option>
               <option value="Class 1">Class 1</option>
               <option value="Class 2">Class 2</option>
@@ -278,102 +271,163 @@
               <option value="Class 12">Class 12</option>
             </select>
             <div class="relative flex-1 md:flex-none">
-              <input type="text" id="lessonSearch" oninput="renderStudentDashboard()" placeholder="Search lessons..." class="w-full md:w-60 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:border-indigo-600">
-              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input type="text" id="lessonSearch" oninput="renderStudentDashboard()" placeholder="Search lessons..." class="w-full md:w-60 pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:border-indigo-600 shadow-sm">
+              <i data-lucide="search" class="w-4 h-4 text-slate-405 text-slate-400 absolute left-3.5 top-3.5"></i>
             </div>
           </div>
         </div>
 
-        <!-- Lessons Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="coursesGrid">
-          <!-- Dynamic course cards injected via JS -->
+        <!-- Syllabus pathway grouping -->
+        <div id="syllabusPathContainer" class="space-y-8">
+          <!-- Dynamically generated sections matching PW/BYJU's Chapter lists -->
         </div>
+
       </div>
     </section>
 
-    <!-- 5. VIDEO LEARNING & AI CHATBOT -->
-    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-900 text-white flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
-      <!-- Left side: Player & Info -->
-      <div class="flex-1 flex flex-col p-4 lg:p-6 space-y-4 overflow-y-auto chat-scroll h-full">
-        <!-- Back to Dashboard -->
+    <!-- 5. VIDEO LEARNING, AI DOUBT SOLVER & WAVE INTERACTIVE QUIZZES -->
+    <section id="page-video-learning" class="view-page flex-1 hidden bg-slate-950 text-white flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
+      <!-- Left side: Player, Info & Notes -->
+      <div class="flex-1 flex flex-col p-4 lg:p-6 space-y-4 overflow-y-auto chat-scroll h-full bg-slate-900/40">
         <div>
-          <button onclick="navigateTo('student-dashboard')" class="text-xs font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
+          <button onclick="navigateTo('student-dashboard')" class="text-xs font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 bg-slate-800/40 px-3 py-1.5 rounded-lg border border-slate-800">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Dashboard
           </button>
         </div>
 
-        <!-- Video Player -->
+        <!-- Native Video Player -->
         <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
           <video id="videoPlayer" class="w-full h-full object-contain" controls preload="metadata"></video>
         </div>
 
-        <!-- Video Details -->
-        <div class="bg-slate-800/60 p-6 rounded-3xl border border-slate-700/50 space-y-4 max-w-5xl mx-auto w-full">
+        <!-- Lecture Details & PW Notes style -->
+        <div class="bg-slate-900/60 p-6 rounded-3xl border border-slate-800/80 space-y-4 max-w-5xl mx-auto w-full">
           <div class="flex justify-between items-start gap-4">
             <div>
               <span class="inline-block px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-3" id="lessonSubjectTag">Science</span>
               <h1 class="text-2xl font-bold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
             </div>
-            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0">
+            <button onclick="toggleLessonComplete()" id="completeBtn" class="px-4 py-2 rounded-xl bg-indigo-605 bg-indigo-650 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md active:scale-95">
               <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> <span id="completeBtnText">Mark Complete</span>
             </button>
           </div>
-          <p class="text-xs text-slate-400 font-medium" id="lessonInstructor">Educator: -</p>
-          <div class="pt-4 border-t border-slate-700/60">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Lesson Description & Notes</h4>
-            <p class="text-sm text-slate-300 leading-relaxed" id="lessonDescription">Detailed breakdown...</p>
+          <p class="text-xs text-slate-405 text-slate-400 font-medium" id="lessonInstructor">Educator: -</p>
+          
+          <div class="pt-4 border-t border-slate-805 border-slate-800">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Video Lecture Transcript & Study Reference</h4>
+            <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/40 p-4 rounded-2xl border border-slate-850/50" id="lessonDescription">Detailed breakdown...</p>
           </div>
         </div>
       </div>
 
-      <!-- Right side: AI Tutor Chatbot -->
-      <div class="w-full lg:w-[400px] xl:w-[450px] border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-950 flex flex-col h-[500px] lg:h-full shrink-0">
-        <!-- Chat Header -->
-        <div class="p-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="p-2 bg-indigo-600/20 text-indigo-400 rounded-xl"><i data-lucide="bot" class="w-5 h-5"></i></div>
-            <div>
-              <h3 class="font-bold text-sm text-white">EduAI Assistant</h3>
-              <p class="text-[10px] text-emerald-400 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Context Locked to Lesson
-              </p>
-            </div>
+      <!-- Right side: Vedantu-style Interactive Panel (Tabs for AI Doubt and WAVE Quiz) -->
+      <div class="w-full lg:w-[420px] xl:w-[480px] border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-950 flex flex-col h-[520px] lg:h-full shrink-0">
+        
+        <!-- Interactive Panel Tabs -->
+        <div class="flex border-b border-slate-800 bg-slate-900/60 p-1">
+          <button id="tabBtnDoubt" onclick="switchRightPanelTab('doubt')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2">
+            <i data-lucide="message-square" class="w-4 h-4"></i> AI Doubt Solver
+          </button>
+          <button id="tabBtnQuiz" onclick="switchRightPanelTab('quiz')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2">
+            <i data-lucide="list-checks" class="w-4 h-4"></i> WAVE Live Quiz
+          </button>
+        </div>
+
+        <!-- TAB 1: AI Doubt solver (PW Saarthi Style) -->
+        <div id="panelDoubtSolver" class="flex-1 flex flex-col overflow-hidden">
+          <div class="p-3 bg-indigo-950/30 border-b border-slate-800/80 flex gap-2 overflow-x-auto text-xs chat-scroll">
+            <button onclick="triggerQuickAi('summarize')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Core Concept
+            </button>
+            <button onclick="triggerQuickAi('explain')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+              <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400"></i> Explain Simply
+            </button>
+            <button onclick="triggerQuickAi('formula')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
+              <i data-lucide="binary" class="w-3.5 h-3.5 text-pink-400"></i> key Formula
+            </button>
           </div>
-          <button onclick="clearChat()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-850 transition-all" title="Clear Chat">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-          </button>
+
+          <!-- Chat messages -->
+          <div id="chatMessages" class="flex-1 p-4 space-y-4 overflow-y-auto chat-scroll text-sm">
+            <!-- Messages injected dynamically -->
+          </div>
+
+          <!-- Chat input form -->
+          <form onsubmit="sendChatMessage(event)" class="p-4 border-t border-slate-800 bg-slate-900 flex gap-2.5">
+            <input type="text" id="chatInput" placeholder="Ask a school doubt (e.g. solve, explain)..." class="flex-1 bg-slate-950 border border-slate-850 border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition-all shadow-md active:scale-95 shrink-0">
+              <i data-lucide="send" class="w-4.5 h-4.5"></i>
+            </button>
+          </form>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="p-3 bg-slate-900/30 border-b border-slate-800/60 flex gap-2 overflow-x-auto text-xs chat-scroll">
-          <button onclick="triggerQuickAi('summarize')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-            <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Summarize
-          </button>
-          <button onclick="triggerQuickAi('explain')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-            <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400"></i> Explain Simply
-          </button>
-          <button onclick="triggerQuickAi('quiz')" class="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Mini Quiz
-          </button>
+        <!-- TAB 2: WAVE Live Quiz (Vedantu style interactive quiz dashboard) -->
+        <div id="panelInteractiveQuiz" class="flex-1 flex flex-col p-6 overflow-y-auto chat-scroll hidden bg-slate-950">
+          <div id="quizIntroState" class="space-y-4 text-center my-auto">
+            <div class="w-16 h-16 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-500/20">
+              <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Interactive WAVE Quiz</h3>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+              Test your understanding of the lesson video. Answer the multiple-choice questions correctly to score points!
+            </p>
+            <button onclick="startWAVEQuiz()" class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-650 text-white font-bold text-sm rounded-xl hover:translate-y-[-1px] transition-all active:scale-95 shadow-lg shadow-indigo-500/10">
+              Start Quiz Now
+            </button>
+          </div>
+
+          <div id="quizActiveState" class="hidden space-y-6">
+            <!-- Question header -->
+            <div class="flex justify-between items-center text-xs font-bold text-indigo-400 bg-indigo-500/10 px-4 py-2 rounded-xl border border-indigo-500/20">
+              <span id="quizProgressTracker">Question 1 of 3</span>
+              <span id="quizScoreTracker">Score: 0</span>
+            </div>
+
+            <!-- Question text -->
+            <h4 class="text-base font-extrabold text-white leading-snug" id="quizQuestionText">Loading question...</h4>
+
+            <!-- Options buttons list -->
+            <div class="space-y-3" id="quizOptionsContainer">
+              <!-- Dynamic buttons injected -->
+            </div>
+
+            <!-- Next button -->
+            <button id="quizNextBtn" disabled onclick="nextWAVEQuestion()" class="w-full py-3 bg-slate-800 hover:bg-slate-750 text-slate-400 disabled:opacity-50 font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5">
+              Continue <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div id="quizResultState" class="hidden text-center space-y-5 my-auto">
+            <div class="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
+              <i data-lucide="check" class="w-10 h-10"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-black text-white">Quiz Completed!</h3>
+              <p class="text-xs text-slate-400 mt-1">Vedantu-style WAVE performance report</p>
+            </div>
+            
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl max-w-sm mx-auto grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Correct Answers</p>
+                <p class="text-2xl font-bold text-emerald-400 mt-1" id="quizResultScore">3 / 3</p>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Score Percentage</p>
+                <p class="text-2xl font-bold text-white mt-1" id="quizResultPercent">100%</p>
+              </div>
+            </div>
+
+            <button onclick="startWAVEQuiz()" class="px-6 py-3.5 bg-slate-800 hover:bg-slate-750 text-white font-bold text-sm rounded-xl transition-all border border-slate-700">
+              Retry Quiz
+            </button>
+          </div>
         </div>
 
-        <!-- Chat Messages Area -->
-        <div id="chatMessages" class="flex-1 p-4 space-y-4 overflow-y-auto chat-scroll text-sm">
-          <!-- Messages injected dynamically -->
-        </div>
-
-        <!-- Chat Input -->
-        <form onsubmit="sendChatMessage(event)" class="p-4 border-t border-slate-800 bg-slate-900 flex gap-2.5">
-          <input type="text" id="chatInput" placeholder="Ask a question about this video..." class="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all">
-          <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition-all shadow-md shadow-indigo-550 active:scale-95 shrink-0">
-            <i data-lucide="send" class="w-4.5 h-4.5"></i>
-          </button>
-        </form>
       </div>
     </section>
 
     <!-- 6. EDUCATOR DASHBOARD -->
-    <section id="page-educator-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+    <section id="page-educator-dashboard" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8 animate-fade-in">
       <div class="max-w-6xl mx-auto space-y-8">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
@@ -443,7 +497,7 @@
     </section>
 
     <!-- 7. UPLOAD LESSON -->
-    <section id="page-upload" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8">
+    <section id="page-upload" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8 animate-fade-in">
       <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
         <div class="flex items-center gap-3 mb-6">
           <button onclick="navigateTo('educator-dashboard')" class="p-2 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-700 transition-colors">
@@ -535,15 +589,16 @@
     let currentUser = null;
     let activeLessonId = 1;
     let tempUploadedVideoUrl = null;
+    let activeRightPanelTab = 'doubt'; // 'doubt' or 'quiz'
 
-    // Fallback sample videos (using high-quality free HTML5 mp4 assets)
+    // Fallback sample videos
     const SAMPLE_VIDEOS = {
       1: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
       2: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
       3: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
     };
 
-    // Pre-loaded lessons (All initial values marked completed: false to start at 0%)
+    // Pre-loaded lessons
     let defaultLessons = [
       {
         id: 1,
@@ -553,6 +608,7 @@
         instructor: "Dr. Sarah Jenkins",
         videoUrl: SAMPLE_VIDEOS[1],
         completed: false,
+        chapter: "Chapter 1: Life Processes",
         transcript: "Photosynthesis is the process used by plants and other organisms to convert light energy into chemical energy. Light-dependent reactions occur in the thylakoid membrane of chloroplasts, converting water and light into ATP, NADPH, and oxygen gas. Light-independent reactions, or the Calvin Cycle, take place in the stroma where carbon dioxide is fixed into glucose."
       },
       {
@@ -563,6 +619,7 @@
         instructor: "Prof. Mark Vance",
         videoUrl: SAMPLE_VIDEOS[2],
         completed: false,
+        chapter: "Chapter 1: Quadratic Equations",
         transcript: "A quadratic equation is a second-order polynomial equation in a single variable x, written as ax^2 + bx + c = 0. The discriminant b^2 - 4ac determines the nature of the roots: if positive, two distinct real roots exist; if zero, exactly one real root exists; if negative, complex roots exist."
       },
       {
@@ -573,9 +630,55 @@
         instructor: "Ms. Linda Kempler",
         videoUrl: SAMPLE_VIDEOS[3],
         completed: false,
+        chapter: "Chapter 3: Forces & Physics",
         transcript: "Friction is the force resisting the relative motion of solid surfaces, fluid layers, and material elements sliding against each other. There are several types of friction: dry friction resists relative lateral motion of two solid surfaces in contact, and fluid friction describes friction between layers of a viscous fluid that are moving relative to each other."
       }
     ];
+
+    // Pre-loaded Quizzes (Vedantu Wave Style)
+    const WAVE_QUIZZES = {
+      1: [
+        {
+          question: "Which cell organelle is responsible for capturing solar energy during Photosynthesis?",
+          options: ["Mitochondria", "Chloroplast", "Ribosome", "Golgi Body"],
+          correctIndex: 1
+        },
+        {
+          question: "Where do the light-dependent reactions of photosynthesis occur?",
+          options: ["Stroma", "Outer Membrane", "Thylakoid Membrane", "Cytoplasm"],
+          correctIndex: 2
+        },
+        {
+          question: "What is the primary product of the light-independent reactions (Calvin Cycle)?",
+          options: ["Oxygen gas", "Water", "Carbon Dioxide", "Glucose"],
+          correctIndex: 3
+        }
+      ],
+      2: [
+        {
+          question: "What is the formula to calculate the discriminant of a quadratic equation ax² + bx + c = 0?",
+          options: ["b² + 4ac", "b² - 4ac", "b - 4ac", "2a / b²"],
+          correctIndex: 1
+        },
+        {
+          question: "If the discriminant (D) of a quadratic equation is zero, what is the nature of the roots?",
+          options: ["No real roots", "Two distinct real roots", "Exactly one repeating real root", "None of the above"],
+          correctIndex: 2
+        }
+      ],
+      3: [
+        {
+          question: "Which type of friction occurs between sliding layers of a viscous liquid?",
+          options: ["Dry Friction", "Fluid Friction", "Lubricated Friction", "Static Friction"],
+          correctIndex: 1
+        }
+      ]
+    };
+
+    // State parameters for active quiz
+    let currentQuizIndex = 0;
+    let currentQuizScore = 0;
+    let selectedOptionIndex = null;
 
     let lessons = [];
     let chatHistories = {};
@@ -601,9 +704,9 @@
         chatHistories = JSON.parse(storedChats);
       } else {
         chatHistories = {
-          1: [{ sender: 'ai', text: "Hello! I'm EduAI. Ask me anything about this video on Photosynthesis!" }],
-          2: [{ sender: 'ai', text: "Hi! Ready to solve Quadratic Equations? Ask any question based on the lesson." }],
-          3: [{ sender: 'ai', text: "Welcome! Ask me any physics questions regarding friction, surfaces, or kinetic resistance." }]
+          1: [{ sender: 'ai', text: "Welcome to PW Saarthi Doubt Solver! Ask me any physics or biology query regarding Photosynthesis." }],
+          2: [{ sender: 'ai', text: "Hello! I am your Math solver tutor. Send your equations to get solved step-by-step!" }],
+          3: [{ sender: 'ai', text: "Doubt solver initialized. Ask questions on Friction and Surface Friction." }]
         };
         saveChats();
       }
@@ -650,7 +753,7 @@
     function updateAuthModalUI() {
       const isLogin = authMode === 'login';
       document.getElementById('authModalTitle').innerText = isLogin ? 'Welcome Back' : 'Create an Account';
-      document.getElementById('authModalSubtitle').innerText = isLogin ? 'Sign in to access your dashboard' : 'Join EduAI for smart video-based learning';
+      document.getElementById('authModalSubtitle').innerText = isLogin ? 'Sign in to access your learning dashboard' : 'Join EduAI for smart video-based learning';
       document.getElementById('authSubmitBtn').innerText = isLogin ? 'Log In' : 'Sign Up';
       document.getElementById('authSwitchBtn').innerText = isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In';
       
@@ -673,10 +776,10 @@
 
       if (role === 'STUDENT') {
         studentBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-550 hover:text-slate-900";
       } else {
-        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/50";
-        studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-500 hover:text-slate-900";
+        educatorBtn.className = "py-2.5 rounded-xl text-center font-bold text-sm bg-white text-indigo-650 shadow-sm border border-slate-200/50";
+        studentBtn.className = "py-2.5 rounded-xl text-center font-semibold text-sm text-slate-555 hover:text-slate-900";
       }
     }
 
@@ -784,7 +887,7 @@
         studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
         educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
       } else {
-        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-655 shadow-sm";
+        educatorBtn.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white text-indigo-650 shadow-sm";
         studentBtn.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-550 hover:text-slate-900";
       }
     }
@@ -839,84 +942,266 @@
       lucide.createIcons();
     }
 
-    // --- STUDENT DASHBOARD RENDERING ---
+    // --- STUDENT DASHBOARD RENDERING (PW/BYJU's Chapter Pathway Style) ---
     function renderStudentDashboard() {
       if (!currentUser) return;
 
       document.getElementById('studentDashName').innerText = currentUser.name;
       document.getElementById('studentDashGrade').innerText = currentUser.grade;
 
-      const grid = document.getElementById('coursesGrid');
+      const pathContainer = document.getElementById('syllabusPathContainer');
       const filterClass = document.getElementById('filterClassDropdown').value;
       const searchQuery = document.getElementById('lessonSearch').value.toLowerCase().trim();
 
+      // Filtered lessons
       const filtered = lessons.filter(l => {
         const matchesClass = (filterClass === 'ALL' || l.grade === filterClass);
         const matchesQuery = l.title.toLowerCase().includes(searchQuery) || l.subject.toLowerCase().includes(searchQuery);
         return matchesClass && matchesQuery;
       });
 
+      // Calculate stats
       const totalLessons = lessons.length;
       const completedCount = lessons.filter(l => l.completed).length;
       const rate = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
       document.getElementById('completionRateText').innerText = `${rate}%`;
 
       if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full py-16 bg-white border border-slate-100 rounded-3xl flex flex-col items-center justify-center text-center">
+        pathContainer.innerHTML = `
+          <div class="py-16 bg-white border border-slate-100 rounded-3xl flex flex-col items-center justify-center text-center">
             <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mb-4"><i data-lucide="search" class="w-8 h-8"></i></div>
             <h3 class="font-bold text-slate-800 text-lg">No lessons found</h3>
-            <p class="text-slate-400 text-sm max-w-xs mt-1">Try switching the filters or searching for other subjects.</p>
+            <p class="text-slate-405 text-sm max-w-xs mt-1">Try selecting another grade filter or typing a search term.</p>
           </div>
         `;
         lucide.createIcons();
         return;
       }
 
-      grid.innerHTML = filtered.map(lesson => {
-        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native File' : 'Sample Video';
-        return `
-          <div class="bg-white rounded-3xl border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-xl hover:translate-y-[-2px] transition-all flex flex-col justify-between">
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-4">
-                <span class="px-3 py-1 rounded-xl bg-indigo-50 text-indigo-650 text-xs font-bold tracking-wide">${lesson.subject}</span>
-                ${lesson.completed 
-                  ? '<span class="flex items-center gap-1 text-[11px] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-xl font-bold border border-emerald-100"><i data-lucide="check" class="w-3 h-3"></i> Completed</span>' 
-                  : '<span class="text-[11px] bg-slate-105 bg-slate-100 text-slate-500 px-2.5 py-1 rounded-xl font-bold border border-slate-200">Active</span>'
-                }
-              </div>
-              <h3 class="font-bold text-slate-900 text-lg mb-1 leading-snug">${lesson.title}</h3>
-              <p class="text-xs text-slate-400 font-medium">${lesson.instructor} • ${lesson.grade}</p>
-              
-              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
-                <span class="flex items-center gap-1"><i data-lucide="file-video" class="w-3.5 h-3.5"></i> ${videoType}</span>
-              </div>
+      // Group filtered lessons by Subject, then Chapter
+      const structuredData = {};
+      filtered.forEach(lesson => {
+        const sub = lesson.subject;
+        const chap = lesson.chapter || "General Practice & Topics";
+        if (!structuredData[sub]) structuredData[sub] = {};
+        if (!structuredData[sub][chap]) structuredData[sub][chap] = [];
+        structuredData[sub][chap].push(lesson);
+      });
+
+      // Draw HTML
+      let htmlContent = "";
+      Object.keys(structuredData).forEach(subject => {
+        htmlContent += `
+          <div class="space-y-4">
+            <div class="flex items-center gap-2 pb-2 border-b border-slate-205 border-slate-200">
+              <div class="w-3.5 h-3.5 rounded-full bg-indigo-600"></div>
+              <h3 class="text-lg font-black text-slate-900 tracking-tight">${subject} Syllabus</h3>
             </div>
             
-            <div class="px-6 pb-6 pt-0">
-              <button onclick="openLesson(${lesson.id})" class="w-full py-3 bg-slate-950 hover:bg-indigo-600 text-white rounded-2xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-98">
-                <i data-lucide="play" class="w-4 h-4"></i> Start Lesson
-              </button>
+            <div class="space-y-6">
+              ${Object.keys(structuredData[subject]).map(chapterName => {
+                const chapterLessons = structuredData[subject][chapterName];
+                const completedChapCount = chapterLessons.filter(l => l.completed).length;
+                const progressPercent = Math.round((completedChapCount / chapterLessons.length) * 100);
+
+                return `
+                  <div class="bg-white rounded-3xl border border-slate-200/70 p-6 shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                      <div>
+                        <h4 class="font-extrabold text-slate-900 text-base">${chapterName}</h4>
+                        <p class="text-xs text-slate-400 font-medium">${chapterLessons.length} interactive sessions</p>
+                      </div>
+                      
+                      <!-- Chapter progress bar -->
+                      <div class="flex items-center gap-3 w-full sm:w-48 text-xs font-bold text-slate-500">
+                        <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200/50">
+                          <div class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full rounded-full transition-all" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <span class="shrink-0">${progressPercent}%</span>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                      ${chapterLessons.map(lesson => {
+                        const videoType = lesson.videoUrl.startsWith('data:') || lesson.videoUrl.startsWith('blob:') ? 'Native Video' : 'Default Sample';
+                        return `
+                          <div class="border border-slate-100 hover:border-indigo-100 bg-slate-50/30 hover:bg-white rounded-2xl p-4 transition-all flex flex-col justify-between space-y-4 group">
+                            <div>
+                              <div class="flex justify-between items-start mb-2">
+                                <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">${videoType}</span>
+                                ${lesson.completed 
+                                  ? '<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-lg border border-emerald-100">Done</span>' 
+                                  : '<span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-lg border border-indigo-100">Start</span>'
+                                }
+                              </div>
+                              <h5 class="font-bold text-slate-900 text-sm leading-snug group-hover:text-indigo-600 transition-colors">${lesson.title}</h5>
+                              <p class="text-[11px] text-slate-400 mt-1">${lesson.instructor}</p>
+                            </div>
+                            
+                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-650 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
+                              <i data-lucide="play" class="w-3.5 h-3.5"></i> Learn Now
+                            </button>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
         `;
-      }).join('');
+      });
+
+      pathContainer.innerHTML = htmlContent;
+      lucide.createIcons();
+    }
+
+    // --- VIDEO LEARNING TAB TOGGLE (WAVE VS CHAT) ---
+    function switchRightPanelTab(tab) {
+      activeRightPanelTab = tab;
+      const tabBtnDoubt = document.getElementById('tabBtnDoubt');
+      const tabBtnQuiz = document.getElementById('tabBtnQuiz');
+      const panelDoubt = document.getElementById('panelDoubtSolver');
+      const panelQuiz = document.getElementById('panelInteractiveQuiz');
+
+      if (tab === 'doubt') {
+        tabBtnDoubt.className = "flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 bg-slate-900 text-white";
+        tabBtnQuiz.className = "flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white";
+        panelDoubt.classList.remove('hidden');
+        panelQuiz.classList.add('hidden');
+        renderChatMessages();
+      } else {
+        tabBtnQuiz.className = "flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 bg-slate-900 text-white";
+        tabBtnDoubt.className = "flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white";
+        panelQuiz.classList.remove('hidden');
+        panelDoubt.classList.add('hidden');
+        setupWAVEQuizView();
+      }
+    }
+
+    // --- WAVE INTERACTIVE QUIZZES ENGINE (Vedantu WAVE style) ---
+    function setupWAVEQuizView() {
+      const quiz = WAVE_QUIZZES[activeLessonId];
+      const introState = document.getElementById('quizIntroState');
+      const activeState = document.getElementById('quizActiveState');
+      const resultState = document.getElementById('quizResultState');
+
+      if (!quiz || quiz.length === 0) {
+        introState.innerHTML = `
+          <div class="w-16 h-16 bg-slate-800 text-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-700">
+            <i data-lucide="alert-circle" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">No Quiz Available</h3>
+          <p class="text-xs text-slate-400 max-w-xs mx-auto">
+            Our educators haven't uploaded an interactive WAVE quiz for this video yet. Check back soon!
+          </p>
+        `;
+        introState.classList.remove('hidden');
+        activeState.classList.add('hidden');
+        resultState.classList.add('hidden');
+        lucide.createIcons();
+        return;
+      }
+
+      introState.classList.remove('hidden');
+      activeState.classList.add('hidden');
+      resultState.classList.add('hidden');
+    }
+
+    function startWAVEQuiz() {
+      currentQuizIndex = 0;
+      currentQuizScore = 0;
+      selectedOptionIndex = null;
+
+      document.getElementById('quizIntroState').classList.add('hidden');
+      document.getElementById('quizResultState').classList.add('hidden');
+      document.getElementById('quizActiveState').classList.remove('hidden');
+
+      loadWAVEQuestion();
+    }
+
+    function loadWAVEQuestion() {
+      const questionsList = WAVE_QUIZZES[activeLessonId];
+      const currentQ = questionsList[currentQuizIndex];
+      selectedOptionIndex = null;
+
+      document.getElementById('quizProgressTracker').innerText = `Question ${currentQuizIndex + 1} of ${questionsList.length}`;
+      document.getElementById('quizScoreTracker').innerText = `Score: ${currentQuizScore}`;
+      document.getElementById('quizQuestionText').innerText = currentQ.question;
+      
+      const optionsContainer = document.getElementById('quizOptionsContainer');
+      optionsContainer.innerHTML = currentQ.options.map((option, idx) => `
+        <button onclick="selectWAVEOption(${idx})" id="opt-btn-${idx}" class="w-full text-left p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all text-sm font-medium text-slate-350 flex justify-between items-center group">
+          <span>${option}</span>
+          <span class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-indigo-400 text-transparent text-xs font-bold">o</span>
+        </button>
+      `).join('');
+
+      const nextBtn = document.getElementById('quizNextBtn');
+      nextBtn.disabled = true;
+      nextBtn.className = "w-full py-3 bg-slate-800 text-slate-400 disabled:opacity-50 font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5";
+    }
+
+    function selectWAVEOption(idx) {
+      if (selectedOptionIndex !== null) return; // Prevent double clicking
+      selectedOptionIndex = idx;
+
+      const questionsList = WAVE_QUIZZES[activeLessonId];
+      const currentQ = questionsList[currentQuizIndex];
+      const correct = idx === currentQ.correctIndex;
+
+      if (correct) currentQuizScore++;
+
+      // Highlight options
+      currentQ.options.forEach((_, optionIdx) => {
+        const btn = document.getElementById(`opt-btn-${optionIdx}`);
+        if (optionIdx === currentQ.correctIndex) {
+          // Highlight correct (green)
+          btn.className = "w-full text-left p-4 rounded-2xl bg-emerald-950/60 border-2 border-emerald-500 text-white text-sm font-semibold flex justify-between items-center";
+          btn.innerHTML += `<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-450 text-emerald-400 shrink-0"></i>`;
+        } else if (optionIdx === idx) {
+          // Highlight incorrect selection (red)
+          btn.className = "w-full text-left p-4 rounded-2xl bg-rose-955 bg-rose-950/60 border-2 border-rose-500 text-white text-sm font-semibold flex justify-between items-center";
+          btn.innerHTML += `<i data-lucide="alert-circle" class="w-5 h-5 text-rose-450 text-rose-400 shrink-0"></i>`;
+        } else {
+          // Fade others
+          btn.className = "w-full text-left p-4 rounded-2xl bg-slate-900/40 border border-slate-850 border-slate-800 text-slate-600 text-sm font-medium flex justify-between items-center cursor-default";
+        }
+      });
+
+      const nextBtn = document.getElementById('quizNextBtn');
+      nextBtn.disabled = false;
+      nextBtn.className = "w-full py-3 bg-indigo-600 hover:bg-indigo-705 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95";
 
       lucide.createIcons();
     }
 
-    // --- VIDEO LEARNING PAGE ---
-    function openLesson(id) {
-      activeLessonId = id;
-      navigateTo('video-learning');
+    function nextWAVEQuestion() {
+      const questionsList = WAVE_QUIZZES[activeLessonId];
+      if (currentQuizIndex < questionsList.length - 1) {
+        currentQuizIndex++;
+        loadWAVEQuestion();
+      } else {
+        // Show report card state
+        document.getElementById('quizActiveState').classList.add('hidden');
+        const resultState = document.getElementById('quizResultState');
+        resultState.classList.remove('hidden');
+
+        document.getElementById('quizResultScore').innerText = `${currentQuizScore} / ${questionsList.length}`;
+        const percent = Math.round((currentQuizScore / questionsList.length) * 100);
+        document.getElementById('quizResultPercent').innerText = `${percent}%`;
+        
+        lucide.createIcons();
+      }
     }
 
+    // --- VIDEO LEARNING PAGE ---
     function renderVideoPage() {
       const lesson = lessons.find(l => l.id === activeLessonId);
       if (!lesson) return;
 
       const player = document.getElementById('videoPlayer');
-      
       player.src = lesson.videoUrl;
       player.load();
 
@@ -926,7 +1211,9 @@
       document.getElementById('lessonDescription').innerText = lesson.transcript;
       
       updateCompleteBtnState(lesson.completed);
-      renderChatMessages();
+      
+      // Auto switch to Doubt Solver tab
+      switchRightPanelTab('doubt');
     }
 
     function updateCompleteBtnState(completed) {
@@ -934,10 +1221,10 @@
       const completeBtn = document.getElementById('completeBtn');
       if (completed) {
         completeBtnText.innerText = "Completed";
-        completeBtn.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md shadow-emerald-100";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
       } else {
         completeBtnText.innerText = "Mark Complete";
-        completeBtn.className = "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md shadow-indigo-100";
+        completeBtn.className = "px-4 py-2 rounded-xl bg-indigo-650 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition-all flex items-center gap-2 shrink-0 shadow-md";
       }
     }
 
@@ -1066,8 +1353,8 @@
           reply = `### Video Lesson Summary:\n\n**${lesson.title}**\n${lesson.transcript}\n\n*This content forms the primary reference of the topic.*`;
         } else if (action === 'explain') {
           reply = `### Simple Analogy:\n\nThink of **${lesson.title}** like an interactive machine. \n- The input layers process the start parameters.\n- The middle cycles transform this into energy.\n- The output yields the final results. \n\nThis simple concept underpins the entire lecture!`;
-        } else if (action === 'quiz') {
-          reply = `### Practice Mini Quiz:\n\n1. State the central argument presented in **${lesson.title}**.\n2. Summarize how the instructor explains the main concept.\n\n*Draft your answers here or ask for hints!*`;
+        } else if (action === 'formula') {
+          reply = `### Core Subject Reference:\n\nFor **${lesson.title}**, make sure you master:\n\n- The fundamental processes\n- The relevant formulas\n- The context-driven variables described by ${lesson.instructor}.`;
         }
 
         chatHistories[activeLessonId].push({ sender: 'ai', text: reply });
@@ -1084,18 +1371,15 @@
 
     // --- EDUCATOR PORTAL ---
     function renderEducatorDashboard() {
-      // Dynamic calculations based on state data for a fully professional view
       document.getElementById('statLessons').innerText = lessons.length;
       
       const registeredUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
       const studentCount = registeredUsers.filter(u => u.role === 'STUDENT').length;
       document.getElementById('statStudentsCount').innerText = studentCount;
 
-      // Count distinct active classes that have lessons published
       const activeClasses = new Set(lessons.map(l => l.grade));
       document.getElementById('statActiveClassesCount').innerText = activeClasses.size;
 
-      // Count total chat messages across all histories
       let totalChatsCount = 0;
       Object.values(chatHistories).forEach(hist => {
         totalChatsCount += hist.filter(m => m.sender === 'user').length;
@@ -1110,7 +1394,7 @@
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
             <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
             <td class="p-5">
-              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-655 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
+              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
             <td class="p-5">
@@ -1150,6 +1434,9 @@
         return;
       }
 
+      // Generate a mock chapter name based on title or subject
+      const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
+
       const newLesson = {
         id: lessons.length + 1,
         title: title,
@@ -1158,7 +1445,8 @@
         videoUrl: tempUploadedVideoUrl,
         transcript: transcript,
         instructor: currentUser ? currentUser.name : "Educator",
-        completed: false
+        completed: false,
+        chapter: chapter
       };
 
       lessons.push(newLesson);
