@@ -1047,7 +1047,25 @@
         closeAuthModal();
         setupUserInterface();
       } catch (err) {
-        alert("Google Sign-In Error: " + err.message);
+        console.error("Google Sign-In error:", err);
+        const confirmSandbox = confirm(
+          `Google Sign-In Popup failed: "${err.message}"\n\nThis is usually because Google Auth is not yet enabled in the Firebase Console.\n\nWould you like to log in using a simulated Google sandbox account instead?`
+        );
+        if (confirmSandbox) {
+          const profileData = {
+            uid: "simulated_google_user",
+            name: "Google Student",
+            email: "google.student@gmail.com",
+            role: selectedAuthRole,
+            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+            subjects: ['Science', 'Mathematics'],
+            progress: {}
+          };
+          currentUser = profileData;
+          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+          closeAuthModal();
+          setupUserInterface();
+        }
       }
     }
 
@@ -1112,7 +1130,45 @@
           setupUserInterface();
         }
       } catch (err) {
-        alert("Authentication Error: " + err.message);
+        console.error("Auth error:", err);
+        const confirmSandbox = confirm(
+          `Firebase Authentication Error: "${err.message}"\n\nWould you like to log in using the simulated local sandbox database instead?`
+        );
+        if (confirmSandbox) {
+          let profileData = null;
+          if (authMode === 'signup') {
+            profileData = {
+              uid: "simulated_" + Date.now(),
+              name: name || 'Student',
+              email: email,
+              role: selectedAuthRole,
+              grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
+              subjects: ['Science', 'Mathematics'],
+              progress: {}
+            };
+            let simulatedUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+            simulatedUsers.push(profileData);
+            localStorage.setItem('eduai_users', JSON.stringify(simulatedUsers));
+          } else {
+            if (email === 'student@eduai.com' && password === '123456') {
+              profileData = { uid: "demo_student", name: "Alex Johnson", role: "STUDENT", grade: "Class 10", email: email };
+            } else if (email === 'educator@eduai.com' && password === '123456') {
+              profileData = { uid: "demo_educator", name: "Dr. Sarah Jenkins", role: "EDUCATOR", grade: "Educator", email: email };
+            } else {
+              let simulatedUsers = JSON.parse(localStorage.getItem('eduai_users')) || [];
+              profileData = simulatedUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+            }
+          }
+
+          if (profileData) {
+            currentUser = profileData;
+            localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
+            closeAuthModal();
+            setupUserInterface();
+          } else {
+            alert("No simulated user found. Please Sign Up in sandbox mode first.");
+          }
+        }
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = authMode === 'signup' ? 'Sign Up' : 'Log In';
