@@ -117,7 +117,6 @@
       <div id="studentNavTabs" class="hidden flex items-center bg-slate-100/80 p-0.5 rounded-xl text-xs font-bold border border-slate-200/40">
         <button id="navTabDashboard" onclick="navigateTo('student-dashboard')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> Dashboard</button>
         <button id="navTabTeachers" onclick="navigateTo('student-teachers')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Chat Teachers</button>
-        <button onclick="promptEducatorAccessCode()" class="px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5 border-l border-slate-200 pl-3.5"><i data-lucide="key" class="w-3.5 h-3.5"></i> Teacher Side</button>
       </div>
 
       <div id="authNavButtons" class="flex items-center space-x-2">
@@ -377,6 +376,9 @@
           </div>
 
           <button type="submit" id="profileSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95">Save Changes</button>
+          <div class="pt-3 border-t border-slate-100 text-center">
+            <button type="button" onclick="promptEducatorAccessCode(); closeProfileModal();" class="text-[10px] font-bold text-slate-400 hover:text-slate-600 transition-colors uppercase tracking-wider">Access Faculty Terminal</button>
+          </div>
         </form>
       </div>
     </div>
@@ -2900,13 +2902,13 @@
       const lessonId = Date.now().toString();
       const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
       const quizQuestions = generateInteractiveQuiz(transcript, title);
-
+      const fallbackURL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
       const newLesson = {
         id: lessonId,
         title: title,
         grade: grade,
         subject: subject,
-        videoUrl: finalVideoUrl,
+        videoUrl: videoSourceMode === 'link' ? finalVideoUrl : fallbackURL, // Save working public URL initially so students can see it!
         transcript: transcript,
         instructor: currentUser ? currentUser.name : "Educator",
         completed: false,
@@ -2929,7 +2931,7 @@
             localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
           }
         }).catch(err => {
-          console.warn("Storage upload failed, keeping session-bound local Blob URL:", err);
+          console.warn("Storage upload failed, keeping fallback video URL:", err);
         });
       }
 
