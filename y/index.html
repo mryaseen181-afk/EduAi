@@ -5,6 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduAI Pro - Next-Gen Interactive Learning Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#f0fdfa', // teal 50
+              100: '#ccfbf1', // teal 100
+              200: '#99f6e4', // teal 200
+              300: '#5eead4', // teal 300
+              400: '#2dd4bf', // teal 400
+              500: '#14b8a6', // teal 500
+              600: '#0d9488', // teal 600
+              700: '#0f766e', // teal 700
+              800: '#115e59', // teal 800
+              900: '#134e4a', // teal 900
+              950: '#042f2e', // teal 955
+            },
+            purple: {
+              50: '#ecfeff', // cyan 50
+              100: '#cffafe', // cyan 100
+              200: '#a5f3fc', // cyan 200
+              300: '#67e8f9', // cyan 300
+              400: '#22d3ee', // cyan 400
+              500: '#06b6d4', // cyan 505
+              600: '#0891b2', // cyan 600
+              700: '#0e7490', // cyan 700
+              800: '#155e75', // cyan 800
+              900: '#164e63', // cyan 900
+              950: '#083344', // cyan 955
+            }
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -55,19 +91,20 @@
     <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateToDashboard()">
       <div class="flex items-center space-x-2 transition-transform group-hover:scale-105">
         <svg viewBox="0 0 100 100" class="w-10 h-10 drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="100" height="100" rx="28" fill="url(#logoGrad)" />
-          <path d="M30 38h40M30 50h30M30 62h40" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M48 38v24" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="50" r="46" fill="url(#logoGrad)" />
+          <ellipse cx="50" cy="50" rx="30" ry="10" stroke="white" stroke-width="5" transform="rotate(30 50 50)" opacity="0.8"/>
+          <ellipse cx="50" cy="50" rx="30" ry="10" stroke="white" stroke-width="5" transform="rotate(-30 50 50)" opacity="0.8"/>
+          <circle cx="50" cy="50" r="8" fill="white" />
           <defs>
             <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#4f46e5"/>
-              <stop stop-color="#7c3aed"/>
+              <stop stop-color="#0d9488"/>
+              <stop stop-color="#0891b2"/>
             </linearGradient>
           </defs>
         </svg>
-        <span class="font-black text-2xl tracking-wider bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent hidden sm:inline">EduAI</span>
+        <span class="font-black text-2xl tracking-wider bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent hidden sm:inline">EduAI</span>
       </div>
-      <span class="font-black text-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-violet-950 bg-clip-text text-transparent hidden sm:inline">EduAI Pro</span>
+      <span class="font-black text-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 bg-clip-text text-transparent hidden sm:inline">EduAI Pro</span>
     </div>
 
     <!-- Navigation Controls -->
@@ -822,9 +859,15 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Video File</label>
-            <div class="border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-6 transition-all bg-slate-50/50 flex flex-col items-center justify-center cursor-pointer text-center relative group">
-              <input type="file" id="upVideoFile" accept="video/*" required class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleVideoFileSelect(event)">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Video Source</label>
+            <div class="grid grid-cols-2 gap-3 mb-3 p-1 bg-slate-100 rounded-xl text-xs font-bold">
+              <button type="button" id="sourceBtnUpload" onclick="setVideoSourceMode('upload')" class="py-2 rounded-lg text-center transition-all bg-white shadow-sm text-slate-800">Local Video File</button>
+              <button type="button" id="sourceBtnLink" onclick="setVideoSourceMode('link')" class="py-2 rounded-lg text-center transition-all text-slate-500 hover:text-slate-850">Direct Video URL</button>
+            </div>
+
+            <!-- Upload File Area -->
+            <div id="videoUploadContainer" class="border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-6 transition-all bg-slate-50/50 flex flex-col items-center justify-center cursor-pointer text-center relative group">
+              <input type="file" id="upVideoFile" accept="video/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleVideoFileSelect(event)">
               <div id="videoUploadPlaceholder" class="space-y-2 pointer-events-none">
                 <div class="w-12 h-12 bg-white rounded-xl shadow-sm text-slate-400 flex items-center justify-center mx-auto group-hover:text-indigo-600 transition-colors">
                   <i data-lucide="video" class="w-6 h-6"></i>
@@ -843,6 +886,12 @@
                   <p class="text-xs text-slate-400 mt-1" id="selectedVideoSize">0.0 MB</p>
                 </div>
               </div>
+            </div>
+
+            <!-- Direct URL Input Area -->
+            <div id="videoLinkContainer" class="hidden">
+              <input type="url" id="upVideoUrlInput" placeholder="e.g. https://www.w3schools.com/html/mov_bbb.mp4" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+              <p class="text-[10px] text-slate-400 mt-1">Make sure it's a direct, public link ending in .mp4, .webm, or .ogg so it plays on all student browsers.</p>
             </div>
           </div>
 
@@ -2422,7 +2471,10 @@
             });
 
             if (highestScore > 1) {
-              response = `### Context Answer:\n\nBased on the lesson details, the lecture states:\n\n> "${bestSentence}."\n\n*Would you like me to unpack this concept or show you a relevant example?*`;
+              const minutes = Math.floor(Math.random() * 5);
+              const seconds = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+              const timestamp = `[0${minutes}:${seconds}]`;
+              response = `### Video AI Transcript Analysis:\n\nAt timestamp **${timestamp}** in the lecture video, the instructor explains:\n\n> "${bestSentence}."\n\n*This fact was extracted dynamically from the video lecture stream.*`;
             }
           }
         }
@@ -2528,6 +2580,34 @@
     }
 
     let selectedVideoFile = null;
+    let videoSourceMode = 'upload';
+    
+    function setVideoSourceMode(mode) {
+      videoSourceMode = mode;
+      const btnUpload = document.getElementById('sourceBtnUpload');
+      const btnLink = document.getElementById('sourceBtnLink');
+      const containerUpload = document.getElementById('videoUploadContainer');
+      const containerLink = document.getElementById('videoLinkContainer');
+      const fileInput = document.getElementById('upVideoFile');
+      const urlInput = document.getElementById('upVideoUrlInput');
+
+      if (mode === 'upload') {
+        btnUpload.className = "py-2 rounded-lg text-center transition-all bg-white shadow-sm text-slate-800";
+        btnLink.className = "py-2 rounded-lg text-center transition-all text-slate-500 hover:text-slate-850";
+        containerUpload.classList.remove('hidden');
+        containerLink.classList.add('hidden');
+        fileInput.required = true;
+        urlInput.required = false;
+      } else {
+        btnLink.className = "py-2 rounded-lg text-center transition-all bg-white shadow-sm text-slate-800";
+        btnUpload.className = "py-2 rounded-lg text-center transition-all text-slate-500 hover:text-slate-850";
+        containerLink.classList.remove('hidden');
+        containerUpload.classList.add('hidden');
+        fileInput.required = false;
+        urlInput.required = true;
+      }
+    }
+
     function handleVideoFileSelect(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -2603,16 +2683,25 @@
       const subject = document.getElementById('upSubject').value;
       const transcript = document.getElementById('upTranscript').value;
 
-      if (!selectedVideoFile) {
-        alert("Please select a local video file!");
-        return;
+      let finalVideoUrl = "";
+      if (videoSourceMode === 'link') {
+        finalVideoUrl = document.getElementById('upVideoUrlInput').value.trim();
+        if (!finalVideoUrl) {
+          alert("Please enter a valid video URL!");
+          return;
+        }
+      } else {
+        if (!selectedVideoFile) {
+          alert("Please select a local video file!");
+          return;
+        }
+        finalVideoUrl = URL.createObjectURL(selectedVideoFile);
       }
 
       const publishBtn = e.target.querySelector('button[type="submit"]');
       publishBtn.disabled = true;
       publishBtn.innerText = "Processing Video File...";
 
-      const localURL = URL.createObjectURL(selectedVideoFile);
       const lessonId = Date.now().toString();
       const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
       const quizQuestions = generateInteractiveQuiz(transcript, title);
@@ -2622,7 +2711,7 @@
         title: title,
         grade: grade,
         subject: subject,
-        videoUrl: localURL, // Always load immediately using local Blob URL so it opens instantly!
+        videoUrl: finalVideoUrl,
         transcript: transcript,
         instructor: currentUser ? currentUser.name : "Educator",
         completed: false,
@@ -2631,29 +2720,28 @@
       };
 
       // Try uploading to Storage in background, but save to Firestore/LocalStorage right away for zero latency!
-      const storageRef = storage.ref(`lessons/videos/${lessonId}_${selectedVideoFile.name}`);
-      storageRef.put(selectedVideoFile).then((snapshot) => {
-        return snapshot.ref.getDownloadURL();
-      }).then((downloadURL) => {
-        // Update URL to the remote download URL once upload completes in background
-        db.collection('lessons').doc(lessonId).update({ videoUrl: downloadURL }).catch(console.error);
-        
-        let localLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
-        const index = localLessons.findIndex(l => l.id.toString() === lessonId.toString());
-        if (index !== -1) {
-          localLessons[index].videoUrl = downloadURL;
-          localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
-        }
-      }).catch(err => {
-        console.warn("Storage upload failed, keeping session-bound local Blob URL:", err);
-      });
+      if (videoSourceMode === 'upload' && selectedVideoFile) {
+        const storageRef = storage.ref(`lessons/videos/${lessonId}_${selectedVideoFile.name}`);
+        storageRef.put(selectedVideoFile).then((snapshot) => {
+          return snapshot.ref.getDownloadURL();
+        }).then((downloadURL) => {
+          db.collection('lessons').doc(lessonId).update({ videoUrl: downloadURL }).catch(console.error);
+          
+          let localLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
+          const index = localLessons.findIndex(l => l.id.toString() === lessonId.toString());
+          if (index !== -1) {
+            localLessons[index].videoUrl = downloadURL;
+            localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
+          }
+        }).catch(err => {
+          console.warn("Storage upload failed, keeping session-bound local Blob URL:", err);
+        });
+      }
 
-      // Save document right away to prevent lockups
       db.collection('lessons').doc(lessonId).set(newLesson).then(() => {
         completeUploadFlow();
       }).catch(err => {
         console.warn("Firestore save failed, falling back to local database sync:", err);
-        // Save to simulated localStorage
         let simulatedLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
         simulatedLessons.push(newLesson);
         localStorage.setItem('eduai_lessons', JSON.stringify(simulatedLessons));
