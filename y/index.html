@@ -265,24 +265,6 @@
             <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-[0.98]">Log In</button>
           </div>
 
-          <div id="phoneSignInFields" class="hidden space-y-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Phone Number</label>
-              <input type="tel" id="authPhone" placeholder="+15551234567" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-            </div>
-            <div id="recaptcha-container" class="my-2"></div>
-            <button type="button" id="sendOtpBtn" onclick="handleSendOtp()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-98">Send OTP Code</button>
-            
-            <div id="otpVerifySection" class="hidden space-y-3">
-              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Enter 6-digit OTP Code</label>
-              <input type="text" id="authOtp" placeholder="6-digit code" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-              <button type="button" onclick="handleVerifyOtp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-98">Verify & Sign In</button>
-            </div>
-          </div>
-
-          <div class="text-center pt-2">
-            <button type="button" onclick="togglePhoneMode()" id="phoneToggleLink" class="text-xs font-bold text-indigo-600 hover:underline">Sign In with Phone instead</button>
-          </div>
         </form>
 
         <div class="relative my-5 text-center">
@@ -625,30 +607,23 @@
       <div class="w-full lg:w-[420px] xl:w-[480px] border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-950 flex flex-col h-[520px] lg:h-full shrink-0">
         
         <div class="flex border-b border-slate-800 bg-slate-900/60 p-1">
-          <button id="tabBtnDoubt" onclick="switchRightPanelTab('doubt')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2">
+          <button id="tabBtnDoubt" onclick="switchRightPanelTab('doubt')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 bg-slate-900 text-white">
             <i data-lucide="message-square" class="w-4 h-4"></i> AI Doubt Solver
           </button>
-          <button id="tabBtnQuiz" onclick="switchRightPanelTab('quiz')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2">
+          <button id="tabBtnQuiz" onclick="switchRightPanelTab('quiz')" class="flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white">
             <i data-lucide="list-checks" class="w-4 h-4"></i> WAVE Live Quiz
           </button>
         </div>
 
         <!-- TAB 1: AI Doubt solver -->
         <div id="panelDoubtSolver" class="flex-1 flex flex-col overflow-hidden">
-          <div class="p-3 bg-indigo-950/30 border-b border-slate-800/80 flex gap-2 overflow-x-auto text-xs chat-scroll">
-            <button onclick="triggerQuickAi('summarize')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-              <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Core Concept
-            </button>
-            <button onclick="triggerQuickAi('explain')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-              <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400"></i> Explain Simply
-            </button>
-            <button onclick="triggerQuickAi('formula')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-slate-200 whitespace-nowrap transition-all flex items-center gap-1.5 font-medium border border-slate-800">
-              <i data-lucide="binary" class="w-3.5 h-3.5 text-pink-400"></i> Key Formula
-            </button>
-          </div>
-
           <div id="chatMessages" class="flex-1 p-4 space-y-4 overflow-y-auto chat-scroll text-sm">
             <!-- Messages injected dynamically -->
+          </div>
+
+          <!-- Dynamic Suggested Follow-ups -->
+          <div id="chatSuggestionsContainer" class="px-4 py-2 bg-slate-900 border-t border-slate-800/40 flex gap-2 overflow-x-auto chat-scroll text-[11px] font-semibold text-slate-350">
+            <!-- Dynamically populated suggestions -->
           </div>
 
           <form onsubmit="sendChatMessage(event)" class="p-4 border-t border-slate-800 bg-slate-900 flex gap-2.5">
@@ -939,7 +914,6 @@
 
     // --- AUTHENTICATION FLOW ---
     let authMode = 'login';
-    let authMethod = 'email';
     let selectedAuthRole = 'STUDENT';
 
     function checkAuth() {
@@ -1071,7 +1045,7 @@
       } catch (err) {
         console.error("Google Sign-In error:", err);
         const confirmSandbox = confirm(
-          `Google Sign-In Popup failed: "${err.message}"\n\nThis is usually because Google Auth is not yet enabled in the Firebase Console.\n\nWould you like to log in using a simulated Google sandbox account instead?`
+          `Google Sign-In Popup failed: "${err.message}"\n\nWould you like to log in using a simulated Google sandbox account instead?`
         );
         if (confirmSandbox) {
           const profileData = {
@@ -1197,115 +1171,7 @@
       }
     }
 
-    // --- PHONE NUMBER OTP AUTHENTICATION HANDLERS ---
-    function togglePhoneMode() {
-      const emailFields = document.getElementById('emailSignInFields');
-      const phoneFields = document.getElementById('phoneSignInFields');
-      const link = document.getElementById('phoneToggleLink');
-      
-      if (authMethod === 'email') {
-        authMethod = 'phone';
-        emailFields.classList.add('hidden');
-        phoneFields.classList.remove('hidden');
-        link.innerText = "Sign In with Email instead";
-        document.getElementById('signupNameField').classList.add('hidden');
-      } else {
-        authMethod = 'email';
-        emailFields.classList.remove('hidden');
-        phoneFields.classList.add('hidden');
-        link.innerText = "Sign In with Phone instead";
-        if (authMode === 'signup') {
-          document.getElementById('signupNameField').classList.remove('hidden');
-        }
-      }
-    }
 
-    async function handleSendOtp() {
-      const phone = document.getElementById('authPhone').value.trim();
-      if (!phone) {
-        alert("Please enter a valid phone number including country code (e.g. +15551234567).");
-        return;
-      }
-
-      const sendBtn = document.getElementById('sendOtpBtn');
-      sendBtn.disabled = true;
-      sendBtn.innerText = "Sending...";
-
-      try {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-            'size': 'invisible'
-          });
-        }
-        
-        const confirmationResult = await auth.signInWithPhoneNumber(phone, window.recaptchaVerifier);
-        window.confirmationResult = confirmationResult;
-        
-        document.getElementById('otpVerifySection').classList.remove('hidden');
-        sendBtn.classList.add('hidden');
-        alert("Verification OTP sent to: " + phone);
-      } catch (err) {
-        console.error("Phone Auth Send OTP error:", err);
-        const confirmSandbox = confirm(
-          `Failed to send OTP code: "${err.message}"\n\nThis is usually because Phone Authentication is not yet enabled in the Firebase Console.\n\nWould you like to log in using a simulated Phone sandbox account instead?`
-        );
-        if (confirmSandbox) {
-          const profileData = {
-            uid: "simulated_phone_user",
-            name: "Phone Student",
-            email: phone,
-            role: selectedAuthRole,
-            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
-            subjects: ['Science', 'Mathematics'],
-            progress: {}
-          };
-          currentUser = profileData;
-          localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-          closeAuthModal();
-          setupUserInterface();
-        }
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.innerText = "Send OTP Code";
-      }
-    }
-
-    async function handleVerifyOtp() {
-      const code = document.getElementById('authOtp').value.trim();
-      if (!code) {
-        alert("Please enter the 6-digit verification code.");
-        return;
-      }
-
-      try {
-        const result = await window.confirmationResult.confirm(code);
-        const user = result.user;
-        
-        const doc = await db.collection('users').doc(user.uid).get();
-        let profileData;
-        if (!doc.exists) {
-          profileData = {
-            uid: user.uid,
-            name: "Phone User",
-            email: user.phoneNumber,
-            role: selectedAuthRole,
-            grade: selectedAuthRole === 'STUDENT' ? 'Class 10' : 'Educator',
-            subjects: ['Science', 'Mathematics'],
-            progress: {}
-          };
-          await db.collection('users').doc(user.uid).set(profileData);
-        } else {
-          profileData = doc.data();
-          profileData.uid = user.uid;
-        }
-        currentUser = profileData;
-        localStorage.setItem('eduai_current_user', JSON.stringify(currentUser));
-        closeAuthModal();
-        setupUserInterface();
-      } catch (err) {
-        alert("Invalid verification code: " + err.message);
-      }
-    }
 
     async function logout() {
       try {
@@ -2421,20 +2287,64 @@
           <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
             <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
               isUser 
-                ? 'bg-indigo-600 text-white rounded-tr-none' 
+                ? 'bg-indigo-600 text-white rounded-tr-none shadow-sm' 
                 : 'bg-slate-850 text-slate-100 rounded-tl-none border border-slate-800'
             }">
-              <div class="leading-relaxed whitespace-pre-wrap">${msg.text}</div>
+              <div class="leading-relaxed text-sm whitespace-pre-wrap">${msg.text}</div>
             </div>
           </div>
         `;
       }).join('');
 
       chatContainer.scrollTop = chatContainer.scrollHeight;
+      renderChatSuggestions();
+    }
+
+    function renderChatSuggestions() {
+      const container = document.getElementById('chatSuggestionsContainer');
+      if (!container) return;
+
+      const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
+      if (!lesson) {
+        container.innerHTML = '';
+        return;
+      }
+
+      let prompts = [];
+      if (lesson.subject === 'Science') {
+        prompts = [
+          "Explain the core concept simply",
+          "What is the physical mechanism?",
+          "Give me a real-world analogy"
+        ];
+      } else if (lesson.subject === 'Mathematics') {
+        prompts = [
+          "Show the primary formula",
+          "Give a step-by-step example",
+          "What is the derivation?"
+        ];
+      } else {
+        prompts = [
+          "Summarize this lesson",
+          "What are the main definitions?",
+          "Ask me a practice question"
+        ];
+      }
+
+      container.innerHTML = prompts.map(p => `
+        <button type="button" onclick="submitSuggestedChat('${p.replace(/'/g, "\\'")}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700/50 rounded-xl whitespace-nowrap transition-all">
+          ${p}
+        </button>
+      `).join('');
+    }
+
+    function submitSuggestedChat(text) {
+      document.getElementById('chatInput').value = text;
+      sendChatMessage(new Event('submit'));
     }
 
     function sendChatMessage(e) {
-      e.preventDefault();
+      if (e) e.preventDefault();
       const input = document.getElementById('chatInput');
       const text = input.value.trim();
       if (!text) return;
@@ -2453,13 +2363,31 @@
         let response = "";
 
         if (lesson && lesson.transcript) {
-          const keywords = query.split(' ');
-          const matchingSentences = lesson.transcript.split(/[.!?]+/).filter(sentence => 
-            keywords.some(word => word.length > 3 && sentence.toLowerCase().includes(word))
-          );
+          const stopWords = new Set(["what", "is", "the", "a", "an", "of", "and", "in", "to", "explain", "about", "how", "why", "do", "does", "for"]);
+          const keywords = query.split(/[\s,?.!]+/).filter(w => w.length > 2 && !stopWords.has(w));
           
-          if (matchingSentences.length > 0) {
-            response = `According to the lecture context:\n\n"${matchingSentences.slice(0, 2).join('. ').trim()}."`;
+          if (keywords.length > 0) {
+            const sentences = lesson.transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+            let bestSentence = "";
+            let highestScore = 0;
+
+            sentences.forEach(sentence => {
+              let score = 0;
+              const wordsInSentence = sentence.toLowerCase().split(/[\s,?.!]+/);
+              keywords.forEach(kw => {
+                if (wordsInSentence.includes(kw)) score += 2;
+                else if (sentence.toLowerCase().includes(kw)) score += 1;
+              });
+
+              if (score > highestScore) {
+                highestScore = score;
+                bestSentence = sentence;
+              }
+            });
+
+            if (highestScore > 1) {
+              response = `### Context Answer:\n\nBased on the lesson details, the lecture states:\n\n> "${bestSentence}."\n\n*Would you like me to unpack this concept or show you a relevant example?*`;
+            }
           }
         }
 
@@ -2485,7 +2413,7 @@
       typingDiv.id = 'ai-typing-indicator';
       typingDiv.className = 'flex justify-start';
       typingDiv.innerHTML = `
-        <div class="bg-slate-805 bg-slate-800 text-slate-400 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/50 flex items-center space-x-1.5">
+        <div class="bg-slate-800 text-slate-400 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/50 flex items-center space-x-1.5">
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
           <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
