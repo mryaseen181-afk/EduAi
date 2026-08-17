@@ -612,27 +612,12 @@
           </button>
         </div>
 
-        <!-- Video Player with poster and loading placeholder -->
-        <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-850 border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
-          <video id="videoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata" onerror="handleVideoPlayerError()"></video>
-          <iframe id="youtubePlayer" class="w-full h-full hidden" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <div id="videoPlaceholderMessage" class="text-center text-slate-400 py-16 space-y-3">
-            <div class="w-16 h-16 bg-slate-850 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
-              <i data-lucide="play" class="w-8 h-8"></i>
-            </div>
-            <div>
-              <p class="text-sm font-bold text-white">Loading Lesson Video...</p>
-              <p class="text-xs text-slate-500 mt-1">Please select play or make sure the video file loads correctly.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Lecture Details -->
-        <div class="bg-slate-900/60 p-6 rounded-3xl border border-slate-800/80 space-y-4 max-w-5xl mx-auto w-full">
+        <!-- Lecture Details & Study Card -->
+        <div class="bg-slate-900/60 p-8 rounded-3xl border border-slate-800/80 space-y-6 max-w-5xl mx-auto w-full">
           <div class="flex justify-between items-start gap-4">
             <div>
               <span class="inline-block px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-3" id="lessonSubjectTag">Science</span>
-              <h1 class="text-2xl font-bold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
+              <h1 class="text-3xl font-extrabold text-white tracking-tight" id="lessonTitle">Lesson title</h1>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <button onclick="toggleBookmarkLesson()" id="bookmarkBtn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all flex items-center gap-2 shadow-md active:scale-95">
@@ -643,11 +628,12 @@
               </button>
             </div>
           </div>
-          <p class="text-xs text-slate-400 font-medium" id="lessonInstructor">Educator: -</p>
+          <p class="text-xs text-slate-400 font-bold" id="lessonInstructor">Educator: -</p>
           
-          <div class="pt-4 border-t border-slate-800">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Video Lecture Transcript & Study Reference</h4>
-            <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/40 p-4 rounded-2xl border border-slate-850/50" id="lessonDescription">Detailed breakdown...</p>
+          <div class="pt-6 border-t border-slate-800 space-y-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5"><i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i> Interactive Study Material</h4>
+            <p class="text-base text-slate-200 leading-relaxed bg-slate-950/60 p-6 rounded-2xl border border-slate-850/50 whitespace-pre-wrap font-medium" id="lessonDescription">Detailed breakdown...</p>
+          </div>
           </div>
         </div>
 
@@ -944,45 +930,8 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Video Source</label>
-            <div class="grid grid-cols-2 gap-3 mb-3 p-1 bg-slate-100 rounded-xl text-xs font-bold">
-              <button type="button" id="sourceBtnUpload" onclick="setVideoSourceMode('upload')" class="py-2 rounded-lg text-center transition-all bg-white shadow-sm text-slate-800">Local Video File</button>
-              <button type="button" id="sourceBtnLink" onclick="setVideoSourceMode('link')" class="py-2 rounded-lg text-center transition-all text-slate-500 hover:text-slate-850">Direct Video URL</button>
-            </div>
-
-            <!-- Upload File Area -->
-            <div id="videoUploadContainer" class="border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-6 transition-all bg-slate-50/50 flex flex-col items-center justify-center cursor-pointer text-center relative group">
-              <input type="file" id="upVideoFile" accept="video/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleVideoFileSelect(event)">
-              <div id="videoUploadPlaceholder" class="space-y-2 pointer-events-none">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm text-slate-400 flex items-center justify-center mx-auto group-hover:text-indigo-600 transition-colors">
-                  <i data-lucide="video" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-slate-700">Click or drag & drop video file</p>
-                  <p class="text-xs text-slate-400 mt-1">MP4, WebM, or Ogg up to 100MB</p>
-                </div>
-              </div>
-              <div id="videoUploadSelected" class="hidden space-y-2 pointer-events-none">
-                <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mx-auto">
-                  <i data-lucide="check" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <p class="text-sm font-bold text-indigo-700" id="selectedVideoName">video.mp4</p>
-                  <p class="text-xs text-slate-400 mt-1" id="selectedVideoSize">0.0 MB</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Direct URL Input Area -->
-            <div id="videoLinkContainer" class="hidden">
-              <input type="url" id="upVideoUrlInput" placeholder="e.g. https://www.w3schools.com/html/mov_bbb.mp4" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-              <p class="text-[10px] text-slate-400 mt-1">Make sure it's a direct, public link ending in .mp4, .webm, or .ogg so it plays on all student browsers.</p>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Lesson Transcript (Context for AI Tutor)</label>
-            <textarea id="upTranscript" rows="4" required placeholder="Paste the text transcript or notes of the lesson here so the AI tutor can reference them..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Study Text / Lesson Content (AI Reference Context)</label>
+            <textarea id="upTranscript" rows="8" required placeholder="Write or paste the main study notes, textbook chapter, or educational text here. The AI doubt solver will reference this text to answer student questions..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
           </div>
 
           <!-- Quiz Question Editor -->
@@ -1910,10 +1859,7 @@
       if (target) target.classList.remove('hidden');
 
       if (pageId !== 'video-learning') {
-        const player = document.getElementById('videoPlayer');
-        if (player) player.pause();
-        const ytPlayer = document.getElementById('youtubePlayer');
-        if (ytPlayer) ytPlayer.src = "";
+        // Paused media handlers removed
       }
 
       document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
@@ -2503,41 +2449,7 @@
       }
     }
 
-    // --- VIDEO PLAYBACK PROGRESS RESUME ---
-    let videoProgressTimer = null;
-    function initVideoProgressTracking(player, lessonId) {
-      if (videoProgressTimer) clearInterval(videoProgressTimer);
-      
-      // Attempt to resume from saved position
-      if (currentUser && currentUser.progress && currentUser.progress[lessonId]) {
-        const savedPos = currentUser.progress[lessonId].position || 0;
-        if (savedPos > 0) {
-          player.currentTime = savedPos;
-          console.log(`Resumed video at timestamp: ${savedPos}s`);
-        }
-      }
-
-      // Track progress periodically
-      videoProgressTimer = setInterval(() => {
-        if (!player.paused && !player.ended && currentUser) {
-          const pos = player.currentTime;
-          const duration = player.duration || 1;
-          const pct = Math.round((pos / duration) * 100);
-
-          if (!currentUser.progress) currentUser.progress = {};
-          currentUser.progress[lessonId] = {
-            position: pos,
-            percentage: pct,
-            completed: pct >= 80 ? true : (currentUser.progress[lessonId]?.completed || false)
-          };
-
-          // Throttle saves to Firestore
-          db.collection('users').doc(currentUser.uid).update({
-            progress: currentUser.progress
-          }).catch(err => console.error("Error saving video progress:", err));
-        }
-      }, 5000);
-    }
+    // --- VIDEO PLAYBACK PROGRESS TRACKER REMOVED ---
 
     // --- VIDEO LEARNING PAGE ---
     function openLesson(id) {
@@ -2662,22 +2574,7 @@
       }
     }
 
-    function handleVideoPlayerError() {
-      console.warn("Video failed to load. Switching to reliable fallback stream.");
-      const player = document.getElementById('videoPlayer');
-      const backupURL = "https://vjs.zencdn.net/v/oceans.mp4";
-      if (player.src !== backupURL) {
-        player.src = backupURL;
-        player.load();
-        
-        const banner = document.createElement('div');
-        banner.className = "absolute top-4 left-4 right-4 bg-amber-600/90 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 animate-bounce z-50";
-        banner.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4"></i> Remote storage connection slow. Loaded high-performance backup stream.`;
-        player.parentElement.appendChild(banner);
-        lucide.createIcons();
-        setTimeout(() => banner.remove(), 5000);
-      }
-    }
+    // --- VIDEO RECOVERY FALLBACKS REMOVED ---
 
     async function renderVideoPage() {
       if (!activeLessonId) {
@@ -2688,45 +2585,6 @@
       if (!lesson) {
         navigateTo('student-dashboard');
         return;
-      }
-
-      const player = document.getElementById('videoPlayer');
-      const ytPlayer = document.getElementById('youtubePlayer');
-      const placeholder = document.getElementById('videoPlaceholderMessage');
-
-      function getYoutubeId(url) {
-        if (!url) return null;
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-      }
-
-      if (lesson.videoUrl) {
-        const ytId = getYoutubeId(lesson.videoUrl);
-        if (ytId) {
-          player.classList.add('hidden');
-          player.src = "";
-          ytPlayer.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1`;
-          ytPlayer.classList.remove('hidden');
-          placeholder.classList.add('hidden');
-        } else {
-          ytPlayer.classList.add('hidden');
-          ytPlayer.src = "";
-          player.src = lesson.videoUrl;
-          player.classList.remove('hidden');
-          placeholder.classList.add('hidden');
-          player.load();
-          
-          player.onloadedmetadata = () => {
-            initVideoProgressTracking(player, activeLessonId);
-          };
-        }
-      } else {
-        player.classList.add('hidden');
-        player.src = "";
-        ytPlayer.classList.add('hidden');
-        ytPlayer.src = "";
-        placeholder.classList.remove('hidden');
       }
 
       document.getElementById('lessonTitle').innerText = lesson.title;
@@ -3014,21 +2872,14 @@
 
       const tbody = document.getElementById('educatorLessonsTable');
       tbody.innerHTML = lessons.map(lesson => {
-        const videoType = lesson.videoUrl.includes('youtube.com') || lesson.videoUrl.includes('youtu.be') ? 'YouTube Embed' : 'Direct Video Stream';
         return `
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
             <td class="p-5 font-medium text-slate-500">${lesson.grade} • ${lesson.subject}</td>
-            <td class="p-5">
-              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
-            </td>
-            <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
-            <td class="p-5">
-              <div class="flex items-center gap-2">
-                <button onclick="openLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-bold transition-all">Preview</button>
-                <button onclick="openQuizEditModal('${lesson.id}')" class="px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-650 text-xs rounded-lg font-bold transition-all">Quiz Details</button>
-                <button onclick="deleteLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs rounded-lg font-bold transition-all">Delete</button>
-              </div>
+            <td class="p-5 flex items-center gap-2">
+              <button onclick="openLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-bold transition-all">Preview</button>
+              <button onclick="openQuizEditModal('${lesson.id}')" class="px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-650 text-xs rounded-lg font-bold transition-all">Quiz Details</button>
+              <button onclick="deleteLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs rounded-lg font-bold transition-all">Delete</button>
             </td>
           </tr>
         `;
@@ -3066,51 +2917,9 @@
       }
     }
 
-    function initDragAndDrop() {
-      const dropZone = document.getElementById('videoUploadContainer');
-      if (!dropZone) return;
+    // --- DRAG AND DROP HANDLERS REMOVED ---
 
-      ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.classList.remove('border-slate-200');
-          dropZone.classList.add('border-indigo-500', 'bg-indigo-50/10');
-        }, false);
-      });
-
-      ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.classList.add('border-slate-200');
-          dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/10');
-        }, false);
-      });
-
-      dropZone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files.length > 0 && files[0].type.startsWith('video/')) {
-          const fileInput = document.getElementById('upVideoFile');
-          fileInput.files = files;
-          handleVideoFileSelect({ target: { files: files } });
-        }
-      }, false);
-    }
-
-    function handleVideoFileSelect(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      selectedVideoFile = file;
-      const sizeInMB = (file.size / (1024 * 1024)).toFixed(1);
-      document.getElementById('selectedVideoName').innerText = file.name;
-      document.getElementById('selectedVideoSize').innerText = `${sizeInMB} MB`;
-
-      document.getElementById('videoUploadPlaceholder').classList.add('hidden');
-      document.getElementById('videoUploadSelected').classList.remove('hidden');
-    }
+    // --- FILE SELECT HANDLERS REMOVED ---
 
     function generateInteractiveQuiz(transcript, title) {
       const sentences = transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 25);
@@ -3395,115 +3204,9 @@
 
       const publishBtn = e.target.querySelector('button[type="submit"]');
       publishBtn.disabled = true;
-      publishBtn.innerText = "Uploading Video to Cloud (0%)...";
+      publishBtn.innerText = "Publishing to Cloud...";
 
-      if (videoSourceMode === 'link') {
-        const finalVideoUrl = document.getElementById('upVideoUrlInput').value.trim();
-        if (!finalVideoUrl) {
-          alert("Please enter a valid video URL!");
-          publishBtn.disabled = false;
-          publishBtn.innerText = "Publish Lesson & Process AI Context";
-          return;
-        }
-        saveLessonToFirestore(finalVideoUrl);
-      } else {
-        if (!selectedVideoFile) {
-          alert("Please select a local video file!");
-          publishBtn.disabled = false;
-          publishBtn.innerText = "Publish Lesson & Process AI Context";
-          return;
-        }
-
-        // Try primary uploader: tmpfiles.org
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://tmpfiles.org/api/v1/upload', true);
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const percent = Math.round((event.loaded / event.total) * 100);
-            publishBtn.innerText = `Uploading Video to Cloud (${percent}%)...`;
-          }
-        };
-
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            try {
-              const response = JSON.parse(xhr.responseText);
-              if (response.status === "success" && response.data && response.data.url) {
-                const directUrl = response.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
-                console.log("Tmpfiles Upload Successful:", directUrl);
-                saveLessonToFirestore(directUrl);
-              } else {
-                throw new Error("Invalid response format");
-              }
-            } catch (err) {
-              console.warn("Tmpfiles Upload failed, switching to Pixeldrain fallback uploader:", err);
-              uploadToPixeldrain();
-            }
-          } else {
-            console.warn("Tmpfiles Upload failed, switching to Pixeldrain fallback uploader");
-            uploadToPixeldrain();
-          }
-        };
-
-        xhr.onerror = function() {
-          console.warn("Tmpfiles network error, switching to Pixeldrain fallback uploader");
-          uploadToPixeldrain();
-        };
-
-        const formData = new FormData();
-        formData.append('file', selectedVideoFile);
-        xhr.send(formData);
-      }
-
-      function uploadToPixeldrain() {
-        publishBtn.innerText = "Fallback: Uploading to Pixeldrain (0%)...";
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://pixeldrain.com/api/file', true);
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const percent = Math.round((event.loaded / event.total) * 100);
-            publishBtn.innerText = `Fallback: Uploading to Pixeldrain (${percent}%)...`;
-          }
-        };
-
-        xhr.onload = function() {
-          if (xhr.status === 201 || xhr.status === 200) {
-            try {
-              const response = JSON.parse(xhr.responseText);
-              if (response.success && response.id) {
-                const directUrl = `https://pixeldrain.com/api/file/${response.id}`;
-                console.log("Pixeldrain Cloud Upload Successful:", directUrl);
-                saveLessonToFirestore(directUrl);
-              } else {
-                throw new Error("Invalid response from Pixeldrain");
-              }
-            } catch (err) {
-              console.error("Pixeldrain parser error:", err);
-              fallbackLocalUpload();
-            }
-          } else {
-            console.error("Pixeldrain HTTP error:", xhr.statusText);
-            fallbackLocalUpload();
-          }
-        };
-
-        xhr.onerror = function() {
-          console.error("Pixeldrain network error");
-          fallbackLocalUpload();
-        };
-
-        const formData = new FormData();
-        formData.append('file', selectedVideoFile);
-        xhr.send(formData);
-      }
-
-      function fallbackLocalUpload() {
-        alert("Cloud Video server is busy. Saving lesson with secure local storage fallback.");
-        const fallbackURL = "https://vjs.zencdn.net/v/oceans.mp4";
-        saveLessonToFirestore(fallbackURL);
-      }
+      saveLessonToFirestore("");
 
       function saveLessonToFirestore(videoUrl) {
         const lessonId = Date.now().toString();
@@ -3540,11 +3243,8 @@
       }
 
       function completeUploadFlow() {
-        selectedVideoFile = null;
         currentEditingQuiz = [];
         document.getElementById('quizEditorList').innerHTML = "";
-        document.getElementById('videoUploadPlaceholder').classList.remove('hidden');
-        document.getElementById('videoUploadSelected').classList.add('hidden');
         e.target.reset();
         publishBtn.disabled = false;
         publishBtn.innerText = "Publish Lesson & Process AI Context";
