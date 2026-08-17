@@ -1035,6 +1035,7 @@
     // --- INITIALIZATION ---
     window.onload = () => {
       checkAuth();
+      initDragAndDrop();
       lucide.createIcons();
     };
 
@@ -3018,6 +3019,39 @@
         fileInput.required = false;
         urlInput.required = true;
       }
+    }
+
+    function initDragAndDrop() {
+      const dropZone = document.getElementById('videoUploadContainer');
+      if (!dropZone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.remove('border-slate-200');
+          dropZone.classList.add('border-indigo-500', 'bg-indigo-50/10');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.add('border-slate-200');
+          dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/10');
+        }, false);
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 0 && files[0].type.startsWith('video/')) {
+          const fileInput = document.getElementById('upVideoFile');
+          fileInput.files = files;
+          handleVideoFileSelect({ target: { files: files } });
+        }
+      }, false);
     }
 
     function handleVideoFileSelect(e) {
