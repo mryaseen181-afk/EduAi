@@ -893,8 +893,6 @@
           </div>
         </div>
 
-      </div>
-    </section> </div>
     </section>
 
     <!-- 7. UPLOAD LESSON -->
@@ -991,7 +989,7 @@
           <div class="border-t border-slate-100 pt-4 space-y-3">
             <div class="flex justify-between items-center">
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Lesson Quiz (Self-Evaluation)</label>
-              <button type="button" onclick="generatePreviewQuiz()" class="text-xs font-bold text-indigo-600 hover:underline">Auto-Generate Quiz from Transcript</button>
+              <button type="button" onclick="generatePreviewQuiz()" class="text-xs font-bold text-indigo-650 hover:underline">Auto-Generate Quiz from Transcript</button>
             </div>
             
             <div id="quizEditorList" class="space-y-4">
@@ -1009,6 +1007,33 @@
         </form>
       </div>
     </section>
+
+    <!-- QUIZ EDIT MODAL -->
+    <div id="quizEditModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in">
+      <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xl max-w-lg w-full relative flex flex-col max-h-[90vh]">
+        <button onclick="closeQuizEditModal()" class="absolute right-6 top-6 text-slate-400 hover:text-slate-650 p-1.5 rounded-lg hover:bg-slate-155 hover:bg-slate-100 transition-all">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <div class="mb-4">
+          <h2 class="text-xl font-bold text-slate-900">Manage Lesson Quiz</h2>
+          <p class="text-slate-505 text-slate-500 text-xs mt-0.5" id="quizEditLessonTitle">Edit, add, or remove questions for this lesson.</p>
+        </div>
+
+        <div id="modalQuizQuestionsList" class="flex-1 overflow-y-auto chat-scroll space-y-4 pr-1 mb-4 text-slate-700">
+          <!-- Injected dynamically -->
+        </div>
+
+        <div class="space-y-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="addModalQuizQuestion()" class="w-full py-2.5 border border-dashed border-slate-300 hover:border-indigo-500 text-slate-500 hover:text-indigo-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add New Question
+          </button>
+          <button onclick="saveModalQuizChanges()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95">
+            Save Quiz Changes
+          </button>
+        </div>
+      </div>
+    </div>
 
   </main>
 
@@ -2998,9 +3023,12 @@
               <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
-            <td class="p-5 flex items-center gap-3">
-              <button onclick="openLesson('${lesson.id}')" class="text-indigo-600 hover:underline font-bold text-xs">Preview</button>
-              <button onclick="deleteLesson('${lesson.id}')" class="text-rose-600 hover:underline font-bold text-xs">Delete</button>
+            <td class="p-5">
+              <div class="flex items-center gap-2">
+                <button onclick="openLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-bold transition-all">Preview</button>
+                <button onclick="openQuizEditModal('${lesson.id}')" class="px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-650 text-xs rounded-lg font-bold transition-all">Quiz Details</button>
+                <button onclick="deleteLesson('${lesson.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs rounded-lg font-bold transition-all">Delete</button>
+              </div>
             </td>
           </tr>
         `;
@@ -3156,6 +3184,122 @@
       }
     }
 
+    let activeQuizEditLessonId = null;
+    let tempModalQuizQuestions = [];
+
+    function openQuizEditModal(lessonId) {
+      activeQuizEditLessonId = lessonId;
+      const lesson = lessons.find(l => l.id.toString() === lessonId.toString());
+      if (!lesson) return;
+
+      document.getElementById('quizEditLessonTitle').innerText = `Lesson: ${lesson.title}`;
+      tempModalQuizQuestions = JSON.parse(JSON.stringify(lesson.quiz || []));
+      
+      renderModalQuizEditor();
+      document.getElementById('quizEditModal').classList.remove('hidden');
+    }
+
+    function closeQuizEditModal() {
+      document.getElementById('quizEditModal').classList.add('hidden');
+      activeQuizEditLessonId = null;
+      tempModalQuizQuestions = [];
+    }
+
+    function renderModalQuizEditor() {
+      const container = document.getElementById('modalQuizQuestionsList');
+      if (tempModalQuizQuestions.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 text-center py-8 text-xs font-semibold">No quiz questions. Click "Add New Question" below to start!</p>`;
+        return;
+      }
+
+      container.innerHTML = tempModalQuizQuestions.map((q, index) => {
+        return `
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 relative text-left">
+            <button type="button" onclick="removeModalQuizQuestion(${index})" class="absolute right-4 top-4 text-slate-400 hover:text-rose-600 transition-colors">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+            <div class="pr-8">
+              <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Question ${index + 1}</label>
+              <input type="text" value="${q.question}" oninput="updateModalQuizQuestionText(${index}, this.value)" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+              ${q.options.map((opt, optIndex) => {
+                const isCorrect = q.correctIndex === optIndex;
+                return `
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between">
+                      <label class="block text-[9px] font-bold text-slate-400">Option ${optIndex + 1}</label>
+                      <button type="button" onclick="setModalQuizCorrectIndex(${index}, ${optIndex})" class="text-[9px] font-bold ${isCorrect ? 'text-indigo-650' : 'text-slate-400 hover:text-slate-655'}">
+                        ${isCorrect ? '★ Correct' : 'Set Correct'}
+                      </button>
+                    </div>
+                    <input type="text" value="${opt}" oninput="updateModalQuizOptionText(${index}, ${optIndex}, this.value)" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white text-slate-850">
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function updateModalQuizQuestionText(qIndex, text) {
+      if (tempModalQuizQuestions[qIndex]) tempModalQuizQuestions[qIndex].question = text;
+    }
+
+    function updateModalQuizOptionText(qIndex, optIndex, text) {
+      if (tempModalQuizQuestions[qIndex] && tempModalQuizQuestions[qIndex].options) {
+        tempModalQuizQuestions[qIndex].options[optIndex] = text;
+      }
+    }
+
+    function setModalQuizCorrectIndex(qIndex, optIndex) {
+      if (tempModalQuizQuestions[qIndex]) {
+        tempModalQuizQuestions[qIndex].correctIndex = optIndex;
+        renderModalQuizEditor();
+      }
+    }
+
+    function addModalQuizQuestion() {
+      tempModalQuizQuestions.push({
+        question: "Describe a core concept explained in this lesson.",
+        options: ["Correct Option Answer", "Distractor Option B", "Distractor Option C", "Distractor Option D"],
+        correctIndex: 0
+      });
+      renderModalQuizEditor();
+    }
+
+    function removeModalQuizQuestion(index) {
+      tempModalQuizQuestions.splice(index, 1);
+      renderModalQuizEditor();
+    }
+
+    async function saveModalQuizChanges() {
+      if (!activeQuizEditLessonId) return;
+      
+      try {
+        await db.collection('lessons').doc(activeQuizEditLessonId.toString()).update({
+          quiz: tempModalQuizQuestions
+        });
+        
+        let localLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
+        const index = localLessons.findIndex(l => l.id.toString() === activeQuizEditLessonId.toString());
+        if (index !== -1) {
+          localLessons[index].quiz = tempModalQuizQuestions;
+          localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
+        }
+        
+        closeQuizEditModal();
+        alert("Quiz updated successfully!");
+      } catch (err) {
+        console.error("Error updating quiz:", err);
+        alert("Failed to save quiz changes to cloud.");
+      }
+    }
+
     let currentEditingQuiz = [];
 
     function generatePreviewQuiz() {
@@ -3178,7 +3322,7 @@
 
       container.innerHTML = currentEditingQuiz.map((q, qIndex) => {
         return `
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 relative">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 relative text-left">
             <button type="button" onclick="removeQuizQuestion(${qIndex})" class="absolute right-4 top-4 text-slate-400 hover:text-rose-600 transition-colors">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
@@ -3194,7 +3338,7 @@
                   <div class="space-y-1">
                     <div class="flex items-center justify-between">
                       <label class="block text-[9px] font-bold text-slate-400">Option ${optIndex + 1}</label>
-                      <button type="button" onclick="setQuizCorrectIndex(${qIndex}, ${optIndex})" class="text-[9px] font-bold ${isCorrect ? 'text-indigo-650' : 'text-slate-400 hover:text-slate-600'}">
+                      <button type="button" onclick="setQuizCorrectIndex(${qIndex}, ${optIndex})" class="text-[9px] font-bold ${isCorrect ? 'text-indigo-650' : 'text-slate-400 hover:text-slate-655'}">
                         ${isCorrect ? '★ Correct' : 'Set Correct'}
                       </button>
                     </div>
