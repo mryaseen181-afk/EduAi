@@ -615,6 +615,7 @@
         <!-- Video Player with poster and loading placeholder -->
         <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-850 border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
           <video id="videoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata" onerror="handleVideoPlayerError()"></video>
+          <iframe id="youtubePlayer" class="w-full h-full hidden" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           <div id="videoPlaceholderMessage" class="text-center text-slate-400 py-16 space-y-3">
             <div class="w-16 h-16 bg-slate-850 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
               <i data-lucide="play" class="w-8 h-8"></i>
@@ -1869,6 +1870,8 @@
       if (pageId !== 'video-learning') {
         const player = document.getElementById('videoPlayer');
         if (player) player.pause();
+        const ytPlayer = document.getElementById('youtubePlayer');
+        if (ytPlayer) ytPlayer.src = "";
       }
 
       document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
@@ -2646,20 +2649,41 @@
       }
 
       const player = document.getElementById('videoPlayer');
+      const ytPlayer = document.getElementById('youtubePlayer');
       const placeholder = document.getElementById('videoPlaceholderMessage');
 
+      function getYoutubeId(url) {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+      }
+
       if (lesson.videoUrl) {
-        player.src = lesson.videoUrl;
-        player.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        player.load();
-        
-        // Wait for metadata to load before resuming track
-        player.onloadedmetadata = () => {
-          initVideoProgressTracking(player, activeLessonId);
-        };
+        const ytId = getYoutubeId(lesson.videoUrl);
+        if (ytId) {
+          player.classList.add('hidden');
+          player.src = "";
+          ytPlayer.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1`;
+          ytPlayer.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+        } else {
+          ytPlayer.classList.add('hidden');
+          ytPlayer.src = "";
+          player.src = lesson.videoUrl;
+          player.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+          player.load();
+          
+          player.onloadedmetadata = () => {
+            initVideoProgressTracking(player, activeLessonId);
+          };
+        }
       } else {
         player.classList.add('hidden');
+        player.src = "";
+        ytPlayer.classList.add('hidden');
+        ytPlayer.src = "";
         placeholder.classList.remove('hidden');
       }
 
