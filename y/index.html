@@ -987,6 +987,22 @@
             <textarea id="upTranscript" rows="4" required placeholder="Paste the text transcript or notes of the lesson here so the AI tutor can reference them..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"></textarea>
           </div>
 
+          <!-- Quiz Question Editor -->
+          <div class="border-t border-slate-100 pt-4 space-y-3">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Lesson Quiz (Self-Evaluation)</label>
+              <button type="button" onclick="generatePreviewQuiz()" class="text-xs font-bold text-indigo-600 hover:underline">Auto-Generate Quiz from Transcript</button>
+            </div>
+            
+            <div id="quizEditorList" class="space-y-4">
+              <!-- Dynamically populated editor fields for quiz questions -->
+            </div>
+            
+            <button type="button" onclick="addBlankQuizQuestion()" class="w-full py-2 border border-dashed border-slate-300 hover:border-indigo-500 text-slate-500 hover:text-indigo-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Custom Quiz Question
+            </button>
+          </div>
+
           <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-100 active:scale-98">
             Publish Lesson & Process AI Context
           </button>
@@ -2973,7 +2989,7 @@
 
       const tbody = document.getElementById('educatorLessonsTable');
       tbody.innerHTML = lessons.map(lesson => {
-        const videoType = lesson.videoUrl.startsWith('https://firebasestorage') ? 'Cloud Storage' : 'Native File';
+        const videoType = lesson.videoUrl.includes('youtube.com') || lesson.videoUrl.includes('youtu.be') ? 'YouTube Embed' : 'Direct Video Stream';
         return `
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="p-5 font-bold text-slate-900">${lesson.title}</td>
@@ -2982,8 +2998,9 @@
               <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/50">${videoType}</span>
             </td>
             <td class="p-5"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-xl font-bold border border-emerald-100">Processed</span></td>
-            <td class="p-5">
+            <td class="p-5 flex items-center gap-3">
               <button onclick="openLesson('${lesson.id}')" class="text-indigo-600 hover:underline font-bold text-xs">Preview</button>
+              <button onclick="deleteLesson('${lesson.id}')" class="text-rose-600 hover:underline font-bold text-xs">Delete</button>
             </td>
           </tr>
         `;
@@ -3121,6 +3138,109 @@
       return quizQuestions;
     }
 
+    async function deleteLesson(lessonId) {
+      if (!confirm("Are you sure you want to delete this lesson? This will remove all associated comments, quiz questions, and doubt history permanently.")) return;
+      
+      try {
+        await db.collection('lessons').doc(lessonId.toString()).delete();
+        let localLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
+        localLessons = localLessons.filter(l => l.id.toString() !== lessonId.toString());
+        localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
+        lessons = localLessons;
+        
+        renderEducatorDashboard();
+        alert("Lesson deleted successfully!");
+      } catch (err) {
+        console.error("Error deleting lesson:", err);
+        alert("Failed to delete lesson from cloud database.");
+      }
+    }
+
+    let currentEditingQuiz = [];
+
+    function generatePreviewQuiz() {
+      const title = document.getElementById('upTitle').value;
+      const transcript = document.getElementById('upTranscript').value;
+      if (!transcript) {
+        alert("Please write or paste the transcript first!");
+        return;
+      }
+      currentEditingQuiz = generateInteractiveQuiz(transcript, title);
+      renderQuizEditor();
+    }
+
+    function renderQuizEditor() {
+      const container = document.getElementById('quizEditorList');
+      if (currentEditingQuiz.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 text-center py-4 text-xs">No quiz questions added yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = currentEditingQuiz.map((q, qIndex) => {
+        return `
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 relative">
+            <button type="button" onclick="removeQuizQuestion(${qIndex})" class="absolute right-4 top-4 text-slate-400 hover:text-rose-600 transition-colors">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+            <div class="pr-8">
+              <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Question ${qIndex + 1}</label>
+              <input type="text" value="${q.question}" oninput="updateQuizQuestionText(${qIndex}, this.value)" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+              ${q.options.map((opt, optIndex) => {
+                const isCorrect = q.correctIndex === optIndex;
+                return `
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between">
+                      <label class="block text-[9px] font-bold text-slate-400">Option ${optIndex + 1}</label>
+                      <button type="button" onclick="setQuizCorrectIndex(${qIndex}, ${optIndex})" class="text-[9px] font-bold ${isCorrect ? 'text-indigo-650' : 'text-slate-400 hover:text-slate-600'}">
+                        ${isCorrect ? '★ Correct' : 'Set Correct'}
+                      </button>
+                    </div>
+                    <input type="text" value="${opt}" oninput="updateQuizOptionText(${qIndex}, ${optIndex}, this.value)" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white">
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      lucide.createIcons();
+    }
+
+    function updateQuizQuestionText(qIndex, text) {
+      if (currentEditingQuiz[qIndex]) currentEditingQuiz[qIndex].question = text;
+    }
+
+    function updateQuizOptionText(qIndex, optIndex, text) {
+      if (currentEditingQuiz[qIndex] && currentEditingQuiz[qIndex].options) {
+        currentEditingQuiz[qIndex].options[optIndex] = text;
+      }
+    }
+
+    function setQuizCorrectIndex(qIndex, optIndex) {
+      if (currentEditingQuiz[qIndex]) {
+        currentEditingQuiz[qIndex].correctIndex = optIndex;
+        renderQuizEditor();
+      }
+    }
+
+    function addBlankQuizQuestion() {
+      currentEditingQuiz.push({
+        question: "Describe a core concept explained in this lesson.",
+        options: ["Correct Option Answer", "Distractor Option B", "Distractor Option C", "Distractor Option D"],
+        correctIndex: 0
+      });
+      renderQuizEditor();
+    }
+
+    function removeQuizQuestion(index) {
+      currentEditingQuiz.splice(index, 1);
+      renderQuizEditor();
+    }
+
     function handleUpload(e) {
       e.preventDefault();
       
@@ -3150,7 +3270,7 @@
           return;
         }
 
-        // Upload to tmpfiles.org via standard XHR to track progress percentage
+        // Try primary uploader: tmpfiles.org
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://tmpfiles.org/api/v1/upload', true);
 
@@ -3166,25 +3286,67 @@
             try {
               const response = JSON.parse(xhr.responseText);
               if (response.status === "success" && response.data && response.data.url) {
-                // Convert to direct download link
                 const directUrl = response.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
-                console.log("Cloud Upload Successful:", directUrl);
+                console.log("Tmpfiles Upload Successful:", directUrl);
                 saveLessonToFirestore(directUrl);
               } else {
                 throw new Error("Invalid response format");
               }
             } catch (err) {
-              console.error("Cloud Upload parse error:", err);
+              console.warn("Tmpfiles Upload failed, switching to Pixeldrain fallback uploader:", err);
+              uploadToPixeldrain();
+            }
+          } else {
+            console.warn("Tmpfiles Upload failed, switching to Pixeldrain fallback uploader");
+            uploadToPixeldrain();
+          }
+        };
+
+        xhr.onerror = function() {
+          console.warn("Tmpfiles network error, switching to Pixeldrain fallback uploader");
+          uploadToPixeldrain();
+        };
+
+        const formData = new FormData();
+        formData.append('file', selectedVideoFile);
+        xhr.send(formData);
+      }
+
+      function uploadToPixeldrain() {
+        publishBtn.innerText = "Fallback: Uploading to Pixeldrain (0%)...";
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://pixeldrain.com/api/file', true);
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            publishBtn.innerText = `Fallback: Uploading to Pixeldrain (${percent}%)...`;
+          }
+        };
+
+        xhr.onload = function() {
+          if (xhr.status === 201 || xhr.status === 200) {
+            try {
+              const response = JSON.parse(xhr.responseText);
+              if (response.success && response.id) {
+                const directUrl = `https://pixeldrain.com/api/file/${response.id}`;
+                console.log("Pixeldrain Cloud Upload Successful:", directUrl);
+                saveLessonToFirestore(directUrl);
+              } else {
+                throw new Error("Invalid response from Pixeldrain");
+              }
+            } catch (err) {
+              console.error("Pixeldrain parser error:", err);
               fallbackLocalUpload();
             }
           } else {
-            console.error("Cloud Upload HTTP error:", xhr.statusText);
+            console.error("Pixeldrain HTTP error:", xhr.statusText);
             fallbackLocalUpload();
           }
         };
 
         xhr.onerror = function() {
-          console.error("Cloud Upload network error");
+          console.error("Pixeldrain network error");
           fallbackLocalUpload();
         };
 
@@ -3202,7 +3364,11 @@
       function saveLessonToFirestore(videoUrl) {
         const lessonId = Date.now().toString();
         const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
-        const quizQuestions = generateInteractiveQuiz(transcript, title);
+        
+        // Use custom quiz edited by teacher if populated; otherwise auto-generate
+        const quizQuestions = currentEditingQuiz.length > 0 
+          ? currentEditingQuiz 
+          : generateInteractiveQuiz(transcript, title);
 
         const newLesson = {
           id: lessonId,
@@ -3231,6 +3397,8 @@
 
       function completeUploadFlow() {
         selectedVideoFile = null;
+        currentEditingQuiz = [];
+        document.getElementById('quizEditorList').innerHTML = "";
         document.getElementById('videoUploadPlaceholder').classList.remove('hidden');
         document.getElementById('videoUploadSelected').classList.add('hidden');
         e.target.reset();
