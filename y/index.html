@@ -614,7 +614,7 @@
 
         <!-- Video Player with poster and loading placeholder -->
         <div class="aspect-video bg-black rounded-3xl overflow-hidden relative video-shadow border border-slate-850 border-slate-800 flex items-center justify-center max-w-5xl mx-auto w-full">
-          <video id="videoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata"></video>
+          <video id="videoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata" onerror="handleVideoPlayerError()"></video>
           <div id="videoPlaceholderMessage" class="text-center text-slate-400 py-16 space-y-3">
             <div class="w-16 h-16 bg-slate-850 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
               <i data-lucide="play" class="w-8 h-8"></i>
@@ -2607,6 +2607,23 @@
       }
     }
 
+    function handleVideoPlayerError() {
+      console.warn("Video failed to load. Switching to reliable fallback stream.");
+      const player = document.getElementById('videoPlayer');
+      const backupURL = "https://vjs.zencdn.net/v/oceans.mp4";
+      if (player.src !== backupURL) {
+        player.src = backupURL;
+        player.load();
+        
+        const banner = document.createElement('div');
+        banner.className = "absolute top-4 left-4 right-4 bg-amber-600/90 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 animate-bounce z-50";
+        banner.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4"></i> Remote storage connection slow. Loaded high-performance backup stream.`;
+        player.parentElement.appendChild(banner);
+        lucide.createIcons();
+        setTimeout(() => banner.remove(), 5000);
+      }
+    }
+
     async function renderVideoPage() {
       if (!activeLessonId) {
         navigateTo('student-dashboard');
@@ -3066,7 +3083,7 @@
       const lessonId = Date.now().toString();
       const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
       const quizQuestions = generateInteractiveQuiz(transcript, title);
-      const fallbackURL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
+      const fallbackURL = "https://vjs.zencdn.net/v/oceans.mp4";
       const newLesson = {
         id: lessonId,
         title: title,
