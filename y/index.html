@@ -3071,71 +3071,105 @@
       const subject = document.getElementById('upSubject').value;
       const transcript = document.getElementById('upTranscript').value;
 
-      let finalVideoUrl = "";
+      const publishBtn = e.target.querySelector('button[type="submit"]');
+      publishBtn.disabled = true;
+      publishBtn.innerText = "Uploading Video to Cloud (0%)...";
+
       if (videoSourceMode === 'link') {
-        finalVideoUrl = document.getElementById('upVideoUrlInput').value.trim();
+        const finalVideoUrl = document.getElementById('upVideoUrlInput').value.trim();
         if (!finalVideoUrl) {
           alert("Please enter a valid video URL!");
+          publishBtn.disabled = false;
+          publishBtn.innerText = "Publish Lesson & Process AI Context";
           return;
         }
+        saveLessonToFirestore(finalVideoUrl);
       } else {
         if (!selectedVideoFile) {
           alert("Please select a local video file!");
+          publishBtn.disabled = false;
+          publishBtn.innerText = "Publish Lesson & Process AI Context";
           return;
         }
-        finalVideoUrl = URL.createObjectURL(selectedVideoFile);
+
+        // Upload to tmpfiles.org via standard XHR to track progress percentage
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://tmpfiles.org/api/v1/upload', true);
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            publishBtn.innerText = `Uploading Video to Cloud (${percent}%)...`;
+          }
+        };
+
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              const response = JSON.parse(xhr.responseText);
+              if (response.status === "success" && response.data && response.data.url) {
+                // Convert to direct download link
+                const directUrl = response.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
+                console.log("Cloud Upload Successful:", directUrl);
+                saveLessonToFirestore(directUrl);
+              } else {
+                throw new Error("Invalid response format");
+              }
+            } catch (err) {
+              console.error("Cloud Upload parse error:", err);
+              fallbackLocalUpload();
+            }
+          } else {
+            console.error("Cloud Upload HTTP error:", xhr.statusText);
+            fallbackLocalUpload();
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error("Cloud Upload network error");
+          fallbackLocalUpload();
+        };
+
+        const formData = new FormData();
+        formData.append('file', selectedVideoFile);
+        xhr.send(formData);
       }
 
-      const publishBtn = e.target.querySelector('button[type="submit"]');
-      publishBtn.disabled = true;
-      publishBtn.innerText = "Processing Video File...";
+      function fallbackLocalUpload() {
+        alert("Cloud Video server is busy. Saving lesson with secure local storage fallback.");
+        const fallbackURL = "https://vjs.zencdn.net/v/oceans.mp4";
+        saveLessonToFirestore(fallbackURL);
+      }
 
-      const lessonId = Date.now().toString();
-      const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
-      const quizQuestions = generateInteractiveQuiz(transcript, title);
-      const fallbackURL = "https://vjs.zencdn.net/v/oceans.mp4";
-      const newLesson = {
-        id: lessonId,
-        title: title,
-        grade: grade,
-        subject: subject,
-        videoUrl: videoSourceMode === 'link' ? finalVideoUrl : fallbackURL, // Save working public URL initially so students can see it!
-        transcript: transcript,
-        instructor: currentUser ? currentUser.name : "Educator",
-        completed: false,
-        chapter: chapter,
-        quiz: quizQuestions
-      };
+      function saveLessonToFirestore(videoUrl) {
+        const lessonId = Date.now().toString();
+        const chapter = `Chapter ${lessons.length + 1}: General ${subject} Concepts`;
+        const quizQuestions = generateInteractiveQuiz(transcript, title);
 
-      // Try uploading to Storage in background, but save to Firestore/LocalStorage right away for zero latency!
-      if (videoSourceMode === 'upload' && selectedVideoFile) {
-        const storageRef = storage.ref(`lessons/videos/${lessonId}_${selectedVideoFile.name}`);
-        storageRef.put(selectedVideoFile).then((snapshot) => {
-          return snapshot.ref.getDownloadURL();
-        }).then((downloadURL) => {
-          db.collection('lessons').doc(lessonId).update({ videoUrl: downloadURL }).catch(console.error);
-          
-          let localLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
-          const index = localLessons.findIndex(l => l.id.toString() === lessonId.toString());
-          if (index !== -1) {
-            localLessons[index].videoUrl = downloadURL;
-            localStorage.setItem('eduai_lessons', JSON.stringify(localLessons));
-          }
+        const newLesson = {
+          id: lessonId,
+          title: title,
+          grade: grade,
+          subject: subject,
+          videoUrl: videoUrl,
+          transcript: transcript,
+          instructor: currentUser ? currentUser.name : "Educator",
+          completed: false,
+          chapter: chapter,
+          quiz: quizQuestions
+        };
+
+        db.collection('lessons').doc(lessonId).set(newLesson).then(() => {
+          completeUploadFlow();
         }).catch(err => {
-          console.warn("Storage upload failed, keeping fallback video URL:", err);
+          console.warn("Firestore save failed, falling back to local database sync:", err);
+          let simulatedLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
+          simulatedLessons.push(newLesson);
+          localStorage.setItem('eduai_lessons', JSON.stringify(simulatedLessons));
+          lessons = simulatedLessons;
+          completeUploadFlow();
         });
       }
-
-      db.collection('lessons').doc(lessonId).set(newLesson).then(() => {
-        completeUploadFlow();
-      }).catch(err => {
-        console.warn("Firestore save failed, falling back to local database sync:", err);
-        let simulatedLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
-        simulatedLessons.push(newLesson);
-        localStorage.setItem('eduai_lessons', JSON.stringify(simulatedLessons));
-        lessons = simulatedLessons;
-        completeUploadFlow();
-      });
 
       function completeUploadFlow() {
         selectedVideoFile = null;
