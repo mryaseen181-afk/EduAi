@@ -3055,6 +3055,15 @@ Here is a quick concept check based on your syllabus notes:
 *Can you outline the main variables or formulas introduced in this chapter and describe one real-world application where they are used?*
 
 **Draft your answer below in the chat, and I will evaluate it for you!**`;
+      } else if (query.includes('switch') || query.includes('swithe') || query.includes('circuit') || query.includes('key')) {
+        return `### Physics Concept: Electrical Switches & Circuits
+
+A **switch** (often represented as a key in circuit diagrams) is a control device that can open or close an electrical path:
+
+- **Open Switch:** The conducting path is broken. Current cannot flow through the circuit (Zero Amperes).
+- **Closed Switch:** The conducting path is complete. Current flows freely through the load.
+
+**Vivid Analogy:** Think of an electrical switch like a drawbridge over a river. If the drawbridge is raised (open switch), cars (current) cannot cross the river. If the drawbridge is lowered (closed switch), traffic flows continuously!`;
       }
 
       // Default contextual extraction from transcript
@@ -3081,8 +3090,8 @@ Here is a quick concept check based on your syllabus notes:
             }
           });
 
-          if (bestSentence) {
-            return `### Tutor Transcript Analysis
+          if (highestScore > 1 && bestSentence) {
+            return `### Tutor Syllabus Analysis
 
 Based on the reading materials for this lesson, the educator states:
 
