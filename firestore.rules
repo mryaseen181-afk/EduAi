@@ -3,10 +3,18 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
+      match /{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
     }
     match /lessons/{lessonId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'EDUCATOR';
+      
+      match /comments/{commentId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null;
+      }
     }
     match /teacher_chats/{chatId} {
       allow read, write: if request.auth != null && (

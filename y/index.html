@@ -2841,6 +2841,10 @@
     }
 
     function getSmartAiResponse(query, text, lesson) {
+      if (!query.replace(/[\s.?!,;:]/g, '')) {
+        return `Please ask a clear, topic-related question (e.g. define key terms, explain with an analogy, or request a practice quiz) so I can help you with your studies!`;
+      }
+
       const subject = (lesson?.subject || "General").toLowerCase();
       const title = (lesson?.title || "").toLowerCase();
       
@@ -3699,14 +3703,12 @@ Could you clarify if you would like a **conceptual analogy**, a **step-by-step m
         };
 
         db.collection('lessons').doc(lessonId).set(newLesson).then(() => {
+          addNotification("Lesson Published! 📚", `"${title}" has been successfully saved to the cloud library.`);
           completeUploadFlow();
         }).catch(err => {
-          console.warn("Firestore save failed, falling back to local database sync:", err);
-          let simulatedLessons = JSON.parse(localStorage.getItem('eduai_lessons')) || [];
-          simulatedLessons.push(newLesson);
-          localStorage.setItem('eduai_lessons', JSON.stringify(simulatedLessons));
-          lessons = simulatedLessons;
-          completeUploadFlow();
+          alert("Publish Error: " + err.message);
+          publishBtn.disabled = false;
+          publishBtn.innerText = "Publish Lesson";
         });
       }
 
