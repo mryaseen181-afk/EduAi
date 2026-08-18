@@ -437,6 +437,15 @@
               <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
                 <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Social Science
               </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Urdu
+              </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Arabic
+              </label>
+              <label class="flex items-center p-3.5 border border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all select-none">
+                <input type="checkbox" class="mr-3 w-4 h-4 rounded text-indigo-605 text-indigo-650 text-indigo-600 accent-indigo-600"> Computer Science
+              </label>
             </div>
           </div>
 
@@ -933,6 +942,9 @@
                 <option>Mathematics</option>
                 <option>English</option>
                 <option>Social Science</option>
+                <option>Urdu</option>
+                <option>Arabic</option>
+                <option>Computer Science</option>
               </select>
             </div>
           </div>
@@ -2915,13 +2927,75 @@ Cells are the fundamental building blocks of all living organisms. The primary o
 **Study Tip:** Remember that prokaryotes (like bacteria) lack a membrane-bound nucleus, while eukaryotes (like plant/animal cells) contain them.`;
       }
 
-      if (query.includes('summary') || query.includes('summarize')) {
-        return `### Academic Lesson Summary
+      if (query.includes('urdu') || subject.includes('urdu')) {
+        return `### Urdu Language Studies (اردو)
+
+Urdu is an Indo-Aryan language written in the Persian-Arabic (Nastaliq) script. Key grammatical units include:
+
+1. **Ism (اسم):** Nouns (e.g., کتاب - book, لڑکا - boy).
+2. **Fail (فعل):** Verbs indicating actions (e.g., لکھنا - to write, پڑھنا - to read).
+3. **Zameer (ضمیر):** Pronouns replacing nouns (e.g., وہ - he/she/it, میں - I).
+
+**Vocabulary Example:**
+- **Greetings:** السلام علیکم (Peace be upon you)
+- **Response:** وعلیکم السلام (And upon you be peace)
+
+*Let me know if you would like a list of common adjectives (Sifat) or verb conjugation rules!*`;
+      }
+
+      if (query.includes('arabic') || query.includes('arabi') || subject.includes('arabic')) {
+        return `### Arabic Linguistics & Grammar (العربية)
+
+Arabic is a Semitic language utilizing a unique tri-consonant root system. Basic structures cover:
+
+- **Harakaat (حركات):** Short vowels that alter word meaning:
+  - *Fatha ( َ ):* Creates "a" sound
+  - *Damma ( ُ ):* Creates "u" sound
+  - *Kasra ( ِ ):* Creates "i" sound
+- **Sentence Types:**
+  - *Jumla Ismiyya (جملة اسمية):* Nominal sentences starting with a noun.
+  - *Jumla Fi'liyya (جملة فعلية):* Verbal sentences starting with a verb.
+
+**Vocabulary Basics:**
+- **Thank you:** شكرًا (Shukran)
+- **Welcome:** أهلاً وسهلاً (Ahlan wa Sahlan)
+
+*Ask me to conjugate a past tense verb (Fi'l Madi) or explain active participles (Ism Fa'il)!*`;
+      }
+
+      if (query.includes('computer') || query.includes('code') || query.includes('python') || query.includes('program') || subject.includes('computer')) {
+        return `### Computer Science & Programming Fundamentals
+
+In programming, we write commands to instruct computer systems. Key concepts include:
+
+- **Variables:** Storage locations for values (e.g., \`x = 10\`).
+- **Data Types:** 
+  - *Integer:* Whole numbers
+  - *String:* Text values enclosed in quotes
+  - *Boolean:* \`True\` or \`False\` value parameters
+- **Control Flow Example (Python):**
+\`\`\`python
+# Evaluates dynamic condition checks
+if score >= 50:
+    print("Pass")
+else:
+    print("Study Required")
+\`\`\`
+
+**Key Takeaway:** Computers execute code top-to-bottom sequentially unless interrupted by functions, loops, or branch statements.`;
+      }
+
+      if (query.includes('sum') || query.includes('idea') || query.includes('ideo') || query.includes('main') || query.includes('overview') || query.includes('about') || query.includes('explain') || query.includes('detail')) {
+        const summaryText = lesson ? (lesson.transcript ? lesson.transcript.substring(0, 300) + "..." : "No transcript notes have been published for this lesson.") : "General educational topic overview.";
+        return `### Lesson Summary & Main Idea
 
 In this lesson covering **${lesson ? lesson.title : 'Topic'}**, the key concepts focus on:
-- **Core Subject:** Fundamentals of ${lesson ? lesson.subject : 'Curriculum'}
-- **Key Principle:** The instructor (${lesson ? lesson.instructor : 'Faculty'}) explains how basic models translate to advanced practical exercises.
-- **Application:** Make sure you study the reading material and finish the WAVE test quiz to lock in your scores!`;
+- **Core Subject:** ${lesson ? lesson.subject : 'Curriculum'}
+- **Main Idea:** The central theme is to master the rules, definitions, and structures presented in the reading guide.
+- **Detailed Snippet:**
+  > "${summaryText}"
+
+*Let me know if you would like me to generate a practice question or explain this with an analogy!*`;
       }
 
       if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
