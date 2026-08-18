@@ -2874,6 +2874,73 @@ Where:
 - \\(r\\) is the distance between their centers
 
 **Vivid Analogy:** Imagine placing a heavy bowling ball in the middle of a trampoline. The canvas curves downward. If you roll a marble onto the trampoline, it naturally spirals toward the heavy ball because of the curved slope. This is how gravity works in space!`;
+      } else if (query.includes('solar') || query.includes('planet') || query.includes('space') || query.includes('sun')) {
+        return `### Astronomy Concept: The Solar System
+
+The Solar System consists of our star, the Sun, and everything bound to it by gravity—the planets, dwarf planets, moons, asteroids, and comets.
+
+**The Eight Planets (in order from the Sun):**
+1. **Terrestrial (Rocky) Planets:** Mercury, Venus, Earth, Mars.
+2. **Gas Giants:** Jupiter, Saturn.
+3. **Ice Giants:** Uranus, Neptune.
+
+**Key Fact:** Jupiter is the largest planet in our solar system, with a mass more than two and a half times that of all the other planets combined.`;
+      } else if (query.includes('atom') || query.includes('molecule') || query.includes('proton') || query.includes('electron') || query.includes('neutron')) {
+        return `### Chemistry Concept: Atomic Structure
+
+An atom is the basic building block of chemistry. It is the smallest unit of matter that retains the properties of a chemical element.
+
+**Subatomic Particles:**
+- **Protons:** Positively charged particles located in the central nucleus.
+- **Neutrons:** Neutrally charged particles also located in the nucleus.
+- **Electrons:** Negatively charged particles that orbit the nucleus in specific energy levels or shells.
+
+**Key Definition:** The atomic number of an element represents the total number of protons in its nucleus. For example, Hydrogen has 1 proton (atomic number 1).`;
+      } else if (query.includes('water') || query.includes('h2o') || query.includes('chemical') || query.includes('compound')) {
+        return `### Chemistry Concept: Water (H₂O)
+
+Water is a polar covalent compound. It is composed of two hydrogen atoms bonded to a single oxygen atom.
+
+- **Chemical Formula:** H₂O
+- **Properties:** It has a high heat capacity, acts as a universal solvent, and its solid form (ice) is less dense than its liquid form, allowing it to float.
+
+**Molecular Structure:** The oxygen atom pulls electrons closer to itself than the hydrogen atoms do, creating a partial negative charge near the oxygen and a partial positive charge near the hydrogens. This polarity allows water molecules to form hydrogen bonds with each other.`;
+      } else if (query.includes('light') || query.includes('reflect') || query.includes('refract') || query.includes('lens')) {
+        return `### Physics Concept: Behavior of Light
+
+Light behaves both as a wave and as a stream of particles (photons). Key optical interactions include:
+
+1. **Reflection:** Light bouncing off a surface. The Law of Reflection states:
+   $$\\theta_{\\text{incident}} = \\theta_{\\text{reflected}}$$
+2. **Refraction:** The bending of light as it passes from one medium to another with a different density. This is governed by Snell's Law:
+   $$n_1 \\sin \\theta_1 = n_2 \\sin \\theta_2$$
+
+**Vivid Analogy:** Think of a straw looking "bent" inside a glass of water. This visual distortion occurs because light travels slower through water than it does through air, causing the rays to bend.`;
+      } else if (query.includes('newton') || query.includes('motion') || query.includes('acceleration')) {
+        return `### Physics Concept: Newton's Laws of Motion
+
+Sir Isaac Newton formulated the three fundamental laws of classical mechanics:
+
+1. **First Law (Inertia):** An object at rest remains at rest, and an object in motion continues in motion with constant velocity, unless acted upon by a net external force.
+2. **Second Law (Force):** The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass:
+   $$F = m \\times a$$
+3. **Third Law (Action-Reaction):** For every action, there is an equal and opposite reaction. If Object A exerts a force on Object B, Object B exerts an equal force in the opposite direction on Object A.`;
+      } else if (query.includes('electricity') || query.includes('circuit') || query.includes('volt') || query.includes('ohm')) {
+        return `### Physics Concept: Ohm's Law & Electricity
+
+Electricity is the flow of electric charge (usually electrons) through a conductor. In electrical circuits, the relationship between voltage, current, and resistance is described by Ohm's Law:
+
+$$V = I \\times R$$
+
+Where:
+- \\(V\\) is the Voltage (potential difference, measured in Volts)
+- \\(I\\) is the Current (flow rate of charge, measured in Amperes)
+- \\(R\\) is the Resistance (opposition to flow, measured in Ohms)
+
+**Vivid Analogy:** Think of electricity like water flowing through a pipe:
+- **Voltage** is the water pressure pushing the water forward.
+- **Current** is the volume of water flowing past a point.
+- **Resistance** is a narrowing of the pipe that restricts the flow.`;
       } else if (query.includes('photosynthesis') || query.includes('plant') || query.includes('chloroplast')) {
         return `### Biology Concept: Photosynthesis
 
