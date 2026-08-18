@@ -3668,12 +3668,13 @@ Could you clarify if you would like a **conceptual analogy**, a **step-by-step m
       const grade = document.getElementById('upGrade').value;
       const subject = document.getElementById('upSubject').value;
       const transcript = document.getElementById('upTranscript').value;
+      const videoUrl = document.getElementById('upVideoUrlInput') ? document.getElementById('upVideoUrlInput').value.trim() : "";
 
       const publishBtn = e.target.querySelector('button[type="submit"]');
       publishBtn.disabled = true;
       publishBtn.innerText = "Publishing to Cloud...";
 
-      saveLessonToFirestore("");
+      saveLessonToFirestore(videoUrl);
 
       function saveLessonToFirestore(videoUrl) {
         const lessonId = Date.now().toString();
