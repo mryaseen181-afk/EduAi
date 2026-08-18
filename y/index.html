@@ -2828,6 +2828,161 @@
       sendChatMessage(new Event('submit'));
     }
 
+    function getSmartAiResponse(query, text, lesson) {
+      const subject = (lesson?.subject || "General").toLowerCase();
+      const title = (lesson?.title || "").toLowerCase();
+      
+      // Topic database matches
+      if (query.includes('friction') || query.includes('force') || title.includes('friction') || title.includes('force')) {
+        return `### Conceptual Analysis: Friction & Forces
+
+Friction is the resistive force that opposes the relative motion of two surfaces in contact. It is calculated using the formula:
+
+$$f = \\mu N$$
+
+Where:
+- \\(f\\) is the frictional force (in Newtons)
+- \\(\\mu\\) is the coefficient of friction (dimensionless)
+- \\(N\\) is the normal force pushing the surfaces together
+
+**Vivid Analogy:** Think of friction like walking on a muddy field versus smooth ice. The rough mud creates high friction, giving your boots grip, while the frictionless ice offers no resistance, causing you to slide.
+
+**Key takeaway:** Friction converts kinetic energy into thermal energy (heat). That's why rubbing your hands together quickly warms them up!`;
+      }
+      
+      if (query.includes('gravity') || query.includes('orbit') || title.includes('gravity')) {
+        return `### Physics Concept: Gravitational Attraction
+
+Gravity is the fundamental force of attraction between all matter. Newton's Law of Universal Gravitation states:
+
+$$F = G \\frac{m_1 m_2}{r^2}$$
+
+Where:
+- \\(F\\) is the gravitational force
+- \\(G\\) is the gravitational constant \\((6.674 \\times 10^{-11} \\text{ N m}^2/\\text{kg}^2)\\)
+- \\(m_1, m_2\\) are the masses of the two objects
+- \\(r\\) is the distance between their centers
+
+**Vivid Analogy:** Imagine placing a heavy bowling ball in the middle of a trampoline. The canvas curves downward. If you roll a marble onto the trampoline, it naturally spirals toward the heavy ball because of the curved slope. This is how gravity works in space!`;
+      }
+
+      if (query.includes('photosynthesis') || query.includes('plant') || query.includes('chloroplast')) {
+        return `### Biology Concept: Photosynthesis
+
+Photosynthesis is the chemical process plants use to convert light energy into glucose. The balanced chemical equation is:
+
+$$6CO_2 + 6H_2O \\xrightarrow{\\text{Sunlight}} C_6H_{12}O_6 + 6O_2$$
+
+**Vivid Analogy:** Think of a plant cell like a solar-powered cookie bakery. 
+- **Ovens:** The chloroplasts
+- **Solar Electricity:** Sunlight absorbed by chlorophyll
+- **Raw Ingredients:** Carbon dioxide from the air and water from the roots
+- **Output:** Delicious glucose cookies (energy) and fresh oxygen released as a byproduct!`;
+      }
+
+      if (query.includes('algebra') || query.includes('quadratic') || query.includes('equation') || query.includes('solve')) {
+        return `### Mathematics Tutorial: Quadratic Equations
+
+A quadratic equation is a second-order polynomial equation written in standard form as:
+
+$$ax^2 + bx + c = 0$$
+
+To find the roots (solutions for \\(x\\)), we apply the quadratic formula:
+
+$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+
+**Step-by-step sample calculation:**
+Solve \\(x^2 - 5x + 6 = 0\\) where \\(a = 1, b = -5, c = 6\\):
+1. Calculate the discriminant: \\(b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\\)
+2. Apply formula:
+$$x = \\frac{-(-5) \\pm \\sqrt{1}}{2(1)} = \\frac{5 \\pm 1}{2}$$
+3. Split into two cases:
+   - \\(x_1 = \\frac{5 + 1}{2} = 3\\)
+   - \\(x_2 = \\frac{5 - 1}{2} = 2\\)
+
+Therefore, the solutions are \\(x = 3\\) and \\(x = 2\\).`;
+      }
+
+      if (query.includes('cell') || query.includes('dna') || query.includes('nucleus')) {
+        return `### Molecular Biology: Cell Organelles
+
+Cells are the fundamental building blocks of all living organisms. The primary organelles inside a eukaryotic cell include:
+
+1. **Nucleus:** The cell's library. It stores DNA (genetic blueprints) and directs all cellular activities.
+2. **Mitochondria:** The powerhouses of the cell. They convert glucose into usable chemical energy (ATP molecules).
+3. **Cell Membrane:** The security guard. It selectively controls what enters and exits the cell boundary.
+
+**Study Tip:** Remember that prokaryotes (like bacteria) lack a membrane-bound nucleus, while eukaryotes (like plant/animal cells) contain them.`;
+      }
+
+      if (query.includes('summary') || query.includes('summarize')) {
+        return `### Academic Lesson Summary
+
+In this lesson covering **${lesson ? lesson.title : 'Topic'}**, the key concepts focus on:
+- **Core Subject:** Fundamentals of ${lesson ? lesson.subject : 'Curriculum'}
+- **Key Principle:** The instructor (${lesson ? lesson.instructor : 'Faculty'}) explains how basic models translate to advanced practical exercises.
+- **Application:** Make sure you study the reading material and finish the WAVE test quiz to lock in your scores!`;
+      }
+
+      if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
+        return `### AI Practice Question
+
+Here is a quick concept check based on your syllabus notes:
+
+*Can you outline the main variables or formulas introduced in this chapter and describe one real-world application where they are used?*
+
+**Draft your answer below in the chat, and I will evaluate it for you!**`;
+      }
+
+      // Default contextual extraction from transcript
+      if (lesson && lesson.transcript) {
+        const stopWords = new Set(["what", "is", "the", "a", "an", "of", "and", "in", "to", "explain", "about", "how", "why", "do", "does", "for"]);
+        const keywords = query.split(/[\s,?.!]+/).filter(w => w.length > 2 && !stopWords.has(w));
+        
+        if (keywords.length > 0) {
+          const sentences = lesson.transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+          let bestSentence = "";
+          let highestScore = 0;
+
+          sentences.forEach(sentence => {
+            let score = 0;
+            const wordsInSentence = sentence.toLowerCase().split(/[\s,?.!]+/);
+            keywords.forEach(kw => {
+              if (wordsInSentence.includes(kw)) score += 2;
+              else if (sentence.toLowerCase().includes(kw)) score += 1;
+            });
+
+            if (score > highestScore) {
+              highestScore = score;
+              bestSentence = sentence;
+            }
+          });
+
+          if (bestSentence) {
+            return `### Tutor Transcript Analysis
+
+Based on the reading materials for this lesson, the educator states:
+
+> "${bestSentence}."
+
+To expand on this concept:
+1. Make sure to define the primary terms in your revision notes.
+2. Review the formulas or core rules outlined in the study guide panel.
+
+*Let me know if you would like me to explain this with an analogy or solve a step-by-step example!*`;
+          }
+        }
+      }
+
+      return `I've analyzed the study materials for **${lesson ? lesson.title : 'this lesson'}**.
+
+Your question regarding "${text}" touches on important topics. Based on the educator's guide:
+- The concepts focus heavily on structural definitions and practical equations.
+- We recommend verifying the reading logs on the left panel to cross-reference terms.
+
+Could you clarify if you would like a **conceptual analogy**, a **step-by-step math solver**, or a **quick practice test**?`;
+    }
+
     function sendChatMessage(e) {
       if (e) e.preventDefault();
       const input = document.getElementById('chatInput');
@@ -2845,49 +3000,8 @@
         removeTypingIndicator();
         const lesson = lessons.find(l => l.id.toString() === activeLessonId.toString());
         const query = text.toLowerCase();
-        let response = "";
-
-        if (lesson && lesson.transcript) {
-          const stopWords = new Set(["what", "is", "the", "a", "an", "of", "and", "in", "to", "explain", "about", "how", "why", "do", "does", "for"]);
-          const keywords = query.split(/[\s,?.!]+/).filter(w => w.length > 2 && !stopWords.has(w));
-          
-          if (keywords.length > 0) {
-            const sentences = lesson.transcript.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-            let bestSentence = "";
-            let highestScore = 0;
-
-            sentences.forEach(sentence => {
-              let score = 0;
-              const wordsInSentence = sentence.toLowerCase().split(/[\s,?.!]+/);
-              keywords.forEach(kw => {
-                if (wordsInSentence.includes(kw)) score += 2;
-                else if (sentence.toLowerCase().includes(kw)) score += 1;
-              });
-
-              if (score > highestScore) {
-                highestScore = score;
-                bestSentence = sentence;
-              }
-            });
-
-            if (highestScore > 1) {
-              const minutes = Math.floor(Math.random() * 5);
-              const seconds = Math.floor(Math.random() * 60).toString().padStart(2, '0');
-              const timestamp = `[0${minutes}:${seconds}]`;
-              response = `### Video AI Transcript Analysis:\n\nAt timestamp **${timestamp}** in the lecture video, the instructor explains:\n\n> "${bestSentence}."\n\n*This fact was extracted dynamically from the video lecture stream.*`;
-            }
-          }
-        }
-
-        if (!response) {
-          if (query.includes('summary') || query.includes('summarize')) {
-            response = `### Video Lesson Summary:\n\nIn this session covering **${lesson ? lesson.title : 'Topic'}**, the lecture explains the core principles of **${lesson ? lesson.subject : 'Subject'}**. Educator ${lesson ? lesson.instructor : 'Instructor'} outlines the key conceptual definitions, structures, and applications required.`;
-          } else if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
-            response = `### Practice Question:\n\n*Based on the video tutorial, can you explain the central mechanism or equation introduced and how it applies to real-world examples?*\n\nTake a moment to draft your answer!`;
-          } else {
-            response = `I've analyzed the video content for **${lesson ? lesson.title : 'Topic'}**.\n\nYour question regarding "${text}" relates to critical aspects of the lesson. Based on the course materials, we focus heavily on the topics explained by ${lesson ? lesson.instructor : 'Instructor'}. Could you clarify if you need a step-by-step example or a conceptual overview?`;
-          }
-        }
+        
+        const response = getSmartAiResponse(query, text, lesson);
 
         chatHistories[activeLessonId].push({ sender: 'ai', text: response });
         saveAiChats(activeLessonId);
