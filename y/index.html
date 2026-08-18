@@ -116,6 +116,7 @@
 
       <div id="studentNavTabs" class="hidden flex items-center bg-slate-100/80 p-0.5 rounded-xl text-xs font-bold border border-slate-200/40">
         <button id="navTabDashboard" onclick="navigateTo('student-dashboard')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> Dashboard</button>
+        <button id="navTabAnalytics" onclick="navigateTo('student-analytics')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i> AI Analytics</button>
         <button id="navTabTeachers" onclick="navigateTo('student-teachers')" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-indigo-650 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Chat Teachers</button>
       </div>
 
@@ -953,6 +954,76 @@
             Publish Lesson & Process AI Context
           </button>
         </form>
+      </div>
+    </section>
+
+    <!-- 8. STUDENT AI ANALYTICS -->
+    <section id="page-student-analytics" class="view-page flex-1 hidden bg-slate-50/80 p-4 lg:p-8 animate-fade-in">
+      <div class="max-w-6xl mx-auto space-y-8">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">AI Doubt & Analytics Room</h2>
+            <p class="text-slate-500 text-sm">Review your past doubt sessions, subject metrics, and practice performance.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Doubts Solved</p>
+              <p class="text-3xl font-bold text-slate-900" id="analyticTotalDoubts">0</p>
+            </div>
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center"><i data-lucide="message-circle" class="w-6 h-6"></i></div>
+          </div>
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Average Quiz Score</p>
+              <p class="text-3xl font-bold text-slate-900" id="analyticAvgScore">0%</p>
+            </div>
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center"><i data-lucide="award" class="w-6 h-6"></i></div>
+          </div>
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Weekly Streak Progress</p>
+              <p class="text-3xl font-bold text-slate-900" id="analyticWeeklyStreak">0 Days</p>
+            </div>
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center"><i data-lucide="zap" class="w-6 h-6"></i></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <div class="lg:col-span-1 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 class="font-extrabold text-slate-900 text-lg mb-1">Performance Chart</h3>
+              <p class="text-slate-500 text-xs mb-4">Quiz progress scores relative to syllabus targets</p>
+            </div>
+            
+            <div class="flex items-center justify-center h-48 bg-slate-50 rounded-2xl border border-slate-100 p-2 relative overflow-hidden" id="analyticsChartWrapper">
+              <!-- SVG chart gets drawn dynamically -->
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[400px]">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-lg mb-0.5">Doubt History Search</h3>
+                <p class="text-slate-500 text-xs">Search through past question-answer responses</p>
+              </div>
+              <div class="relative w-full md:w-60">
+                <input type="text" id="doubtLogSearch" oninput="filterAnalyticsDoubtLogs()" placeholder="Search doubts..." class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:border-indigo-605 shadow-sm text-slate-800">
+                <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto chat-scroll space-y-3 pr-1" id="doubtHistoryLogList">
+              <p class="text-slate-400 text-center py-12 text-xs">No doubt sessions recorded yet.</p>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
@@ -1855,14 +1926,19 @@
         // Paused media handlers removed
       }
 
-      document.getElementById('navTabDashboard').className = pageId === 'student-dashboard' 
-        ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
-        : "px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5";
+      const navTabAnalytics = document.getElementById('navTabAnalytics');
+      if (navTabAnalytics) {
+        navTabAnalytics.className = pageId === 'student-analytics' 
+          ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
+          : "px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5";
+      }
+
       document.getElementById('navTabTeachers').className = pageId === 'student-teachers' 
         ? "px-3.5 py-2 rounded-lg text-indigo-650 bg-indigo-50/70 transition-all flex items-center gap-1.5"
         : "px-3.5 py-2 rounded-lg text-slate-500 hover:text-indigo-650 transition-all flex items-center gap-1.5";
 
       if (pageId === 'student-dashboard') renderStudentDashboard();
+      if (pageId === 'student-analytics') renderStudentAnalytics();
       if (pageId === 'student-teachers') {
         loadEducators();
         renderTeachersTab();
@@ -2795,6 +2871,18 @@
 
         chatHistories[activeLessonId].push({ sender: 'ai', text: response });
         saveAiChats(activeLessonId);
+        
+        // Log flat doubt history log
+        if (currentUser) {
+          db.collection('users').doc(currentUser.uid).collection('doubt_history').add({
+            lessonId: activeLessonId,
+            question: text,
+            answer: response,
+            timestamp: Date.now(),
+            subject: lesson ? lesson.subject : "General"
+          }).catch(err => console.warn("Doubt history backup failed:", err));
+        }
+
         renderChatMessages();
       }, 1000);
     }
@@ -2847,6 +2935,127 @@
       chatHistories[activeLessonId] = [{ sender: 'ai', text: "Chat history cleared. Ask me a question about this video!" }];
       saveAiChats(activeLessonId);
       renderChatMessages();
+    }
+
+    // --- AI ANALYTICS ENGINE ---
+    let analyticsDoubtLogs = [];
+
+    async function renderStudentAnalytics() {
+      if (!currentUser) return;
+      
+      document.getElementById('analyticWeeklyStreak').innerText = `${currentUser.streakCount || 0} Days`;
+
+      try {
+        const quizSnapshot = await db.collection('quiz_attempts').where('uid', '==', currentUser.uid).get();
+        let totalScore = 0;
+        let attemptCount = 0;
+        let scorePercentages = [];
+
+        quizSnapshot.forEach(doc => {
+          const data = doc.data();
+          const pct = Math.round((data.score / data.totalQuestions) * 100);
+          scorePercentages.push(pct);
+          totalScore += pct;
+          attemptCount++;
+        });
+
+        const avgScore = attemptCount > 0 ? Math.round(totalScore / attemptCount) : 0;
+        document.getElementById('analyticAvgScore').innerText = `${avgScore}%`;
+        
+        drawAnalyticsChart(scorePercentages.slice(-5));
+      } catch (err) {
+        console.error("Error fetching analytics quiz progress:", err);
+      }
+
+      try {
+        const doubtSnapshot = await db.collection('users').doc(currentUser.uid).collection('doubt_history').orderBy('timestamp', 'desc').get();
+        analyticsDoubtLogs = [];
+        doubtSnapshot.forEach(doc => {
+          analyticsDoubtLogs.push({ id: doc.id, ...doc.data() });
+        });
+
+        document.getElementById('analyticTotalDoubts').innerText = analyticsDoubtLogs.length;
+        renderAnalyticsDoubtLogs(analyticsDoubtLogs);
+      } catch (err) {
+        console.error("Error fetching analytics doubt history:", err);
+      }
+    }
+
+    function drawAnalyticsChart(scores) {
+      const wrapper = document.getElementById('analyticsChartWrapper');
+      if (!wrapper) return;
+      
+      if (scores.length === 0) {
+        wrapper.innerHTML = `<p class="text-slate-400 text-xs font-semibold">Take quizzes to view your progress metrics.</p>`;
+        return;
+      }
+
+      const points = scores.map((s, i) => {
+        const x = 30 + (i * (200 / Math.max(1, scores.length - 1)));
+        const y = 170 - (s * 1.4);
+        return `${x},${y}`;
+      }).join(' ');
+
+      const polyPoints = `30,170 ${points} ${30 + ((scores.length - 1) * (200 / Math.max(1, scores.length - 1)))},170`;
+
+      wrapper.innerHTML = `
+        <svg class="w-full h-full" viewBox="0 0 280 200">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <line x1="30" y1="30" x2="250" y2="30" stroke="#f1f5f9" stroke-width="1"/>
+          <line x1="30" y1="100" x2="250" y2="100" stroke="#f1f5f9" stroke-width="1"/>
+          <line x1="30" y1="170" x2="250" y2="170" stroke="#e2e8f0" stroke-width="2"/>
+          
+          <text x="5" y="35" class="text-[9px] fill-slate-400 font-bold">100%</text>
+          <text x="5" y="105" class="text-[9px] fill-slate-400 font-bold">50%</text>
+          <text x="5" y="175" class="text-[9px] fill-slate-400 font-bold">0%</text>
+
+          <polygon points="${polyPoints}" fill="url(#chartGrad)"/>
+          <polyline points="${points}" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          
+          ${scores.map((s, i) => {
+            const cx = 30 + (i * (200 / Math.max(1, scores.length - 1)));
+            const cy = 170 - (s * 1.4);
+            return `<circle cx="${cx}" cy="${cy}" r="4" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>`;
+          }).join('')}
+        </svg>
+      `;
+    }
+
+    function renderAnalyticsDoubtLogs(logs) {
+      const container = document.getElementById('doubtHistoryLogList');
+      if (logs.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 text-center py-12 text-xs font-semibold">No matching doubt sessions found.</p>`;
+        return;
+      }
+
+      container.innerHTML = logs.map(log => {
+        const timeString = new Date(log.timestamp).toLocaleDateString() + ' ' + new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const lesson = lessons.find(l => l.id.toString() === log.lessonId.toString());
+        const lessonTitle = lesson ? lesson.title : "General Topic";
+        return `
+          <div class="p-4 bg-slate-50 border border-slate-200/65 rounded-2xl space-y-2 text-left">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold bg-indigo-50 text-indigo-650 px-2 py-0.5 rounded-lg border border-indigo-100/50">${log.subject} • ${lessonTitle}</span>
+              <span class="text-[9px] text-slate-400 font-semibold">${timeString}</span>
+            </div>
+            <p class="text-xs font-extrabold text-slate-800">Q: ${log.question}</p>
+            <div class="p-3 bg-white border border-slate-100 rounded-xl text-xs leading-relaxed text-slate-650 whitespace-pre-wrap font-semibold">${log.answer}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterAnalyticsDoubtLogs() {
+      const query = document.getElementById('doubtLogSearch').value.toLowerCase().trim();
+      const filtered = analyticsDoubtLogs.filter(log => {
+        return log.question.toLowerCase().includes(query) || log.answer.toLowerCase().includes(query) || log.subject.toLowerCase().includes(query);
+      });
+      renderAnalyticsDoubtLogs(filtered);
     }
 
     // --- EDUCATOR PORTAL ---
