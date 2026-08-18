@@ -1496,12 +1496,6 @@
       document.getElementById('roleSelectorContainer').classList.add('hidden');
       document.getElementById('studentNavTabs').classList.add('hidden');
       
-      const player = document.getElementById('videoPlayer');
-      if (player) {
-        player.pause();
-        player.src = "";
-      }
-      
       navigateTo('landing');
     }
 
@@ -2625,7 +2619,7 @@
       const newStatus = !currentStatus;
       
       currentUser.progress[activeLessonId] = {
-        position: document.getElementById('videoPlayer').currentTime || 0,
+        position: 0,
         percentage: currentStatus ? 0 : 100,
         completed: newStatus
       };
