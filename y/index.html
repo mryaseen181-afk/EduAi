@@ -694,7 +694,7 @@
           </div>
 
           <!-- Dynamic Suggested Follow-ups -->
-          <div id="chatSuggestionsContainer" class="px-4 py-2 bg-slate-900 border-t border-slate-800/40 flex gap-2 overflow-x-auto chat-scroll text-[11px] font-semibold text-slate-350">
+          <div id="chatSuggestionsContainer" class="px-4 py-2 bg-slate-50 border-t border-slate-200/60 flex gap-2 overflow-x-auto chat-scroll text-[11px] font-semibold text-slate-600">
             <!-- Dynamically populated suggestions -->
           </div>
 
@@ -2099,7 +2099,7 @@
         continueInst.innerText = `Educator: ${lastActiveLesson.instructor} • ${lastActiveLesson.grade}`;
         continueBar.style.width = `${prog.percentage}%`;
         resumeBtn.disabled = false;
-        resumeBtn.className = "px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition-all shrink-0 cursor-pointer active:scale-95 shadow-sm";
+        resumeBtn.className = "px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-all shrink-0 cursor-pointer active:scale-95 shadow-sm";
         resumeBtn.onclick = () => openLesson(lastActiveLesson.id);
       } else {
         continueTitle.innerText = "No lessons in progress";
@@ -2269,7 +2269,7 @@
                               <p class="text-[11px] text-slate-400 mt-1">${lesson.instructor}</p>
                             </div>
                             
-                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-900 group-hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
+                            <button onclick="openLesson(${lesson.id})" class="w-full py-2 bg-slate-100 text-slate-700 group-hover:bg-indigo-600 group-hover:text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 active:scale-95">
                               <i data-lucide="play" class="w-3.5 h-3.5"></i> Learn Now
                             </button>
                           </div>
@@ -2512,16 +2512,16 @@
               : '';
 
             html += `
-              <div class="p-3.5 bg-slate-900/40 border border-slate-850/60 rounded-2xl space-y-1.5 text-slate-300 text-left">
+              <div class="p-3.5 bg-slate-50 border border-slate-200/60 rounded-2xl space-y-1.5 text-slate-700 text-left">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center">
-                    <span class="text-xs font-bold text-white">${data.userName}</span>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest bg-slate-800 px-1.5 py-0.5 rounded ml-2">${data.userRole}</span>
+                    <span class="text-xs font-bold text-slate-900">${data.userName}</span>
+                    <span class="text-[9px] font-bold text-indigo-650 uppercase tracking-widest bg-indigo-50 px-2 py-0.5 rounded-lg ml-2">${data.userRole}</span>
                     ${starsHtml}
                   </div>
-                  <span class="text-[9px] text-slate-500 font-semibold">${timeString}</span>
+                  <span class="text-[9px] text-slate-450 text-slate-400 font-semibold">${timeString}</span>
                 </div>
-                <p class="text-sm leading-relaxed">${data.text}</p>
+                <p class="text-sm leading-relaxed font-semibold text-slate-650">${data.text}</p>
               </div>
             `;
           });
@@ -2677,7 +2677,7 @@
             <div class="max-w-[85%] rounded-2xl px-4 py-3 ${
               isUser 
                 ? 'bg-indigo-600 text-white rounded-tr-none shadow-sm' 
-                : 'bg-slate-850 text-slate-100 rounded-tl-none border border-slate-800'
+                : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200/80'
             }">
               <div class="leading-relaxed text-sm whitespace-pre-wrap">${msg.text}</div>
             </div>
