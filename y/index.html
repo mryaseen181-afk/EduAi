@@ -86,6 +86,14 @@
 </head>
 <body class="bg-[#f8fafc] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
+  <!-- GLOBAL LOADING SCREEN OVERLAY -->
+  <div id="global-loader" class="fixed inset-0 z-[200] bg-white flex flex-col items-center justify-center transition-opacity duration-300">
+    <div class="flex flex-col items-center space-y-4">
+      <div class="w-12 h-12 border-4 border-slate-100 border-t-indigo-650 rounded-full animate-spin"></div>
+      <p class="text-xs font-bold text-slate-400 uppercase tracking-widest animate-pulse">EduAI Pro Connecting...</p>
+    </div>
+  </div>
+
   <!-- TOP NAVIGATION BAR -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 lg:px-8 py-3.5 flex items-center justify-between shadow-sm">
     <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateToDashboard()">
@@ -1094,7 +1102,14 @@
 
     // --- INITIALIZATION ---
     window.onload = () => {
-      checkAuth();
+      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
+          checkAuth();
+        })
+        .catch(err => {
+          console.warn("Persistence setting failed, checkAuth proceeding:", err);
+          checkAuth();
+        });
       initDragAndDrop();
       lucide.createIcons();
     };
@@ -1162,10 +1177,15 @@
           } catch (e) {
             console.error("Error fetching user profile:", e);
             navigateTo('landing');
+          } finally {
+            const loader = document.getElementById('global-loader');
+            if (loader) loader.classList.add('opacity-0', 'pointer-events-none');
           }
         } else {
           currentUser = null;
           navigateTo('landing');
+          const loader = document.getElementById('global-loader');
+          if (loader) loader.classList.add('opacity-0', 'pointer-events-none');
         }
       });
     }
