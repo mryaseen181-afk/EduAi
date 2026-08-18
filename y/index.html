@@ -2860,9 +2860,7 @@ Where:
 **Vivid Analogy:** Think of friction like walking on a muddy field versus smooth ice. The rough mud creates high friction, giving your boots grip, while the frictionless ice offers no resistance, causing you to slide.
 
 **Key takeaway:** Friction converts kinetic energy into thermal energy (heat). That's why rubbing your hands together quickly warms them up!`;
-      }
-      
-      if (query.includes('gravity') || query.includes('orbit') || title.includes('gravity')) {
+      } else if (query.includes('gravity') || query.includes('orbit') || title.includes('gravity')) {
         return `### Physics Concept: Gravitational Attraction
 
 Gravity is the fundamental force of attraction between all matter. Newton's Law of Universal Gravitation states:
@@ -2876,9 +2874,7 @@ Where:
 - \\(r\\) is the distance between their centers
 
 **Vivid Analogy:** Imagine placing a heavy bowling ball in the middle of a trampoline. The canvas curves downward. If you roll a marble onto the trampoline, it naturally spirals toward the heavy ball because of the curved slope. This is how gravity works in space!`;
-      }
-
-      if (query.includes('photosynthesis') || query.includes('plant') || query.includes('chloroplast')) {
+      } else if (query.includes('photosynthesis') || query.includes('plant') || query.includes('chloroplast')) {
         return `### Biology Concept: Photosynthesis
 
 Photosynthesis is the chemical process plants use to convert light energy into glucose. The balanced chemical equation is:
@@ -2890,9 +2886,7 @@ $$6CO_2 + 6H_2O \\xrightarrow{\\text{Sunlight}} C_6H_{12}O_6 + 6O_2$$
 - **Solar Electricity:** Sunlight absorbed by chlorophyll
 - **Raw Ingredients:** Carbon dioxide from the air and water from the roots
 - **Output:** Delicious glucose cookies (energy) and fresh oxygen released as a byproduct!`;
-      }
-
-      if (query.includes('algebra') || query.includes('quadratic') || query.includes('equation') || query.includes('solve')) {
+      } else if (query.includes('algebra') || query.includes('quadratic') || query.includes('equation') || query.includes('solve')) {
         return `### Mathematics Tutorial: Quadratic Equations
 
 A quadratic equation is a second-order polynomial equation written in standard form as:
@@ -2913,9 +2907,7 @@ $$x = \\frac{-(-5) \\pm \\sqrt{1}}{2(1)} = \\frac{5 \\pm 1}{2}$$
    - \\(x_2 = \\frac{5 - 1}{2} = 2\\)
 
 Therefore, the solutions are \\(x = 3\\) and \\(x = 2\\).`;
-      }
-
-      if (query.includes('cell') || query.includes('dna') || query.includes('nucleus')) {
+      } else if (query.includes('cell') || query.includes('dna') || query.includes('nucleus')) {
         return `### Molecular Biology: Cell Organelles
 
 Cells are the fundamental building blocks of all living organisms. The primary organelles inside a eukaryotic cell include:
@@ -2925,9 +2917,7 @@ Cells are the fundamental building blocks of all living organisms. The primary o
 3. **Cell Membrane:** The security guard. It selectively controls what enters and exits the cell boundary.
 
 **Study Tip:** Remember that prokaryotes (like bacteria) lack a membrane-bound nucleus, while eukaryotes (like plant/animal cells) contain them.`;
-      }
-
-      if (query.includes('urdu') || subject.includes('urdu')) {
+      } else if (query.includes('urdu') || subject.includes('urdu')) {
         return `### Urdu Language Studies (اردو)
 
 Urdu is an Indo-Aryan language written in the Persian-Arabic (Nastaliq) script. Key grammatical units include:
@@ -2941,9 +2931,7 @@ Urdu is an Indo-Aryan language written in the Persian-Arabic (Nastaliq) script. 
 - **Response:** وعلیکم السلام (And upon you be peace)
 
 *Let me know if you would like a list of common adjectives (Sifat) or verb conjugation rules!*`;
-      }
-
-      if (query.includes('arabic') || query.includes('arabi') || subject.includes('arabic')) {
+      } else if (query.includes('arabic') || query.includes('arabi') || subject.includes('arabic')) {
         return `### Arabic Linguistics & Grammar (العربية)
 
 Arabic is a Semitic language utilizing a unique tri-consonant root system. Basic structures cover:
@@ -2961,9 +2949,7 @@ Arabic is a Semitic language utilizing a unique tri-consonant root system. Basic
 - **Welcome:** أهلاً وسهلاً (Ahlan wa Sahlan)
 
 *Ask me to conjugate a past tense verb (Fi'l Madi) or explain active participles (Ism Fa'il)!*`;
-      }
-
-      if (query.includes('computer') || query.includes('code') || query.includes('python') || query.includes('program') || subject.includes('computer')) {
+      } else if (query.includes('computer') || query.includes('code') || query.includes('python') || query.includes('program') || subject.includes('computer')) {
         return `### Computer Science & Programming Fundamentals
 
 In programming, we write commands to instruct computer systems. Key concepts include:
@@ -2983,9 +2969,7 @@ else:
 \`\`\`
 
 **Key Takeaway:** Computers execute code top-to-bottom sequentially unless interrupted by functions, loops, or branch statements.`;
-      }
-
-      if (query.includes('sum') || query.includes('idea') || query.includes('ideo') || query.includes('main') || query.includes('overview') || query.includes('about') || query.includes('explain') || query.includes('detail')) {
+      } else if (query.includes('sum') || query.includes('idea') || query.includes('ideo') || query.includes('main') || query.includes('overview') || query.includes('about') || query.includes('explain') || query.includes('detail')) {
         const summaryText = lesson ? (lesson.transcript ? lesson.transcript.substring(0, 300) + "..." : "No transcript notes have been published for this lesson.") : "General educational topic overview.";
         return `### Lesson Summary & Main Idea
 
@@ -2996,9 +2980,7 @@ In this lesson covering **${lesson ? lesson.title : 'Topic'}**, the key concepts
   > "${summaryText}"
 
 *Let me know if you would like me to generate a practice question or explain this with an analogy!*`;
-      }
-
-      if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
+      } else if (query.includes('quiz') || query.includes('test') || query.includes('question')) {
         return `### AI Practice Question
 
 Here is a quick concept check based on your syllabus notes:
